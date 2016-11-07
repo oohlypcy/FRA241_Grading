@@ -8,7 +8,6 @@ Homepage = Blueprint('homepage',__name__,url_prefix="/<url_user_id>",template_fo
 @Homepage.url_value_preprocessor
 def user_id(endpoint,url_user_id):
     # from what i test url_user_id is a dictionary containing 'url_user_id' key with id value
-    print url_user_id['url_user_id']
     g.id = url_user_id['url_user_id']
     g.user = User(g.id)
     connect = sqlite3.connect('Data.db')
