@@ -24,6 +24,12 @@ def user_id(endpoint,url_user_id):
         else:
             g.show_list.append(str(x[1]))
     c.close()
+    d = connect.cursor()
+    wisa = d.execute("SELECT * from Enrol WHERE ID =" + str(id) +" AND subject_Year = 59")
+    wisa2 = wisa.fetchall()
+    print wisa2
+    d.close()
+
 
 
 #Homepage route
@@ -38,7 +44,7 @@ def CurrentSubject(url_user_id):
 
 @Homepage.route('/Work')
 def CurrentWork(url_user_id):
-    return "boo"
+    return render_template("HTML_assignment.html")
 
 @Homepage.route('/Score')
 def CurrentScore(url_user_id):
