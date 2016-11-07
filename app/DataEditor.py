@@ -152,7 +152,7 @@ def workInsert(Subject_ID, Year, WorkID, Deadlines, status, type, FullMark, Grad
     (?,?,?,?,?,?,?,?,?);""",(Subject_ID, Year, WorkID, Deadlines, status, type, FullMark, Grading, lim_member))
 
 
-# UserInsert() #insert User
+# UserInsert(ID='58340500005',Password='Boomming2*',Title='Mr.',Name='Kitti',Surname='Pongaksorn',E_mail='bosskitti7983@gmail.com',Role='student',Faculty='FIBO',Major='robotic and automation',Enrol_Year='58',Picture=None) #insert User
 # subjectInsert(Subject_ID='FRA142',Year='59',Description=None,FullMark=None,Grading=None) #insert subject
 # workInsert(Subject_ID='FRA221',Year='59',WorkID='6') # insert work
 # EnrolInsert('58340500017','FRA221','59')
