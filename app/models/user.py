@@ -27,8 +27,10 @@ class User:
         # get profile data
         mydata = c.execute("SELECT * from User WHERE ID =" + str(self.id))
         k = mydata.fetchone()
+        print k
         # make it into dict
-        Profiledict = {}
+        Profiledict = {'name':str(k[2])+str(k[3])+" "+str(k[4])}
+        print Profiledict['name']
         for x, y in zip(k, column):
             Profiledict[str(y)] = str(x)
         # close connection
