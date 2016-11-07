@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<title>Login_page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- stylesheet from folder not in web!-->
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='w3.css')}}">
+<body>
+
+<header class="w3-container w3-teal">
+  <h1>Login</h1>
+</header>
+
+<div class="w3-container w3-half w3-margin-top">
+
+<form class="w3-container w3-card-4" id="form_login" action="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/login_from_w3.html">
+
+<p>
+<input id="name" class="w3-input" type="text" style="width:90%" required>
+<label class="w3-label w3-validate">Username</label></p>
+<p>
+<input id="pass" class="w3-input" type="password" style="width:90%" required>
+<label class="w3-label w3-validate">Password</label></p>
+
+<p>
+<input id="milk" class="w3-check" type="checkbox" checked="checked">
+<label class="w3-validate">Stay logged in</label></p>
+
+<p>
+<input type="submit" class="w3-btn w3-section w3-teal w3-ripple" onclick="check()" value="login"></button>
+<button type="button" class="w3-btn w3-red" onclick="cancel()">Cancel</button>
+</p>
+<span id="demo"></span>
+<p>
+  <!--change # to input_your_email_page
+  should insert input_your_email_page-->
+<span class="w3-right w3-padding w3-hide-small"><a href="http://hotmail.com/">Forgot a password?</a></span>
+</p>
+
+
+</form>
+
+</div>
+<script type="text/javascript">
+function check(){
+  var text1 = "";
+  var username =document.getElementById('name').value;
+  var password = document.getElementById('pass').value;
+  if (username == "wanway"){
+    if(password=="asdf"){             /*username&password are correct*/
+      text1 ="success";               /*when click login page will change to grading's homepage*/
+      document.getElementById("form_login").action = "file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/template.html";
+    }else {
+      text1 ="failed";
+    }
+  }
+  else {
+    text1 = "failed";
+  }
+document.getElementById('demo').innerHTML=text1;
+return false;
+}
+</script>
+
+</body>
+</html>
