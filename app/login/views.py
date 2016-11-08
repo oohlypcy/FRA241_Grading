@@ -5,8 +5,6 @@ import sqlite3
 Login = Blueprint('login',__name__,template_folder='',static_folder='')
 
 
-
-
 #declare url route
 @Login.route('/login')
 # what we do in this route
