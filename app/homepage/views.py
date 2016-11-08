@@ -8,7 +8,6 @@ Homepage = Blueprint('homepage',__name__,url_prefix="/<url_user_id>",template_fo
 @Homepage.url_value_preprocessor
 def user_id(endpoint,url_user_id):
     # from what i test url_user_id is a dictionary containing 'url_user_id' key with id value
-    print url_user_id['url_user_id']
     g.id = url_user_id['url_user_id']
     g.user = User(g.id)
     connect = sqlite3.connect('Data.db')
@@ -16,14 +15,9 @@ def user_id(endpoint,url_user_id):
     c = connect.cursor()
     # get table column
     tableField = c.execute("PRAGMA table_info(User)")
-    tableField = tableField.fetchall()
-    g.show_list = []
-    for x in tableField:
-        if str(x[1]) == "Picture" or str(x[1]) == "Password":
-            pass
-        else:
-            g.show_list.append(str(x[1]))
+    g.show_list = ['ID','name','E-mail','Role','Faculty','Major','Enrol-Year']
     c.close()
+
 
 
 #Homepage route
