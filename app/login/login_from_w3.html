@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta http-equiv="refresh" content="disabled" id="meta-refresh">
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 var mr = document.getElementById("meta-refresh");
 mr.parentNode.removeChild(mr);
@@ -9,7 +9,7 @@ mr.parentNode.removeChild(mr);
 <title>Login_page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- stylesheet from folder not in web!-->
-<link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <body>
 
 <header class="w3-container w3-teal">
@@ -18,7 +18,7 @@ mr.parentNode.removeChild(mr);
 
 <div class="w3-container w3-half w3-margin-top">
 
-<form class="w3-container w3-card-4">
+<form class="w3-container w3-card-4" id="form_login" >
 
 <p>
 <input id="name" class="w3-input" type="text" style="width:90%" required>
@@ -32,10 +32,10 @@ mr.parentNode.removeChild(mr);
 <label class="w3-validate">Stay logged in</label></p>
 
 <p>
-<button class="w3-btn w3-red" onclick="return check()">Log in</button>
+<button class="w3-btn w3-red" onclick="return checkInServer()">Log in</button>
 <button type="button" class="w3-btn w3-red" onclick="cancel()">Cancel</button>
 </p>
-<span id="demo" >///</span>
+<span id="demo" ></span>
 <p>
   <!--change # to input_your_email_page
   should insert input_your_email_page-->
@@ -46,24 +46,29 @@ mr.parentNode.removeChild(mr);
 
 </div>
 <script type="text/javascript">
-function check(){
-  var text1 = "";
-  var username =document.getElementById('name').value;
-  var password = document.getElementById('pass').value;
-  if (username == "wanway"){
-    if(password=="asdf"){
-      text1 ="success";
-    }else {
-      text1 ="failed";
-    }
+function checkInServer(){
+  var username=document.getElementById('name').value;
+  var authentication;
+   $.ajax({url: "{{url_for('.background_process')}}",
+   async: false,
+   data: {
+    name: $('input[id="name"]').val(),
+    pass: $('input[id="pass"]').val(),
+  },
+  dataType: 'json',
+  success: function(data){
+  authentication=data.authen;
   }
-  else {
-    text1 = "failed";
+ });
+  if (authentication){
+    document.getElementById('demo').innerHTML="";
+    document.getElementById("form_login").action = "{{url_for('homepage.Home',url_user_id="username")}}".replace('username',username);
+    return true;
+  }else{
+  document.getElementById('demo').innerHTML="Your username or password is wrong";
+  return false;
   }
-document.getElementById('demo').innerHTML=text1;
-return false;
-}
-
+  }
 </script>
 
 </body>

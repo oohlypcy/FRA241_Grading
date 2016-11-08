@@ -3,7 +3,6 @@ from login.views import Login
 from homepage.views import Homepage
 #declare flask app
 Grading = Flask(__name__)
-
 #register blueprint
 Grading.register_blueprint(Login)
 Grading.register_blueprint(Homepage)
