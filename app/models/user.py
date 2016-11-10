@@ -11,7 +11,7 @@ class User:
         # make a dictionary
         self.Profile = self.Get_profile()
         self.Subject = ""
-        self.Picture = self.Get_picture() #directory picture
+        self.Picture = self.Get_picture() #url_for('static',filename =)
 
     def Get_profile(self):
         # connect with database
@@ -44,7 +44,7 @@ class User:
         cursor = c.execute("SELECT ID, Picture from User")
         for row in cursor:
             if self.id == str(row[0]):
-                return str(row[1])
+                return url_for('static',filename=str(row[1]))
 
     def Get_subject(self):
         connect = sqlite3.connect('Data.db')
