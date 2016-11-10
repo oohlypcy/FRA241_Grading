@@ -14,9 +14,9 @@ def user_id(endpoint,url_user_id):
     # create a being that process data (go get filter etc.)
     c = connect.cursor()
     # get table column
+    print g.user.Picture
     tableField = c.execute("PRAGMA table_info(User)")
     g.show_list = ['ID','name','E-mail','Role','Faculty','Major','Enrol-Year']
-    c.close()
 
 
 
