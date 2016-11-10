@@ -47,3 +47,5 @@ class Subject:
         c = connect.cursor()
         pass
 
+
+

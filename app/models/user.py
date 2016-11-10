@@ -57,4 +57,3 @@ class User:
         cursor = cursor.fetchone()
 
         c.close()
-
