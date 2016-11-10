@@ -41,13 +41,20 @@ class User:
         connect = sqlite3.connect('Data.db')
         # create a being that process data (go get filter etc.)
         c = connect.cursor()
-        cursor = c.execute("SELECT ID, Picture from User")
-        for row in cursor:
-            if self.id == str(row[0]):
-                return url_for('static',filename=str(row[1]))
+        cursor = c.execute("SELECT ID, Picture from User WHERE ID="+str(self.id))
+        cursor = cursor.fetchone()
+        c.close()
+        if cursor[1]!='':
+            return url_for('static',filename=str(cursor[1]))
+        else:
+            return url_for('static',filename='default1.jpg')
+
 
     def Get_subject(self):
         connect = sqlite3.connect('Data.db')
-        subject = connect
+        c= connect.cursor()
+        cursor = c.execute("SELECT Year from subject WHERE ID = "+str(self.id))
+        cursor = cursor.fetchone()
 
+        c.close()
 
