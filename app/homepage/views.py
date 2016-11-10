@@ -33,6 +33,8 @@ def CurrentSubject(url_user_id):
 @Homepage.route('/Work')
 def CurrentWork(url_user_id):
     print url_user_id
+    g.user =User(url_user_id)
+    g.subject=''
     return render_template("HTML_assignment.html")
 
 @Homepage.route('/Score')
