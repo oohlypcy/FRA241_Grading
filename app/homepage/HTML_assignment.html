@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<title>Template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- stylesheet from folder not in web!-->
+<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
+.w3-navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+body,td,th {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 18px;
+}
+</style>
+<body>
+
+<!--Navbar-->
+<div class="w3-top">
+  <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
+    <!--li == show list item -->
+    <li class="w3-opennav w3-right w3-hide-large">
+      <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    </li>
+    <li><a href="{{url_for('static',filename="w3.css")}}" class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('static',filename="w3.css")}}"  " class="w3-hover-white">Subject</li>
+    <!--<li class="w3-hide-small"><a href="{{url_for('static',filename="w3.css")}}" class="w3-hover-white">Assignment</li>-->
+    <li class="w3-hide-small"><a href="{{url_for('static',filename="w3.css")}}" class="w3-hover-white">Project</li>
+    <li class="w3-hide-small"><a href="{{url_for('static',filename="w3.css")}}" class="w3-hover-white">Score</li>
+  </ul>
+</div>
+
+<!-- Sidenav -->
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="http://google.co.th/" class="w3-hover-black">subjects</a>
+    <a href="http://google.co.th/" class="w3-hover-black">assisgnment list</a>
+  <a href="http://facebook.com/" class="w3-hover-black">commit assignment</a>
+  <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt webpage</a>
+  <a href="#" class="w3-hover-black">link</a>
+</nav>
+
+<!-- Overlay effect when opening sidenav on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+<div class="w3-main" style="margin-left:250px">
+    <!--the assignment table-->
+    <!--add table form the add function-->
+    <table id="myTable">
+  <tr>
+    <td>Row1 cell1</td>
+    <td>Row1 cell2</td>
+  </tr>
+  <tr>
+    <td>Row2 cell1</td>
+    <td>Row2 cell2</td>
+  </tr>
+  <tr>
+    <td>Row3 cell1</td>
+    <td>Row3 cell2</td>
+  </tr>
+</table>
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+
+  <!-- Pagination // page navigation-->
+  <!--<div class="w3-center w3-padding-64">-->
+    <!--<ul class="w3-pagination">-->
+      <!--<li><a class="w3-black" href="#">1</a></li>-->
+      <!--<li><a class="w3-hover-black" href="#">2</a></li>-->
+      <!--<li><a class="w3-hover-black" href="#">3</a></li>-->
+      <!--<li><a class="w3-hover-black w3-hide-small" href="#">4</a></li>-->
+      <!--<li><a class="w3-hover-black w3-hide-small" href="#">5</a></li>-->
+      <!--<li><a class="w3-hover-black" href="#">»</a></li>-->
+    <!--</ul>-->
+  <!--</div>-->
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <h4>FRA 241 FIBOgrading project 2016</h4>
+    </div>
+
+    <!--div class="w3-container w3-theme-l1">
+      <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </div-->
+  </footer>
+
+<!-- END MAIN -->
+</div>
+
+<script>
+// Get the Sidenav
+var mySidenav = document.getElementById("mySidenav");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidenav, and add overlay effect
+function w3_open() {
+    if (mySidenav.style.display === 'block') {
+        mySidenav.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidenav.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidenav with the close button
+function w3_close() {
+    mySidenav.style.display = "none";
+    overlayBg.style.display = "none";
+}
+
+
+<!--the table code starts-->
+function myFunction() {
+    var table = document.getElementById("myTable");
+    var row = table.insertRow(0);
+    var dbname;
+    var dbsubject;
+    var dbduedate;
+    var dbnote;
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    cell1.innerHTML = "dbname";
+    cell2.innerHTML = "dbsubject";
+    cell3.innerHTML = "dbduedate";
+    cell4.innerHTML = "dbnote"
+
+}
+
+<!--end of table part-->
+</script>
+
+</body>
+</html>

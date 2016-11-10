@@ -27,13 +27,14 @@ def user_id(endpoint,url_user_id):
         else:
             g.show_list.append(str(x[1]))
     c.close()
+    connect= sqlite3.connect('Data.db')
     d = connect.cursor()
-    wisa = d.execute("SELECT * from Enrol WHERE ID =" + str(id) +" AND subject_Year = 59")
-    wisa2 = wisa.fetchall()
-    print wisa2
-    d.close()
-
-
+    wiz = d.execute("SELECT * from Enrol WHERE ID =" + str(g.id) +" AND subject_Year = 59")
+    liz=wiz.fetchone()
+    print(liz)
+    wiz = d.execute("SELECT * from Enrol WHERE ID =" + str(g.id) +" AND subject_Year = 59")
+    liz=wiz.fetchall()
+    print(liz)
 
 #Homepage route
 @Homepage.route('/Home')
