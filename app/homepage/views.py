@@ -16,7 +16,7 @@ def user_id(endpoint,url_user_id):
     # get table column
     tableField = c.execute("PRAGMA table_info(User)")
     g.Picture = g.user.Picture
-    g.show_list = ['ID','name','E-mail','Role','Faculty','Major','Enrol-Year','Picture']
+    g.show_list = ['ID','name','E-mail','Role','Faculty','Major','Enrol-Year']
 
 
 
