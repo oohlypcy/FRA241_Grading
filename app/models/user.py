@@ -53,7 +53,7 @@ class User:
     def Get_subject(self):
         connect = sqlite3.connect('Data.db')
         c= connect.cursor()
-        cursor = c.execute("SELECT Year from subject WHERE ID = "+str(self.id))
+        cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
         cursor = cursor.fetchone()
 
         c.close()
