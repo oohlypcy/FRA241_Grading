@@ -177,13 +177,16 @@ def workInsert(Subject_ID, Year, WorkID, Deadlines, status, type, FullMark, Grad
 # SubmitworkInsert(Subject_ID='FRA241',Year='59',WorkID='00001',ID='58340500005',Address=None,Status=None,Mark='10')
 # SubmitworkInsert(Subject_ID='FRA241',Year='59',WorkID='00002',ID='58340500005',Address=None,Status=None,Mark='15')
 
+# c.execute("UPDATE User  SET Picture ='Untitled.png' WHERE ID ='58340500005'")
+
 conn.commit() #save data into db
 
 print("-----------User-----------")
-cursor = c.execute("SELECT ID, Password from User") #choose table for search data
+cursor = c.execute("SELECT ID, Password, Picture from User") #choose table for search data
 for row in cursor:
     print "ID = ", row[0]
     print "Password = ", row[1]
+    print "Picture = ",row[2]
 
 print("-----------Enrol-----------")
 cursor = c.execute("SELECT ID, Subject_ID, Subject_Year from Enrol")  # choose table for search data

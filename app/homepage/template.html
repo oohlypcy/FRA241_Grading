@@ -30,8 +30,7 @@
     </li>
     <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
     <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Assignment</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Project</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
     <li class="w3-hide-small"><a href="#" class="w3-hover-white">Score</a></li>
     <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
@@ -54,7 +53,7 @@
             {% endfor %}
           </div>
           <div class="w3-col l6 w3-center">
-            <img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>
+            <img src = "{{g.user.Picture}}" style="width:50%; height:30%;"/>
           </div>
         </div>
     </div>

@@ -5,35 +5,45 @@ from flask import url_for
 # declare class
 class Subject:
     # when create function
-    def __init__(self, id):
+    def __init__(self,Subject_Id,Year):
         # declare attribute when create
-        self.id = id
+        self.Subject_Id = Subject_Id
+        self.Year=Year
         # make a dictionary
-        self.Profile = self.Get_profile()
-        self.Subject = ""
-        self.Picture = ""  # url_for('static', filename='')
+        self.data = self.Get_data()
+        self.Status = ""
+        self.Work = ""  # url_for('static', filename='')
+        self.Student=""
+        self.File=""
+        self.path
 
-    def Get_profile(self):
+    def Get_data(self):
         # connect with database
         connect = sqlite3.connect('Data.db')
         # create a being that process data (go get filter etc.)
         c = connect.cursor()
         # get table column
-        tableField = c.execute("PRAGMA table_info(User)")
+        tableField = c.execute("PRAGMA table_info(subject)")
         tableField = tableField.fetchall()
         column = []
         for x in tableField:
             column.append(str(x[1]))
         # get profile data
-        mydata = c.execute("SELECT * from User WHERE ID =" + str(self.id))
-        k = mydata.fetchone()
+        myData = c.execute("SELECT * from subject WHERE Subject_ID =" + str(self.id)+"AND Year=" +str(self.Year))
+        k = myData.fetchone()
         # make it into dict
-        Profiledict = {}
+        datadict = {}
         for x, y in zip(k, column):
-            Profiledict[str(y)] = str(x)
+            datadict[str(y)] = str(x)
         # close connection
         c.close()
         # return the dict
-        return Profiledict
+        return datadict
 
+    def Get_work(self):
+        # connect with database
+        connect = sqlite3.connect('Data.db')
+        # create a being that process data (go get filter etc.)
+        c = connect.cursor()
+        pass
 

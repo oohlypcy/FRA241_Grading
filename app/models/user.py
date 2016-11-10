@@ -11,7 +11,7 @@ class User:
         # make a dictionary
         self.Profile = self.Get_profile()
         self.Subject = ""
-        self.Picture = ""  # url_for('static', filename='')
+        self.Picture = self.Get_picture() #url_for('static',filename =)
 
     def Get_profile(self):
         # connect with database
@@ -37,10 +37,24 @@ class User:
         return Profiledict
 
     def Get_picture(self):
-        p = 'picture.jpg'
+        # connect with database
+        connect = sqlite3.connect('Data.db')
+        # create a being that process data (go get filter etc.)
+        c = connect.cursor()
+        cursor = c.execute("SELECT ID, Picture from User WHERE ID="+str(self.id))
+        cursor = cursor.fetchone()
+        c.close()
+        if cursor[1]!='':
+            return url_for('static',filename=str(cursor[1]))
+        else:
+            return url_for('static',filename='default1.jpg')
+
 
     def Get_subject(self):
         connect = sqlite3.connect('Data.db')
-        subject = connect
+        c= connect.cursor()
+        cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
+        cursor = cursor.fetchone()
 
+        c.close()
 
