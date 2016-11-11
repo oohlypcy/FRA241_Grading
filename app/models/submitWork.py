@@ -8,7 +8,7 @@ class submitWork:
         self.WorkID = Work_ID
         self.submit_date = submit_date
         self.ID = ID
-        self.Mark = ""
+        self.Mark = self.Get_Mark()
         self.Address = self.Get_address()
         self.Status = self.Get_Status()
 

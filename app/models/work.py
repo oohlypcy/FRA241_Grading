@@ -12,10 +12,10 @@ class Work:
         self.Work_Id = Work_ID
         self.Type = ""
         self.Date_check = ""
-        self.submit_work = ""
-        self.Deadline = ""
-        self.Fullmark = ""
-        self.grading = ""
+        self.submit_work = self.Get_submit_work()
+        self.Deadline = self.Get_deadline()
+        self.Fullmark = self.Fullmark()
+        self.grading = self.Get_grading()
 
     def Get_deadline(self):
         connect = sqlite3.connect("Data.db")
@@ -60,11 +60,13 @@ class Work:
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
         # get submit work
-        pass # failed
+        # failed
         submit_work = c.execute("SELECT .. from SubmitWork WHERE Subject_ID = "
-                           + str(self.Subject_ID) + " Year = " + str(self.year) +
-                           " WorkID = " + str(self.Work_Id))
-        submit_work = submit_work.fetchone()
+                           + str(self.Subject_ID) + "AND Year = " + str(self.year) +
+                           "AND WorkID = " + str(self.Work_Id))
+        Submit_Work={}
+        for x in submit_work.fetchall():
+            pass #kitti pls use stdudentid as key and create submit work class into value
         # close connection
         c.close()
         # return status [list]
@@ -84,6 +86,7 @@ class Work:
         return str(grading[0])
 
     def Mark_decending(self):
+        #get mark as key then use sortbykey u canuse map lambda whatever
         pass
 
 
