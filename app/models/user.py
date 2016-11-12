@@ -54,7 +54,7 @@ class User:
         connect = sqlite3.connect('Data.db')
         c= connect.cursor()
         cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
-        cursor = cursor.fetchone()
+        for x in cursor.fetchall():
+            pass
 
         c.close()
-

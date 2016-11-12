@@ -45,5 +45,21 @@ class Subject:
         connect = sqlite3.connect('Data.db')
         # create a being that process data (go get filter etc.)
         c = connect.cursor()
-        pass
+        work = c.execute("Subject_ID = " + str(self.Subject_Id)+ "Add work = " + str(self.work))
+        work = work.fetchone()
+        #close connection
+        c.close()
+        #return id [list]
+        return str(work[0])
+
+    def Get_Year(self):
+        connect = sqlite3.connect("Data.db")
+        c = connect.cursor()
+        #get user ID in same workID
+        Year = c.execute("Add Year = " +str(self.Year))
+        Year = Year.fetchone()
+        #close connection
+        c.close()
+        #return id [list]
+        return int(Year[0])
 
