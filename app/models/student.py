@@ -1,7 +1,8 @@
 import sqlite3
 from flask import url_for
 
-
+#use  inheritance idiotttttttttt
+#use  inheritance idiotttttttttt
 # declare class
 class Student:
     # when create function
@@ -14,6 +15,7 @@ class Student:
         self.Cal_grade_subject = self.Cal_grade_subject() #url_for('static',filename =)
         self.Cal_grade_ave=self.Cal_grade_ave()
         self.Get_grade_mark_by_subject =self.Get_grade_mark_by_subject()
+        self.work=[]
 
     #def Cal_grade_subject(self):
         # connect with database
@@ -29,7 +31,7 @@ class Student:
         # create a being that process data (go get filter etc.)
         #c = connect.cursor()
 
-
+    # use  inheritance idiotttttttttt
     def Get_grade_mark_by_subject(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
@@ -41,5 +43,10 @@ class Student:
         c.close()
         #return grading 'str'
         return str(grade_mark_by_subject[0])
-
         c.close()
+
+#use  inheritance idiotttttttttt
+#use  inheritance idiotttttttttt
+#use  inheritance idiotttttttttt
+#use  inheritance idiotttttttttt
+#use  inheritance idiotttttttttt
