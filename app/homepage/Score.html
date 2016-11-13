@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-<title>Template</title>
+<head>
+  <!--favicon-->
+<link rel="icon" href="demo_icon.gif" type="image/gif" sizes="16x16">
+<title>FRA221_Grading - Score</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -36,6 +40,11 @@
   </ul>
 </div>
 
+<!--black ribbon for HM King RAMA IX-->
+<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
+  <img src="http://image.coolz-server.com/s/v6pge483">
+</div>
+
 <!-- Sidenav -->
 <nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
@@ -56,74 +65,34 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">My profile</h1>
+      <h1 class="w3-text-teal">My Score</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
             {% for x in g.show_list %}
-              <h3><b>{{x}}</b></h3>
+              <h3>{{x}}</h3>
               <p> {{g.user.Profile[x]}}</p>
             {% endfor %}
-            <h3><b>my poem</b></h3>
-            <p>roses are red</p>
-            <p>violets are blue</p>
-            <p>who the fuck are you</p>
-            <p>send me a friend request</p>
-          </div>
-          <div class="w3-col l6 w3-center">
-            <img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>
           </div>
         </div>
     </div>
-    <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-    </div>
   </div>
-
-  <div class="w3-row">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Heading</h1>
-      <p>tellsomething.</p>
-    </div>
-    <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-    </div>
-  </div>
-
-  <div class="w3-row w3-padding-64">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Heading</h1>
-      <p>tell something.</p>
-    </div>
-    <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-    </div>
-  </div>
-
-  <!-- Pagination -->
-  <div class="w3-center w3-padding-64">
-    <ul class="w3-pagination">
-      <li><a class="w3-black" href="#">1</a></li>
-      <li><a class="w3-hover-black" href="#">2</a></li>
-      <li><a class="w3-hover-black" href="#">3</a></li>
-      <li><a class="w3-hover-black w3-hide-small" href="#">4</a></li>
-      <li><a class="w3-hover-black w3-hide-small" href="#">5</a></li>
-      <li><a class="w3-hover-black" href="#">Next</a></li>
-    </ul>
-  </div>
-
-  <footer id="myFooter">
-    <div class="w3-container w3-theme-l2 w3-padding-32">
-      <h4>Footer</h4>
-    </div>
-
-    <!--div class="w3-container w3-theme-l1">
-      <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </div-->
-  </footer>
-
+<!-- Table score-->
+<div class="w3-col l6 w3-center">
+    <table>
+      <tr>
+        <th>Homework&Assignment</th>
+        <th>Score</th>
+      </tr>
+      <tr>
+        <td>Homework 1</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>Assignment</td>
+        <td>20</td>
+      </tr>
+    </table>
+</div>
 <!-- END MAIN -->
 </div>
 
@@ -153,4 +122,5 @@ function w3_close() {
 </script>
 
 </body>
+</head>
 </html>
