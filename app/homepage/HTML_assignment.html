@@ -16,9 +16,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     padding-top: 12px;
     padding-bottom: 12px;
 }
-body,td,th {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 18px;
+table, td {
+    border: 1px solid black;
 }
 </style>
 <body>
@@ -30,11 +29,11 @@ body,td,th {
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="#" class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</li>
-    <!--<li class="w3-hide-small"><a href="{{url_for('static',filename="w3.css")}}" class="w3-hover-white">Assignment</li>-->
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Project</li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Score</li>
+    <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Score</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
 </div>
 
@@ -58,6 +57,9 @@ body,td,th {
 <div class="w3-main" style="margin-left:250px">
     <!--the assignment table-->
     <!--add table form the add function-->
+    <div class="w3-row w3-padding-64">
+    <div class="w3-twothird w3-container">
+
 <table id="myTable">
   <tr>
     <td>ID</td>
@@ -68,6 +70,9 @@ body,td,th {
   </tr>
 </table>
 <br>
+    </div>
+  </div>
+
 
 <button onclick="myFunction()">Try it</button>
     <!-- - -->
