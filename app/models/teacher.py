@@ -21,6 +21,7 @@ class Subject:
         self.student_profile=self.View_student_profile()
 
     def Cal_mean(self):
+        pass
         # connect with database
         #connect = sqlite3.connect('Data.db')
         # create a being that process data (go get filter etc.)
