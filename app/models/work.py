@@ -1,5 +1,6 @@
 import sqlite3
 from flask import url_for
+from app.models.submitWork import submitWork
 
 
 # declare class
@@ -7,7 +8,7 @@ class Work:
     # when create function
     def __init__(self, Subject_ID, year, Work_ID):
         # declare attribute when create
-        self.Subject_ID  = Subject_ID
+        self.Subject_ID = Subject_ID
         self.year = year
         self.Work_Id = Work_ID
         self.Type = ""
@@ -22,7 +23,7 @@ class Work:
         c = connect.cursor()
         # get deadline
         member_list = c.execute("SELECT Deadlines from work WHERE WorkID = "
-                                + str(self.WorkID) +" AND Year = "+str(self.year)+ " AND Subject_ID = "
+                                + str(self.WorkID) + " AND Year = " + str(self.year) + " AND Subject_ID = "
                                 + str(self.Subject_Id))
         deadline = member_list.fetchone()
         # close connection
@@ -33,12 +34,12 @@ class Work:
     def Get_fullmark(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
-        #get fullmark
+        # get fullmark
         fullmark = c.execute("SELECT FullMark from work WHERE Subject_ID = "
-                             +str(self.Subject_ID) + " Year = "+str(self.year)+
-                             " WorkID = " +str(self.Work_Id ))
+                             + str(self.Subject_ID) + " Year = " + str(self.year) +
+                             " WorkID = " + str(self.Work_Id))
         fullmark = fullmark.fetchone()
-        #close connection
+        # close connection
         c.close()
         # return fullmark of work 'int'
         return int(fullmark[0])
@@ -46,14 +47,14 @@ class Work:
     def Get_status(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
-        #get status
+        # get status
         status = c.execute("SELECT status from work WHERE Subject_ID = "
-                             +str(self.Subject_ID) + " Year = "+str(self.year)+
-                             " WorkID = " +str(self.Work_Id ))
+                           + str(self.Subject_ID) + " Year = " + str(self.year) +
+                           " WorkID = " + str(self.Work_Id))
         status = status.fetchone()
-        #close connection
+        # close connection
         c.close()
-        #return status 'str'
+        # return status 'str'
         return str(status[0])
 
     def Get_submit_work(self):
@@ -62,11 +63,11 @@ class Work:
         # get submit work
         # failed
         submit_work = c.execute("SELECT .. from SubmitWork WHERE Subject_ID = "
-                           + str(self.Subject_ID) + "AND Year = " + str(self.year) +
-                           "AND WorkID = " + str(self.Work_Id))
-        Submit_Work={}
+                                + str(self.Subject_ID) + "AND Year = " + str(self.year) +
+                                "AND WorkID = " + str(self.Work_Id))
+        Submit_Work = {}
         for x in submit_work.fetchall():
-            pass #kitti pls use stdudentid as key and create submit work class into value
+            Submit_Work[str(x[3])] = submitWork(self.Work_Id, self.Subject_ID, self.year, str(x[3]))
         # close connection
         c.close()
         # return status [list]
@@ -75,19 +76,16 @@ class Work:
     def Get_grading(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
-        #get grading
+        # get grading
         grading = c.execute("SELECT Garding from work where Subject_ID = "
-                           + str(self.Subject_ID) + " Year = " + str(self.year) +
-                           " WorkID = " + str(self.Work_Id))
+                            + str(self.Subject_ID) + " Year = " + str(self.year) +
+                            " WorkID = " + str(self.Work_Id))
         grading = grading.fetchone()
-        #close connection
+        # close connection
         c.close()
-        #return grading 'str'
+        # return grading 'str'
         return str(grading[0])
 
     def Mark_decending(self):
-        #get mark as key then use sortbykey u canuse map lambda whatever
+        # get mark as key then use sortbykey u canuse map lambda whatever
         pass
-
-
-

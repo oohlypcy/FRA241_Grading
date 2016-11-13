@@ -56,5 +56,8 @@ class User:
         cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
         for x in cursor.fetchall():
             pass
-
         c.close()
+
+class Student(User):
+    def Get_work(self):
+        pass

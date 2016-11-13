@@ -18,6 +18,21 @@
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 18px;
       }
+    table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
 </style>
 <body>
 
@@ -28,13 +43,25 @@
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
+    <li><a href="https://trello.com/b/LQX8QwF9/fra241-group2" class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Assignment</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Project</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Score</a></li>
   </ul>
 </div>
+
+<!-- Sidenav -->
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="http://google.co.th/" class="w3-hover-black">google</a>
+  <a href="http://facebook.com/" class="w3-hover-black">facebook</a>
+  <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/login_from_w3.html" class="w3-hover-black">Log out</a>
+</nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -44,21 +71,49 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Center">My profile</h1>
+      <h1 class="w3-text-teal">Score</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-            {% for x in g.show_list %}
-              <h3 style="display: inline"><b>{{x}}</b></h3>
-              <span class="w3-text-cyan"> : {{g.user.Profile[x]}}</span><br><br>
-            {% endfor %}
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+
+                {% for i in g.a %}
+                <tr>
+                  <td>{{g.student2[i]}}</td>
+                  <td>{{g.student1[i]}}</td>
+                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" style="width:90%" required></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            <p>
+            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
+            <button type="button" class="w3-btn w3-green" onclick="cancel()">Cancel</button>
+            </p>
+
           </div>
           <div class="w3-col l6 w3-center">
-            <img src = "{{g.user.Picture}}" style="width:50%; height:30%;"/>
+            <img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>
           </div>
         </div>
     </div>
+    <div class="w3-third w3-container">
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
+      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+    </div>
   </div>
-  <!-- Pagination -->
+
+
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <h4>Footer</h4>
+    </div>
+
     <!--div class="w3-container w3-theme-l1">
       <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </div-->
