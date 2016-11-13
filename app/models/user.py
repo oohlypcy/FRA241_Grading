@@ -1,7 +1,7 @@
 import sqlite3
 from flask import url_for
-
-
+import datetime
+from app.models.subject import Subject
 # declare class
 class User:
     # when create function
@@ -10,7 +10,10 @@ class User:
         self.id = id
         # make a dictionary
         self.Profile = self.Get_profile()
-        self.Subject = ""
+        self.Subject = {
+            'current':[],
+            'past':[]
+        }
         self.Picture = self.Get_picture() #url_for('static',filename =)
 
     def Get_profile(self):
@@ -51,11 +54,22 @@ class User:
 
 
     def Get_subject(self):
+        sub = {
+            'current':[],
+            'past':[]
+        }
+        currentAcademicYear= datetime.date.today()
+        if currentAcademicYear.month <= 4:
+            currentAcademicYear = currentAcademicYear.year + 542
+        else:
+            currentAcademicYear = currentAcademicYear.year + 543
+        currentAcademicYear = int(str(currentAcademicYear)[2,3])
         connect = sqlite3.connect('Data.db')
         c= connect.cursor()
         cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
         for x in cursor.fetchall():
-            pass
+            if int(x[1]) ==currentAcademicYear:
+                sub['current'].append(Subject(x[0],x[1]))
         c.close()
 
 class Student(User):

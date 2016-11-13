@@ -43,10 +43,10 @@ def CurrentWork(url_user_id):
 
 @Homepage.route('/Score')
 def CurrentScore(url_user_id):
-    g.id = url_user_id
-    g.user = User(g.id)
-    connect = sqlite3.connect('Data.db')
+    #g.id = url_user_id
+    #g.user = User(g.id)
+    #connect = sqlite3.connect('Data.db')
     # create a being that process data (go get filter etc.)
-    c = connect.cursor()
-    g.subject_list = c.execute('SELECT * from ')
+    #c = connect.cursor()
+    #g.subject_list = c.execute('SELECT * from ')
     return render_template('score.html')
