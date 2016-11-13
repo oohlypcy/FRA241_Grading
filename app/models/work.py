@@ -2,6 +2,7 @@ import sqlite3
 from flask import url_for
 from app.models.submitWork import submitWork
 
+
 # declare class
 class Work:
     # when create function
@@ -66,7 +67,7 @@ class Work:
                                 "AND WorkID = " + str(self.Work_Id))
         Submit_Work = {}
         for x in submit_work.fetchall():
-            Submit_Work[str(x[3])] = submitWork(self.Work_Id,self.Subject_ID,self.year,str(x[3]))
+            Submit_Work[str(x[3])] = submitWork(self.Work_Id, self.Subject_ID, self.year, str(x[3]))
         # close connection
         c.close()
         # return status [list]
