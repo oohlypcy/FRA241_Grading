@@ -71,6 +71,7 @@ class User:
                 print x[0],x[1]
                 sub['past'].append(Subject(x[1],x[2]))
         c.close()
+        return sub
 
 class Student(User):
     def Get_work(self):
