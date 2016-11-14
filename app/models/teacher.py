@@ -20,6 +20,16 @@ class Subject:
         self.student_profile=self.View_student_profile()
 
     def Cal_mean(self):
+        if sort == "mean score":
+            print ("Accessing Database")
+            time.student(2)
+            print ("Accessing Database...")
+            time.student(2)
+            c = lite.connect('student.db')
+            with c:
+                cur. con.cursor()
+                table = cur.execute("slect firstname,mean score FROM FIBO By score ")
+
     select
         student_ID, avg(score) as score
     from
