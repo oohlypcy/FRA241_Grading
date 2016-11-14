@@ -68,8 +68,10 @@ class User:
         c= connect.cursor()
         cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
         for x in cursor.fetchall():
-            if int(x[1]) ==currentAcademicYear:
+            if int(x[1]) == currentAcademicYear:
                 sub['current'].append(Subject(x[0],x[1]))
+            else:
+                sub['past'].append(Subject(x[0],x[1]))
         c.close()
 
 class Student(User):

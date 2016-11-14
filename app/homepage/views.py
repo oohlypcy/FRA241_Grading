@@ -30,7 +30,7 @@ def Home(url_user_id):
 # see current subject route
 @Homepage.route('/Subject')
 def CurrentSubject(url_user_id):
-    return "boo"
+    return render_template('sub.html')
 
 
 @Homepage.route('/Work')
