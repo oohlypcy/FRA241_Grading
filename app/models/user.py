@@ -10,10 +10,7 @@ class User:
         self.id = id
         # make a dictionary
         self.Profile = self.Get_profile()
-        self.Subject = {
-            'current':[],
-            'past':[]
-        }
+        self.Subject = self.Get_subject()
         self.Picture = self.Get_picture() #url_for('static',filename =)
 
     def Get_profile(self):
