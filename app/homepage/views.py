@@ -53,9 +53,6 @@ def CurrentWork(url_user_id):
     g.work = []
     for subject in g.subject:
         g.work.append(subject.get_work())
-
-
-
     return render_template("HTML_assignment.html")
 
 

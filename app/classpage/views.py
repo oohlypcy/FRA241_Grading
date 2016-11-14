@@ -21,7 +21,7 @@ def Subject(url_Subject_id, url_Year,url_user_id):
 
 @classpage.route('/work')
 def Subject_work(url_Subject_id, url_Year,url_user_id):
-    return 'boo'
+    return render_template('HTML_assignment.html')
 
 
 @classpage.route('/Score')
