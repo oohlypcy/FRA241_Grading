@@ -49,9 +49,9 @@
 
           <div class="w3-col l6 w3-center">
               <ul class="w3-ul w3-hoverable w3-xxlarge">
-                  <li><a href="https://www.facebook.com/">Subject-1</a></li>
-                  <li><a href="file:///C:/Users/Administrator/Desktop/atom/sub-1">Subject-2</a></li>
-                  <li>Subject-3</li>
+                  {% for x in g.subject_list %}
+                  <li><a href="{{url_for('classpage.Subject', url_Subject_id = x.Subject_Id , url_Year = x.Year , url_user_id = g.id)}}">{{x.Subject_Id}}</a></li>
+                {% endfor %}
                 </ul>
 
 
