@@ -56,20 +56,22 @@
 <!-- Table score-->
     <div class="w3-row w3-padding-64">
 <div class="w3-col l6 w3-center">
-    <table>
-      <tr>
-        <th>Homework&Assignment</th>
-        <th>Score</th>
-      </tr>
-      <tr>
-        <td>Homework 1</td>
-        <td>10</td><!--point/full point-->
-      </tr>
-      <tr>
-        <td>Assignment</td>
-        <td>20</td>
-      </tr>
-    </table>
+  {% for x in g.subject %}
+      <table>
+        <tr>
+          <th>Homework&Assignment</th>
+          <th>{{x}}</th>
+        </tr>
+        {% for y in g.work %}
+          {% if y[0] == x %}
+            <tr>
+              <td>Homework {{y[1]}}</td>
+              <td> {{y[2][0]}}</td><!--point/full point-->
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </table>
+  {% endfor %}
 </div>
         </div>
 <!-- END MAIN -->

@@ -11,7 +11,7 @@ class submitWork:
         self.submit_date = self.Get_submit_date()
         self.Mark = self.Get_Mark()
         self.Address = self.Get_address()
-        self.Status = self.Get_Status()
+        self.Status = self.Get_status()
 
     def Get_member_list(self):
         connect = sqlite3.connect("Data.db")
@@ -70,9 +70,8 @@ class submitWork:
         c = connect.cursor()
         # get status from work id &subject id
         status = c.execute(
-            "SELECT status from SubmitWork WHERE WorkID = " + str(self.WorkID) +
-            " AND Year = " + str(self.Year) +
-            " AND Subject_ID = " + str(self.Subject_Id))
+            "SELECT status from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?",(str(self.WorkID),
+                                                                            str(self.Year), str(self.Subject_Id)))
         status = status.fetchone()
         # close connection
         c.close()
@@ -89,8 +88,8 @@ class submitWork:
         # close connection
         c.close()
         # return address 'str'
-        print self.workID,self.Year,self.Subject_Id,work_address
-        return str(work_address[0])
+        # print self.workID,self.Year,self.Subject_Id,work_address
+        return work_address[0]
 
     def Upload(self, repository, name):  # address
         # connect = sqlite3.connect("Data.db")

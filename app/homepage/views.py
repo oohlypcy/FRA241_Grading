@@ -51,19 +51,56 @@ def CurrentWork(url_user_id):
     g.subject = sorted(g.subject)
     #sent work data to html
     g.work = []
+    g.address = []
+    g.status = []
     for subject in g.subject:
-        g.work.append(subject.get_work())
+        data =[]
+        for work in subject.get_work():
+            # check work from submit work
+            try :
+                k = submitWork(work[2], year, work[0], g.user.id)
+                g.address.append(k.Address)
+                g.status.append("send")
+            # work doesn't submit
+            except Exception:
+                g.address.append(None)
+                g.status.append("not send")
+            g.work.append(work)
 
 
+    g.lenght = range(len(g.work))
 
     return render_template("HTML_assignment.html")
 
 
 @Homepage.route('/Score')
 def CurrentScore(url_user_id):
+    year = datetime.date.today()
+    if year.month <= 4:
+        year = int(str(year.year + 542)[2:4])
+    else:
+        year = int(str(year.year + 543)[2:4])
+
     g.id = url_user_id
     g.user = User(g.id)
+    #get subject
+    g.subject = []
+    g.work = []
     g.subject_list = g.user.Subject['current']
     g.subject_list=sorted(g.subject_list)
+    for subject in g.subject_list :
+        # g.subject.append(subject.get_work())
+        for work in subject.get_work():
+            if work[0] not in g.subject:
+                # get subject id 1 time / 1 subject
+                g.subject.append(work[0])
+            try:
+                position = work[2]
+                workID = work[0]
+                work = submitWork(work[2],year,work[0],g.id)
+                g.work.append([workID,position,work.Get_Mark()])
+            except Exception:
+                g.work.append([workID,position,None])
+
     #create a being that process data (go get filter etc.)
     return render_template('Score.html')

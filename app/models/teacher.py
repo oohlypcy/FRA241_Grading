@@ -26,7 +26,7 @@ class Subject:
         #all_score =
         #all_student =
         #mean = all_score/all_student
-
+        pass
     def Get_grade_mark_by_subject(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()

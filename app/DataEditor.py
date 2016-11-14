@@ -207,7 +207,7 @@ class Data:
     def edit(self):
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("UPDATE SubmitWork SET Address = 'www.outlook.com' WHERE WorkID = 3 ")
+        c.execute("UPDATE work SET status = ' never  send'")
         conn.commit()
 
         c.close()
