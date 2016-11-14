@@ -49,8 +49,8 @@
 
           <div class="w3-col l6 w3-center">
               <ul class="w3-ul w3-hoverable w3-xxlarge">
-                  <li><a href="https://www.facebook.com/">Assignment</a></li>
-                  <li><a href="https://www.facebook.com/">Score</a></li>
+                  <li><a href="{{url_for('classpage.Subject_work', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Assignment</a></li>
+                  <li><a href="{{url_for('classpage.Subject_Score', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Score</a></li>
 
                 </ul>
 
