@@ -1,7 +1,6 @@
 import sqlite3
 from flask import url_for
-
-
+from flask import url_for,g,Blueprint,render_template
 # declare class
 class Subject:
     # when create function
@@ -21,12 +20,12 @@ class Subject:
         self.student_profile=self.View_student_profile()
 
     def Cal_mean(self):
-        pass
-        # connect with database
+
         #connect = sqlite3.connect('Data.db')
-        # create a being that process data (go get filter etc.)
         #c = connect.cursor()
-        # get table column
+        #all_score =
+        #all_student =
+        #mean = all_score/all_student
 
     def Get_grade_mark_by_subject(self):
         connect = sqlite3.connect("Data.db")
