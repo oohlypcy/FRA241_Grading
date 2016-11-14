@@ -20,10 +20,14 @@ def Subject(url_Subject_id, url_Year,url_user_id):
 
 
 @classpage.route('/work')
-def Subject_work(url_Subject_id, url_Year):
+def Subject_work(url_Subject_id, url_Year,url_user_id):
     return 'boo'
 
 
 @classpage.route('/Score')
-def Subject_Score(url_Subject_id, url_Year):
+def Subject_Score(url_Subject_id, url_Year,url_user_id):
+    return 'boo'
+
+@classpage.route('/<work_id>/score')
+def Subject_work_score(url_Subject_id, url_Year,url_user_id):
     return 'boo'
