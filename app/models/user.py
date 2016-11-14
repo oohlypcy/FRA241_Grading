@@ -36,4 +36,5 @@ class User:
         # return the dict
         return Profiledict
 
-
+    def Get_subject(self):
+        pass

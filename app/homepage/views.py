@@ -42,4 +42,4 @@ def CurrentWork(url_user_id):
 
 @Homepage.route('/Score')
 def CurrentScore(url_user_id):
-    return "boo"
+    return render_template("Score.html")
