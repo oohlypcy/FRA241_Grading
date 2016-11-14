@@ -16,7 +16,7 @@ class Work:
         self.submit_work = self.Get_submit_work()
         self.Deadline = self.Get_deadline()
         self.Fullmark = self.Fullmark()
-        self.grading = self.Get_grading()
+        self.grad = self.Get_grad()
 
     def Get_deadline(self):
         connect = sqlite3.connect("Data.db")
@@ -73,18 +73,18 @@ class Work:
         # return status [list]
         return submit_work
 
-    def Get_grading(self):
+    def Get_grad(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
-        # get grading
-        grading = c.execute("SELECT Garding from work where Subject_ID = "
+        # get grad
+        grad = c.execute("SELECT Garding from work where Subject_ID = "
                             + str(self.Subject_ID) + " Year = " + str(self.year) +
                             " WorkID = " + str(self.Work_Id))
-        grading = grading.fetchone()
+        grad = grad.fetchone()
         # close connection
         c.close()
-        # return grading 'str'
-        return str(grading[0])
+        # return grad 'str'
+        return str(grad[0])
 
     def Mark_decending(self):
         # get mark as key then use sortbykey u canuse map lambda whatever
