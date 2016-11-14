@@ -20,12 +20,20 @@ class Subject:
         self.student_profile=self.View_student_profile()
 
     def Cal_mean(self):
-
-        #connect = sqlite3.connect('Data.db')
+    select
+        student_ID, avg(score) as score
+    from
+        Subject
+    group by
+        Student_ID
+    order by
+        avg(score)
+            #connect = sqlite3.connect('Data.db')
         #c = connect.cursor()
         #all_score = c.execute("Select student_ID =")
         #all_student = Stusent_ID
         #mean = all_score/all_student
+
 
     def Get_grade_mark_by_subject(self):
         connect = sqlite3.connect("Data.db")
