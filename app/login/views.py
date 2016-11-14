@@ -5,8 +5,6 @@ import sqlite3
 Login = Blueprint('login',__name__,template_folder='',static_folder='')
 
 
-
-
 #declare url route
 @Login.route('/login')
 # what we do in this route
@@ -20,17 +18,12 @@ def background_process():
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
     id_from_form=request.values.get('name')
-    print id_from_form
     password_from_form=request.values.get('pass')
-    print password_from_form
     cursor1 = c.execute("SELECT ID, Password from User WHERE ID="+str(id_from_form))
     a =cursor1.fetchone()
-
     if(str(a[0])==str(id_from_form) and str(a[1])==str(password_from_form) ):
-        print 1
         return jsonify(authen=True)
     else:
-        print 2
         return jsonify(authen=False)
 #    ID = []
 #    Password = []
