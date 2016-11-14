@@ -9,7 +9,7 @@ Homepage = Blueprint('homepage', __name__, url_prefix="/<url_user_id>", template
 # still figuring it
 @Homepage.url_value_preprocessor
 def user_id(endpoint, url_user_id):
-    pass
+    g.id = url_user_id['url_user_id']
 
 
 # Homepage route

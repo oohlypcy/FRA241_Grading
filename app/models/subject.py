@@ -29,7 +29,6 @@ class Subject:
         for x in tableField:
             column.append(str(x[1]))
         # get profile data
-        print self.Subject_Id,self.Year
         myData = c.execute("SELECT * from subject WHERE Subject_ID = ? AND Year = ?",(self.Subject_Id,self.Year))
         k = myData.fetchone()
         # make it into dict
