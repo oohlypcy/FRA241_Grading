@@ -60,15 +60,16 @@ class User:
             currentAcademicYear = currentAcademicYear.year + 542
         else:
             currentAcademicYear = currentAcademicYear.year + 543
-        currentAcademicYear = int(str(currentAcademicYear)[2,3])
+        currentAcademicYear = int(str(currentAcademicYear)[2:4])
         connect = sqlite3.connect('Data.db')
         c= connect.cursor()
-        cursor = c.execute("SELECT Enrol-Year from User WHERE ID = "+str(self.id))
+        cursor = c.execute("SELECT * from enrol WHERE ID = "+str(self.id))
         for x in cursor.fetchall():
-            if int(x[1]) == currentAcademicYear:
-                sub['current'].append(Subject(x[0],x[1]))
+            if str(x[2]) == str(currentAcademicYear):
+                sub['current'].append(Subject(x[1],x[2]))
             else:
-                sub['past'].append(Subject(x[0],x[1]))
+                print x[0],x[1]
+                sub['past'].append(Subject(x[1],x[2]))
         c.close()
 
 class Student(User):
