@@ -30,14 +30,14 @@ class Subject:
                 cur. con.cursor()
                 table = cur.execute("slect firstname,mean score FROM FIBO By score ")
 
-    select
-        student_ID, avg(score) as score
-    from
-        Subject
-    group by
-        Student_ID
-    order by
-        avg(score)
+            select
+                student_ID, avg(score) as score
+            from
+                Subject
+            group by
+                Student_ID
+            order by
+                avg(score)
             #connect = sqlite3.connect('Data.db')
         #c = connect.cursor()
         #all_score = c.execute("Select student_ID =")
