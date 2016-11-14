@@ -52,23 +52,23 @@ class Subject:
     #     # return id [list]
     #     return str(work[0])
 
-    def Get_Year(self):
-        connect = sqlite3.connect("Data.db")
-        c = connect.cursor()
-        # get user ID in same workID
-        Year = c.execute("Add Year = " + str(self.Year))
-        Year = Year.fetchone()
-        # close connection
-        c.close()
-        # return id [list]
-        return int(Year[0])
+    # def Get_Year(self):
+    #     connect = sqlite3.connect("Data.db")
+    #     c = connect.cursor()
+    #     # get user ID in same workID
+    #     Year = c.execute("Add Year = " + str(self.Year))
+    #     Year = Year.fetchone()
+    #     # close connection
+    #     c.close()
+    #     # return id [list]
+    #     return int(Year[0])
 
     def get_work(self):
         # connect with database
         connect = sqlite3.connect('Data.db')
         # create a being that process data (go get filter etc.)
         c = connect.cursor()
-        work = c.execute("SELECT * from work WHERE Subject_ID = "+str(self.Subject_Id)+" AND Year = "+str(self.Year))
+        work = c.execute("SELECT * from work WHERE Subject_ID = ? AND Year = ?",(str(self.Subject_Id),str(self.Year)))
         work = work.fetchall()
         #close connection
         c.close()

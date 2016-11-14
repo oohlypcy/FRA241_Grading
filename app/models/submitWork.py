@@ -44,10 +44,8 @@ class submitWork:
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
         # get mark
-        mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = "
-                         + str(self.WorkID) + " AND ID = " + str(self.ID) +
-                         " AND Year = " + str(self.Year) +
-                         " AND Subject_ID = " + str(self.Subject_Id))
+        mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = ? AND ID = ? AND Year = ? AND Subject_ID = ?"
+                         ,(str(self.WorkID),str(self.ID) ,str(self.Year),str(self.Subject_Id)))
         mark = mark.fetchone()
         # close connection
         c.close()
@@ -85,13 +83,13 @@ class submitWork:
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
         # get address of work
-        work_address = c.execute("SELECT Address from SubmitWork WHERE WorkID = "
-                                 + str(self.WorkID) + " AND Year = " + str(self.Year) +
-                                 " AND Subject_ID = " + str(self.Subject_Id))
+        work_address = c.execute("SELECT Address from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?"
+                                 ,(str(self.WorkID),str(self.Year),str(self.Subject_Id)))
         work_address = work_address.fetchone()
         # close connection
         c.close()
         # return address 'str'
+        print self.workID,self.Year,self.Subject_Id,work_address
         return str(work_address[0])
 
     def Upload(self, repository, name):  # address

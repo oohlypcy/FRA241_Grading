@@ -207,7 +207,7 @@ class Data:
     def edit(self):
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("UPDATE subject SET Description = 'for learning about programming and software engineering', FullMark ='100'  WHERE Subject_ID = 'FRA241' ")
+        c.execute("UPDATE SubmitWork SET Address = 'www.outlook.com' WHERE WorkID = 3 ")
         conn.commit()
 
         c.close()
@@ -284,7 +284,7 @@ class Data:
         cursor.close()
         c.close()
 
-# a = Data()
-# a.edit()
-#
-# a.show()
+a = Data()
+a.edit()
+
+a.show()

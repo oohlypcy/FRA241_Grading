@@ -61,13 +61,29 @@ table, td {
     <div class="w3-twothird w3-container">
 
         <table id="myTable">
-          <tr>
-            <td>ID</td>
-            <td>NAME</td>
-            <td>SUBJECT</td>
-            <td>DUE DATE</td>
-            <td>NOTES</td>
-          </tr>
+            <tr>
+                    <td>SUBJECT </td>
+                    <td>Work ID  </td>
+                    <td>type  </td>
+                    <td>DUE DATE </td>
+                    <td>STATUS  </td>
+                </tr>
+            {% for x in g.work %}
+                {% for y in x %}
+
+                        <tr>
+                            <!--pull subjectID, WorkID, type, duedate and status-->
+                            <td> {{y[0]}} </td>
+                            <td> <a href="http://google.co.th/" style="cursor:pointer"> {{y[2]}} </a> </td>
+                            <td> {{y[5]}} </td>
+                            <td> {{y[3]}} </td>
+                            <td> {{y[4]}} </td>
+                        </tr>
+
+
+                {% endfor %}
+            {% endfor %}
+
         </table>
         <br>
     </div>

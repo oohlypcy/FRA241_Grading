@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, render_template, g, request, json, jsonify
 import sqlite3
 from app.models.user import User
 from app.models.subject import Subject
+from app.models.submitWork import submitWork
 import datetime
 # create Blueprint class with name importname Blueprintfolders
 Homepage = Blueprint('homepage', __name__, url_prefix="/<url_user_id>", template_folder='', static_folder='')
@@ -47,13 +48,14 @@ def CurrentWork(url_user_id):
 
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
-    print g.subject
     g.subject = sorted(g.subject)
+    #sent work data to html
     g.work = []
-    # for subject in g.subject:
-    #     work = Subject(subject,year)
-    #     g.work.append(work.get_work())
-    print g.work
+    for subject in g.subject:
+        g.work.append(subject.get_work())
+
+
+
     return render_template("HTML_assignment.html")
 
 
