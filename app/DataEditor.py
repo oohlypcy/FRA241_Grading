@@ -183,7 +183,7 @@ class Data:
     # EnrolInsert('58340500017','FRA221','59')
     # GroupsInsert(Subject_ID='FRA421',Year='59',WorkID='0001',ID='58340500017') #insert Groups
 
-    # c.executescript("""DELETE FROM Enrol WHERE ID = '58340500017'""")
+    # self.c.executescript("""DELETE FROM Enrol WHERE ID = '58340500017'""")
     # EnrolInsert(ID='58340500005',Subject_ID='FRA241',Subject_Year='59')
     # c.executescript("""DELETE FROM subject WHERE Subject_ID='FRA241'""")
     # subjectInsert(Subject_ID='FRA241',Year='59',Description=None,FullMark='100',Grading=None)
@@ -202,15 +202,7 @@ class Data:
     # SubmitworkInsert(Subject_ID='FRA241',Year='59',WorkID='00001',ID='58340500005',Address=None,Status=None,Mark='10')
     # SubmitworkInsert(Subject_ID='FRA241',Year='59',WorkID='00002',ID='58340500005',Address=None,Status=None,Mark='15')
 
-    # c.execute("UPDATE User SET Picture ='Untitled.png' WHERE ID ='58340500005'")
-
-    def edit(self):
-        conn = sqlite3.connect("Data.db")
-        c = conn.cursor()
-        c.execute("UPDATE SubmitWork SET Address = 'www.outlook.com' WHERE WorkID = 3 ")
-        conn.commit()
-
-        c.close()
+    # c.execute("UPDATE User  SET Picture ='Untitled.png' WHERE ID ='58340500005'")
 
     def show(self):
         print("-----------User-----------")
@@ -264,15 +256,12 @@ class Data:
             print "Mark = ",row[6]
 
         print("-----------work-----------")
-        cursor = c.execute("SELECT Subject_ID, Year, WorkID, Deadlines, status, FullMark, lim_member from work")
+        cursor = c.execute("SELECT Subject_ID, Year, WorkID, FullMark from work")
         for row in cursor:
             print "Subject ID = ",row[0]
             print "Year = ",row[1]
             print "WorkID = ",row[2]
-            print "Deadline = ",row[3]
-            print "status = ", row[4]
-            print "FullMark = ", row[5]
-            print "lim_member = ", row[6]
+            print "FullMark = ",row[3]
 
         print("-----------enrol-----------")
         cursor = c.execute("SELECT ID, Subject_ID, subject_year from Enrol")
@@ -283,8 +272,3 @@ class Data:
 
         cursor.close()
         c.close()
-
-a = Data()
-a.edit()
-
-a.show()
