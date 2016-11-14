@@ -9,7 +9,7 @@ Homepage = Blueprint('homepage', __name__, url_prefix="/<url_user_id>", template
 # still figuring it
 @Homepage.url_value_preprocessor
 def user_id(endpoint, url_user_id):
-    pass
+    g.id = url_user_id['url_user_id']
 
 
 # Homepage route
@@ -30,12 +30,14 @@ def Home(url_user_id):
 # see current subject route
 @Homepage.route('/Subject')
 def CurrentSubject(url_user_id):
+    g.id = url_user_id
+    g.user = User(g.id)
+    g.subject_list = g.user.Subject['current']
     return render_template('sub.html')
 
 
 @Homepage.route('/Work')
 def CurrentWork(url_user_id):
-    print url_user_id
     g.user = User(url_user_id)
     g.subject = ''
     return render_template("HTML_assignment.html")
@@ -43,10 +45,9 @@ def CurrentWork(url_user_id):
 
 @Homepage.route('/Score')
 def CurrentScore(url_user_id):
-    #g.id = url_user_id
-    #g.user = User(g.id)
-    #connect = sqlite3.connect('Data.db')
-    # create a being that process data (go get filter etc.)
-    #c = connect.cursor()
-    #g.subject_list = c.execute('SELECT * from ')
-    return render_template('score.html')
+    g.id = url_user_id
+    g.user = User(g.id)
+    g.subject_list = g.user.Subject['current']
+    g.subject_list=sorted(g.subject_list)
+    #create a being that process data (go get filter etc.)
+    return render_template('Score.html')

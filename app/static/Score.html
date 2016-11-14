@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-<title>Template</title>
+<head>
+  <!--favicon-->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
+<title>FRA221_Grading - Score</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -36,35 +40,38 @@
   </ul>
 </div>
 
+<!--black ribbon for HM King RAMA IX-->
+<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
+  <img src="http://image.coolz-server.com/s/v6pge483">
+</div>
+
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
 <div class="w3-main" style="margin-left:250px">
 
-  <div class="w3-row w3-padding-64">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Left">Subject</h1>
-        <div class="w3-row w3-container">
-
-          <div class="w3-col l6 w3-center">
-              <ul class="w3-ul w3-hoverable w3-xxlarge">
-                  <li><a href="https://www.facebook.com/">Subject-1</a></li>
-                  <li><a href="file:///C:/Users/Administrator/Desktop/atom/sub-1">Subject-2</a></li>
-                  <li>Subject-3</li>
-                </ul>
-
-
-          </div>
+ <!-- ID Name-lastname enrool -->
+  <!-- Subject -->
+<!-- Table score-->
+    <div class="w3-row w3-padding-64">
+<div class="w3-col l6 w3-center">
+    <table>
+      <tr>
+        <th>Homework&Assignment</th>
+        <th>Score</th>
+      </tr>
+      <tr>
+        <td>Homework 1</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>Assignment</td>
+        <td>20</td>
+      </tr>
+    </table>
+</div>
         </div>
-    </div>
-  </div>
-  <!-- Pagination -->
-    <!--div class="w3-container w3-theme-l1">
-      <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </div-->
-  </footer>
-
 <!-- END MAIN -->
 </div>
 
@@ -94,4 +101,5 @@ function w3_close() {
 </script>
 
 </body>
+</head>
 </html>

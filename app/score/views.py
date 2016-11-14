@@ -25,4 +25,4 @@ def user_id2(endpoint,url_user_id_):
 #score route
 @score.route('/rScore')
 def scores(url_user_id_):
-    return render_template("score.html")
+    return render_template("score1.html")
