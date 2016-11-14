@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, render_template, g, request, json, jsonify
 import sqlite3
 from app.models.user import User
+from app.models.subject import Subject
 
 # create Blueprint class with name importname Blueprintfolders
 classpage = Blueprint('classpage', __name__, url_prefix="/<url_user_id>/<url_Subject_id>/<url_Year>",
@@ -21,6 +22,7 @@ def Subject(url_Subject_id, url_Year,url_user_id):
 
 @classpage.route('/work')
 def Subject_work(url_Subject_id, url_Year,url_user_id):
+    g.subject=Subject(url_Subject_id,url_Year)
     return render_template('HTML_assignment.html')
 
 
@@ -29,5 +31,5 @@ def Subject_Score(url_Subject_id, url_Year,url_user_id):
     return 'boo'
 
 @classpage.route('/<work_id>/score')
-def Subject_work_score(url_Subject_id, url_Year,url_user_id):
+def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     return 'boo'
