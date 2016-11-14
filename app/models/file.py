@@ -1,8 +1,6 @@
 import sqlite3
 from flask import url_for
 from flask import request
-
-
 # declare class
 class file:
     def upload_file(self):
