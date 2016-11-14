@@ -30,6 +30,9 @@ def Home(url_user_id):
 # see current subject route
 @Homepage.route('/Subject')
 def CurrentSubject(url_user_id):
+    g.id = url_user_id
+    g.user = User(g.id)
+    g.subject_list = g.user.Subject['current']
     return render_template('sub.html')
 
 
