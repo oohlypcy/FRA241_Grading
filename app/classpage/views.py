@@ -56,7 +56,6 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         for row in ID_student1:
             NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
             NAME_student = NAME_student.fetchall()
-            print NAME_student
             single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ?",
                                              (str(row[0]), url_Subject_id))
             single_score_student = single_score_student.fetchall()
