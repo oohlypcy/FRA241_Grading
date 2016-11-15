@@ -47,9 +47,8 @@ class Work:
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
         # get status
-        status = c.execute("SELECT status from work WHERE Subject_ID = "
-                           + str(self.Subject_ID) + " Year = " + str(self.year) +
-                           " WorkID = " + str(self.Work_Id))
+        status = c.execute("SELECT status from work WHERE Subject_ID = ? AND Year = ? AND WorkID = ? ",
+                           (str(self.Subject_ID),str(self.year),str(self.Work_Id)))
         status = status.fetchone()
         # close connection
         c.close()
