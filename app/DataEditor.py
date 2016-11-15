@@ -8,10 +8,6 @@ class Data:
         c= conn.cursor()    #prepare from modify db
     
         # create table name user
-    
-        # c.executescript("""DROP TABLE User""") #delete table
-        # c.executescript("""DELETE FROM subject WHERE Subject_ID = 'FRA142'""") #delete data in table subject
-        # c.executescript("""DELETE FROM work WHERE Subject_ID ='FRA222'""") #delete work
         try :
             c.executescript("""
             CREATE TABLE `User` (
@@ -204,10 +200,10 @@ class Data:
 
     # c.execute("UPDATE User SET Picture ='Untitled.png' WHERE ID ='58340500005'")
 
-    def edit(self):
+    def edit(self,code):
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("UPDATE work SET status = ' avaliable to send'")
+        c.execute(str(code))
         conn.commit()
 
         c.close()
@@ -216,11 +212,18 @@ class Data:
         print("-----------User-----------")
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        cursor = c.execute("SELECT ID, Password, Picture from User") #choose table for search data
+        cursor = c.execute("SELECT ID, Password, Title, Name, Surname, Role, Faculty, Major, Picture from User") #choose table for search data
         for row in cursor:
             print "ID = ", row[0]
             print "Password = ", row[1]
-            print "Picture = ",row[2]
+            print "Title = ", row[2]
+            print "Name = ", row[3]
+            print "Surname = ", row[4]
+
+            print "Role = ", row[5]
+            print "Faculty = ", row[6]
+            print "Major =",row[7]
+            print "Picture = ",row[8]
 
         print("-----------Enrol-----------")
         cursor = c.execute("SELECT ID, Subject_ID, Subject_Year from Enrol")  # choose table for search data
@@ -281,10 +284,21 @@ class Data:
             print "Subject ID = ",row[1]
             print "Subject year = ",row[2]
 
-        cursor.close()
+        # c.executescript("""DELETE  FROM User WHERE ID = '58340500000' AND Password = 'asdf'""")  # delete data in table subject
+        # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
+        # conn.commit()
         c.close()
 
-# a = Data()
-# a.edit()
-#
-# a.show()
+# c.executescript("""DROP TABLE User""") #delete table
+# c.executescript("""DELETE FROM subject WHERE Subject_ID = 'FRA142'""") #delete data in table subject
+# c.executescript("""DELETE FROM work WHERE Subject_ID ='FRA222'""") #delete work
+
+a = Data()
+
+# a.edit("DELETE FROM User WHERE ID = 'wanway'")#can do all code with SQL
+
+# a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
+a.show()
+
+
+# teacher id = '58340500000' <> password = 'password'
