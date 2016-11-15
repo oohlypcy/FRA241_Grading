@@ -29,26 +29,12 @@ def Subject_work(url_Subject_id, url_Year,url_user_id):
     g.user = User(url_user_id)
     g.subject = Subject(url_Subject_id, url_Year)
     g.subjectwork = g.subject.get_work()
-
+    print g.subjectwork
     # sent work data to html
     g.work = []
     g.address = []
     g.status = []
-    for work in g.subjectwork:
-        # check work from submit work
-        try:
-            k = submitWork(work[2], g.subject.Year, g.subject.Subject_Id, g.user.id)
-            g.address.append(k.Address)
-            g.status.append("send")
-        # work doesn't submit
-        except Exception:
-            g.address.append(None)
-            g.status.append("not send")
-    g.lenght = range(len(g.subjectwork))
-    print g.address
-    print g.subjectwork
-
-    return render_template("HTML_assignment.html")
+    return render_template("HTML_assignment1.html")
 
 
 @classpage.route('/Score')

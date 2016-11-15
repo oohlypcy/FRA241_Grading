@@ -29,7 +29,7 @@ table, td {
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
+    <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
@@ -62,23 +62,22 @@ table, td {
 
         <table id="myTable">
             <tr>
-                    <td>SUBJECT </td>
                     <td>Work ID  </td>
                     <td>type  </td>
                     <td>DUE DATE </td>
                     <td>STATUS  </td>
+                    <td>FULLMARK  </td>
                     <td>LINK </td>
                 </tr>
-
-            {% for x in g.lenght %}
+            {% for x in g.subject.get_work() %}
                         <tr>
                             <!--pull subjectID, WorkID, type, duedate and status-->
-                            <td> {{g.work[x][0]}} </td>
-                            <td> {{g.work[x][2]}} </td>
-                            <td> {{g.work[x][5]}} </td>
-                            <td> {{g.work[x][3]}} </td>
-                            <td> {{g.status[x]}}  </td>
-                            <td> <a href= {{g.address[x]}} style="cursor:pointer"> get link </a> </td>
+                            <td> {{x[2]}} </td>
+                            <td> {{x[5]}} </td>
+                            <td> {{x[3]}} </td>
+                            <td> {{x[4]}} </td>
+                            <td> {{x[6]}}  </td>
+                            <td> <a href= "{{url_for('classpage.Subject_work_score' , url_user_id = g.id ,url_Subject_id = x[0], url_Year = x[1] ,work_id = x[2] )}}" style="cursor:pointer"> get link </a> </td>
                         </tr>
 
             {% endfor %}

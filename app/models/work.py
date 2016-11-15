@@ -13,6 +13,7 @@ class Work:
         self.Work_Id = Work_ID
         self.Type = ""
         self.Date_check = ""
+        self.status=self.Get_status()
         self.submit_work = self.Get_submit_work()
         self.Deadline = self.Get_deadline()
         self.Fullmark = self.Get_fullmark()
