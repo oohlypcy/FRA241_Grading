@@ -43,11 +43,11 @@ tr:nth-child(even) {
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="https://trello.com/b/LQX8QwF9/fra241-group2" class="w3-theme-l1">Home</a></li>
+        <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Assignment</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Project</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Score</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
 </div>
 
@@ -80,20 +80,29 @@ tr:nth-child(even) {
                 <th>Name</th>
                 <th>Score</th>
               </tr>
-
+                <form id="myForm">
+                {% if g.user.Profile['Role'] == 'teacher' %}
                 {% for i in g.a %}
                 <tr>
                   <td>{{g.student2[i]}}</td>
                   <td>{{g.student1[i]}}</td>
-                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" style="width:90%" required></td>
+                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
                 </tr>
                 {% endfor %}
+                  {% else %}
+                <tr>
+                    <td>{{g.user.id}}</td>
+                    <td>{{g.user.Profile['name']}}</td>
+                  <td>{{g.score}}</td>
+                 </tr>
+                  {% endif %}
 
             </table>
             <p>
             <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
-            <button type="button" class="w3-btn w3-green" onclick="cancel()">Cancel</button>
+             <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
             </p>
+            </form>
 
           </div>
           <div class="w3-col l6 w3-center">
@@ -145,6 +154,11 @@ function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
 }
+function myFunction() {
+    document.getElementById("myForm").reset();
+}
+
+
 </script>
 
 </body>
