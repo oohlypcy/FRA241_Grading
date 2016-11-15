@@ -207,7 +207,7 @@ class Data:
     def edit(self):
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("UPDATE work SET status = ' never  send'")
+        c.execute("UPDATE work SET status = ' avaliable to send'")
         conn.commit()
 
         c.close()
@@ -284,7 +284,7 @@ class Data:
         cursor.close()
         c.close()
 
-a = Data()
-a.edit()
-
-a.show()
+# a = Data()
+# a.edit()
+#
+# a.show()
