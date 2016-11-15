@@ -16,6 +16,7 @@ def class_process(endpoint, url_Subject_id):
     g.id = url_Subject_id['url_user_id']
     g.Subject_id = url_Subject_id['url_Subject_id']
     g.Year = url_Subject_id['url_Year']
+    g.user = User(g.id)
 
 
 @classpage.route('/')
@@ -28,7 +29,6 @@ def Subject_work(url_Subject_id, url_Year,url_user_id):
     g.user = User(url_user_id)
     g.subject = Subject(url_Subject_id, url_Year)
     g.subjectwork = g.subject.get_work()
-    print g.subjectwork
     # sent work data to html
     return render_template("HTML_assignment1.html")
 
@@ -54,16 +54,18 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         g.single_score = []
         ID_student1 = ID_student.fetchall()
         for row in ID_student1:
-            NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
-            NAME_student = NAME_student.fetchall()
-            single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ?",
+            sudent = User(str(row[0]))
+            if sudent.Profile['Role'] == 'student':
+                NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
+                NAME_student = NAME_student.fetchall()
+                single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ?",
                                              (str(row[0]), url_Subject_id))
-            single_score_student = single_score_student.fetchall()
-
-            # ID_student = ID_student.fetchall()
-            g.single_score.append(str(single_score_student[0][0]))
-            g.student1.append(str(NAME_student[0][1]))
-            g.student2.append(str(row[0]))
+                single_score_student = single_score_student.fetchall()
+                print  single_score_student
+                # ID_student = ID_student.fetchall()
+                g.single_score.append(str(single_score_student[0][0]))
+                g.student1.append(str(NAME_student[0][1]))
+                g.student2.append(str(row[0]))
         g.a = range(len(g.student2))
         c.close()
         return render_template("score1.html")
