@@ -67,16 +67,18 @@ table, td {
                     <td>type  </td>
                     <td>DUE DATE </td>
                     <td>STATUS  </td>
+                    <td>LINK </td>
                 </tr>
 
             {% for x in g.lenght %}
                         <tr>
                             <!--pull subjectID, WorkID, type, duedate and status-->
                             <td> {{g.work[x][0]}} </td>
-                            <td> <a href= {{g.address[x]}} style="cursor:pointer"> {{g.work[x][2]}} </a> </td>
+                            <td> {{g.work[x][2]}}  </td>
                             <td> {{g.work[x][5]}} </td>
                             <td> {{g.work[x][3]}} </td>
                             <td> {{g.status[x]}} </td>
+                            <td> <a href= {{g.address[x]}} style="cursor:pointer"> get link </a> </td>
                         </tr>
 
             {% endfor %}

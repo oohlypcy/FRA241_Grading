@@ -97,7 +97,7 @@ def CurrentScore(url_user_id):
             try:
                 position = work[2]
                 workID = work[0]
-                work = submitWork(work[2],year,work[0],g.id)
+                work = submitWork(work[2],year,work[0],g.id )
                 g.work.append([workID,position,work.Get_Mark()])
             except Exception:
                 g.work.append([workID,position,None])
