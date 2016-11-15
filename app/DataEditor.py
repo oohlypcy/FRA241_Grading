@@ -219,11 +219,11 @@ class Data:
             print "Title = ", row[2]
             print "Name = ", row[3]
             print "Surname = ", row[4]
-
             print "Role = ", row[5]
             print "Faculty = ", row[6]
             print "Major =",row[7]
             print "Picture = ",row[8]
+            print "***************"
 
         print("-----------Enrol-----------")
         cursor = c.execute("SELECT ID, Subject_ID, Subject_Year from Enrol")  # choose table for search data
@@ -231,6 +231,7 @@ class Data:
             print "ID = ", row[0]
             print "Subject_ID = ", row[1]
             print "Subject_Year = ", row[2]
+            print "***************"
 
         print("-----------Groups-----------")
         cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID from Groups")
@@ -239,12 +240,14 @@ class Data:
             print "Year = ", row[1]
             print "WorkID = ", row[2]
             print "ID = ", row[3]
+            print "***************"
 
         print("-----------media-----------")
         cursor = c.execute("SELECT Subject_ID, Year  from media")  # choose table for search data
         for row in cursor:
             print "Subject_ID = ", row[0]
             print "Year = ", row[1]
+            print "***************"
 
         print("-----------subject-----------")
         cursor = c.execute("SELECT Subject_ID, Year, Description,FullMark, Grading from subject")
@@ -254,6 +257,7 @@ class Data:
             print "Description = ",row[2]
             print "FullMark = ",row[3]
             print "Grading = ",row[4]
+            print "***************"
 
         print("-----------SubmitWork-----------")
         cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID, Address, Status, Mark from SubmitWork")
@@ -265,6 +269,7 @@ class Data:
             print "Address = ",row[4]
             print "Status = ",row[5]
             print "Mark = ",row[6]
+            print "***************"
 
         print("-----------work-----------")
         cursor = c.execute("SELECT Subject_ID, Year, WorkID, Deadlines, status, FullMark, lim_member from work")
@@ -276,6 +281,7 @@ class Data:
             print "status = ", row[4]
             print "FullMark = ", row[5]
             print "lim_member = ", row[6]
+            print "***************"
 
         print("-----------enrol-----------")
         cursor = c.execute("SELECT ID, Subject_ID, subject_year from Enrol")
@@ -283,6 +289,7 @@ class Data:
             print "ID = ",row[0]
             print "Subject ID = ",row[1]
             print "Subject year = ",row[2]
+        print "***************"
 
         # c.executescript("""DELETE  FROM User WHERE ID = '58340500000' AND Password = 'asdf'""")  # delete data in table subject
         # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
@@ -296,7 +303,7 @@ class Data:
 a = Data()
 
 # a.edit("DELETE FROM User WHERE ID = 'wanway'")#can do all code with SQL
-
+# a.EnrolInsert('58340500000','FRA222','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
 a.show()
 
