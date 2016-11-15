@@ -25,15 +25,11 @@ def Subjects(url_Subject_id, url_Year,url_user_id):
 
 @classpage.route('/work')
 def Subject_work(url_Subject_id, url_Year,url_user_id):
-
     g.user = User(url_user_id)
     g.subject = Subject(url_Subject_id, url_Year)
     g.subjectwork = g.subject.get_work()
     print g.subjectwork
     # sent work data to html
-    g.work = []
-    g.address = []
-    g.status = []
     return render_template("HTML_assignment1.html")
 
 
@@ -46,4 +42,25 @@ def Subject_Score(url_Subject_id, url_Year,url_user_id):
 
 @classpage.route('/<work_id>/score')
 def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
-    return 'boo'
+    connect = sqlite3.connect('Data.db')
+    g.id = url_user_id
+    c= connect.cursor()
+    g.user = User(url_user_id)
+    if g.user.Profile['Role']=='teacher':
+        ID_student = c.execute("SELECT ID from Enrol WHERE  Subject_ID =  ? AND Subject_Year = ?",(url_Subject_id,url_Year))
+        g.student1 = []
+        g.student2 = []
+        g.student3 = []
+        ID_student1 = ID_student.fetchall()
+        for row in ID_student1:
+            NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
+            NAME_student = NAME_student.fetchall()
+            print NAME_student
+            # ID_student = ID_student.fetchall()
+            g.student1.append(str(NAME_student[0][1]))
+            g.student2.append(str(row[0]))
+        g.a = range(len(g.student2))
+        c.close()
+        return render_template("score1.html")
+    else:
+        return 'boo'
