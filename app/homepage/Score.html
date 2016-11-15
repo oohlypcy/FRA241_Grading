@@ -59,14 +59,16 @@
   {% for x in g.subject %}
       <table>
         <tr>
-          <th>Homework&Assignment</th>
           <th>{{x}}</th>
+          <th>mark</th>
+          <th>full mark</th>
         </tr>
         {% for y in g.work %}
           {% if y[0] == x %}
             <tr>
-              <td>Homework {{y[1]}}</td>
+              <td>Work {{y[1]}}</td>
               <td> {{y[2][0]}}</td><!--point/full point-->
+              <td>  </td>
             </tr>
           {% endif %}
         {% endfor %}

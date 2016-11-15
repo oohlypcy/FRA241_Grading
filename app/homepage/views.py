@@ -67,7 +67,6 @@ def CurrentWork(url_user_id):
                 g.status.append("not send")
             g.work.append(work)
 
-
     g.lenght = range(len(g.work))
 
     return render_template("HTML_assignment.html")
