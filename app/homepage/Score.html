@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<title>Template</title>
+<head>
+  <!--favicon-->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
+<title>FRA221_Grading - Score</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 {% if g.user.Profile['Role'] == 'student' %}
@@ -11,6 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -25,9 +29,6 @@
 </style>
 <body>
 
-<!--favicon-->
-<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
-
 <!--Navbar-->
 <div class="w3-top">
   <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
@@ -35,15 +36,17 @@
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
-    {% if g.user.Profile['Role']== 'student' %}
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score1</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('score.scores',url_user_id_=g.id)}}" class="w3-hover-white">Score2</a></li>
-    {% endif %}
+    <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
     <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
+</div>
+
+<!--black ribbon for HM King RAMA IX-->
+<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
+  <img src="http://image.coolz-server.com/s/v6pge483">
 </div>
 
 <!-- Overlay effect when opening sidenav on small screens -->
@@ -52,28 +55,31 @@
 <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
 <div class="w3-main" style="margin-left:250px">
 
-  <div class="w3-row w3-padding-64">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Center">My profile</h1>
-        <div class="w3-row w3-container">
-          <div class="w3-col l6 w3-white w3-left">
-            {% for x in g.show_list %}
-              <h3 style="display: inline"><b>{{x}}</b></h3>
-              <span class="w3-text-cyan"> : {{g.user.Profile[x]}}</span><br><br>
-            {% endfor %}
-          </div>
-          <div class="w3-col l6 w3-center">
-            <img src = "{{g.user.Picture}}" style="width:50%; height:30%;"/>
-          </div>
+ <!-- ID Name-lastname enrool -->
+  <!-- Subject -->
+<!-- Table score-->
+    <div class="w3-row w3-padding-64">
+<div class="w3-col l6 w3-center">
+  {% for x in g.subject %}
+      <table>
+        <tr>
+          <th>{{x}}</th>
+          <th>mark</th>
+          <th>full mark</th>
+        </tr>
+        {% for y in g.work %}
+          {% if y[0] == x %}
+            <tr>
+              <td>Work {{y[1]}}</td>
+              <td> {{y[2][0]}}</td><!--point/full point-->
+              <td> {{y[3]}} </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </table>
+  {% endfor %}
+</div>
         </div>
-    </div>
-  </div>
-  <!-- Pagination -->
-    <!--div class="w3-container w3-theme-l1">
-      <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </div-->
-  </footer>
-
 <!-- END MAIN -->
 </div>
 
@@ -103,4 +109,5 @@ function w3_close() {
 </script>
 
 </body>
+</head>
 </html>

@@ -1,7 +1,7 @@
 import sqlite3
 from flask import url_for
-
-
+import datetime
+from app.models.subject import Subject
 # declare class
 class User:
     # when create function
@@ -10,8 +10,8 @@ class User:
         self.id = id
         # make a dictionary
         self.Profile = self.Get_profile()
-        self.Subject = ""
-        self.Picture = ""  # url_for('static', filename='')
+        self.Subject = self.Get_subject()
+        self.Picture = self.Get_picture() #url_for('static',filename =)
 
     def Get_profile(self):
         # connect with database
@@ -37,10 +37,42 @@ class User:
         return Profiledict
 
     def Get_picture(self):
-        p = 'picture.jpg'
+        # connect with database
+        connect = sqlite3.connect('Data.db')
+        # create a being that process data (go get filter etc.)
+        c = connect.cursor()
+        cursor = c.execute("SELECT ID, Picture from User WHERE ID="+str(self.id))
+        cursor = cursor.fetchone()
+        c.close()
+        if cursor[1]!='':
+            return url_for('static',filename=str(cursor[1]))
+        else:
+            return url_for('static',filename='default1.jpg')
+
 
     def Get_subject(self):
+        sub = {
+            'current':[],
+            'past':[]
+        }
+        currentAcademicYear= datetime.date.today()
+        if currentAcademicYear.month <= 4:
+            currentAcademicYear = currentAcademicYear.year + 542
+        else:
+            currentAcademicYear = currentAcademicYear.year + 543
+        currentAcademicYear = int(str(currentAcademicYear)[2:4])
         connect = sqlite3.connect('Data.db')
-        subject = connect
+        c= connect.cursor()
+        cursor = c.execute("SELECT * from enrol WHERE ID = "+str(self.id))
+        for x in cursor.fetchall():
+            if str(x[2]) == str(currentAcademicYear):
+                sub['current'].append(Subject(x[1],x[2]))
+            else:
+                print x[0],x[1]
+                sub['past'].append(Subject(x[1],x[2]))
+        c.close()
+        return sub
 
-
+class Student(User):
+    def Get_work(self):
+        pass

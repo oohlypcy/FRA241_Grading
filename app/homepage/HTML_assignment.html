@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--fuck yeah-->
+<html>
+<title>gonna push diz damn thing assignment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+{% if g.user.Profile['Role'] == 'student' %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% else %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% endif %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+.w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
+.w3-navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+table, td {
+    border: 1px solid black;
+}
+</style>
+<body>
+
+<!--Navbar-->
+<div class="w3-top">
+  <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
+    <!--li == show list item -->
+    <li class="w3-opennav w3-right w3-hide-large">
+      <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    </li>
+    <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
+  </ul>
+</div>
+
+<!-- Sidenav -->
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="http://google.co.th/" class="w3-hover-black">subjects</a>
+    <a href="http://google.co.th/" class="w3-hover-black">assisgnment list</a>
+  <a href="http://facebook.com/" class="w3-hover-black">commit assignment</a>
+  <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt webpage</a>
+  <a href="#" class="w3-hover-black">link</a>
+</nav>
+
+<!-- Overlay effect when opening sidenav on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+<div class="w3-main" style="margin-left:250px">
+    <!--the assignment table-->
+    <!--add table form the add function-->
+    <div class="w3-row w3-padding-64">
+    <div class="w3-twothird w3-container">
+
+        <table id="myTable">
+            <tr>
+                    <td>SUBJECT </td>
+                    <td>Work ID  </td>
+                    <td>type  </td>
+                    <td>DUE DATE </td>
+                    <td>STATUS  </td>
+                    <td>LINK </td>
+                </tr>
+
+            {% for x in g.lenght %}
+                        <tr>
+                            <!--pull subjectID, WorkID, type, duedate and status-->
+                            <td> {{g.work[x][0]}} </td>
+                            <td> {{g.work[x][2]}}  </td>
+                            <td> {{g.work[x][5]}} </td>
+                            <td> {{g.work[x][3]}} </td>
+                            <td> {{g.status[x]}} </td>
+                            <td> <a href= {{g.address[x]}} style="cursor:pointer"> get link </a> </td>
+                        </tr>
+
+            {% endfor %}
+
+
+        </table>
+        <br>
+    </div>
+  </div>
+
+
+<button onclick="myFunction()">Try it</button>
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+
+  <!-- Pagination // page navigation-->
+  <!--<div class="w3-center w3-padding-64">-->
+    <!--<ul class="w3-pagination">-->
+      <!--<li><a class="w3-black" href="#">1</a></li>-->
+      <!--<li><a class="w3-hover-black" href="#">2</a></li>-->
+      <!--<li><a class="w3-hover-black" href="#">3</a></li>-->
+      <!--<li><a class="w3-hover-black w3-hide-small" href="#">4</a></li>-->
+      <!--<li><a class="w3-hover-black w3-hide-small" href="#">5</a></li>-->
+      <!--<li><a class="w3-hover-black" href="#">»</a></li>-->
+    <!--</ul>-->
+  <!--</div>-->
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <h4>FRA 241 FIBOgrading project 2016</h4>
+    </div>
+
+    <!--div class="w3-container w3-theme-l1">
+      <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </div-->
+  </footer>
+
+<!-- END MAIN -->
+</div>
+
+<script>
+// Get the Sidenav
+var mySidenav = document.getElementById("mySidenav");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidenav, and add overlay effect
+function w3_open() {
+    if (mySidenav.style.display === 'block') {
+        mySidenav.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidenav.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidenav with the close button
+
+
+
+<!--the table code starts-->
+function myFunction() {
+    var table = document.getElementById("myTable");
+    var dbID  = "idsample";
+    var dbname  = "namesample";
+    var dbsubject = "subjectsample";
+    var dbduedate = "duedatesample";
+    var dbnote = "notessample";
+    var row = table.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    cell1.innerHTML = dbID;
+    cell2.innerHTML = dbname;
+    cell3.innerHTML = dbsubject;
+    cell4.innerHTML = dbduedate;
+    cell5.innerHTML = dbnote;
+}
+
+<!--end of table part-->
+</script>
+
+</body>
+</html>
