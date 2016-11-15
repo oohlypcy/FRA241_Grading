@@ -1,8 +1,9 @@
-from flask import Flask, Blueprint, render_template, g, request, json, jsonify
+from flask import Flask, Blueprint, render_template, g, request, json, jsonify, url_for
 import sqlite3
 from app.models.user import User
 from app.models.subject import Subject
 from app.models.submitWork import submitWork
+from app.models.work import Work
 import datetime
 # create Blueprint class with name importname Blueprintfolders
 Homepage = Blueprint('homepage', __name__, url_prefix="/<url_user_id>", template_folder='', static_folder='')
@@ -58,8 +59,8 @@ def CurrentWork(url_user_id):
         for work in subject.get_work():
             # check work from submit work
             try :
-                k = submitWork(work[2], year, work[0], g.user.id)
-                g.address.append(k.Address)
+                # k = submitWork(work[2], year, work[0], g.user.id)
+                g.address.append(str(url_for('classpage.Subject_work_score',url_Subject_id = work[0],url_Year =  year,work_id = work[2],url_user_id = g.user.id)))
                 g.status.append("send")
             # work doesn't submit
             except Exception:
@@ -85,11 +86,13 @@ def CurrentScore(url_user_id):
     #get subject
     g.subject = []
     g.work = []
+    g.fullmark = []
     g.subject_list = g.user.Subject['current']
     g.subject_list=sorted(g.subject_list)
     for subject in g.subject_list :
         # g.subject.append(subject.get_work())
         for work in subject.get_work():
+            fullmark = Work(work[0], year, work[2])
             if work[0] not in g.subject:
                 # get subject id 1 time / 1 subject
                 g.subject.append(work[0])
@@ -97,9 +100,10 @@ def CurrentScore(url_user_id):
                 position = work[2]
                 workID = work[0]
                 work = submitWork(work[2],year,work[0],g.id )
-                g.work.append([workID,position,work.Get_Mark()])
+                g.work.append([workID,position,work.Get_Mark(), fullmark.Get_fullmark()])
             except Exception:
-                g.work.append([workID,position,None])
+                g.work.append([workID,position,None, fullmark.Get_fullmark()])
+
 
     #create a being that process data (go get filter etc.)
     return render_template('Score.html')
