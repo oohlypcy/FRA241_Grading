@@ -46,17 +46,22 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     g.id = url_user_id
     c= connect.cursor()
     g.user = User(url_user_id)
-    if g.user.Profile['Role']=='teacher':
+    if g.user.Profile['Role']=='student':
         ID_student = c.execute("SELECT ID from Enrol WHERE  Subject_ID =  ? AND Subject_Year = ?",(url_Subject_id,url_Year))
         g.student1 = []
         g.student2 = []
         g.student3 = []
+        g.single_score = []
         ID_student1 = ID_student.fetchall()
         for row in ID_student1:
             NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
             NAME_student = NAME_student.fetchall()
             print NAME_student
+            single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ?",(str(row[0]),url_Subject_id) )
+            single_score_student = single_score_student.fetchall()
+
             # ID_student = ID_student.fetchall()
+            g.single_score.append(str(single_score_student[0][0]))
             g.student1.append(str(NAME_student[0][1]))
             g.student2.append(str(row[0]))
         g.a = range(len(g.student2))
