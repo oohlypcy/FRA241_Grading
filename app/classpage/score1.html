@@ -80,7 +80,7 @@ tr:nth-child(even) {
                 <th>Name</th>
                 <th>Score</th>
               </tr>
-
+                {% if g.user.Profile['Role'] == 'teacher' %}
                 {% for i in g.a %}
                 <tr>
                   <td>{{g.student2[i]}}</td>
@@ -88,6 +88,13 @@ tr:nth-child(even) {
                     <td><input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
                 </tr>
                 {% endfor %}
+                  {% else %}
+                <tr>
+                    <td>{{g.user.id}}</td>
+                    <td>{{g.user.Profile['name']}}</td>
+                  <td>{{g.score}}</td>
+                 </tr>
+                  {% endif %}
 
             </table>
             <p>
