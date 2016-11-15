@@ -80,7 +80,7 @@ tr:nth-child(even) {
                 <th>Name</th>
                 <th>Score</th>
               </tr>
-
+                <form id="myForm">
                 {% for i in g.a %}
                 <tr>
                   <td>{{g.student2[i]}}</td>
@@ -92,9 +92,9 @@ tr:nth-child(even) {
             </table>
             <p>
             <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
-            <button type="button" class="w3-btn w3-green" onclick="cancel()">Cancel</button>
+              <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
             </p>
-
+</form>
           </div>
           <div class="w3-col l6 w3-center">
             <img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>
@@ -144,6 +144,9 @@ function w3_open() {
 function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
+}
+function myFunction() {
+    document.getElementById("myForm").reset();
 }
 </script>
 
