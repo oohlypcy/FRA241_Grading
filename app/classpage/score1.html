@@ -161,6 +161,25 @@ function w3_close() {
 function myFunction() {
     document.getElementById("myForm").reset();
 }
+var student_list = {{g.student2}};
+function Score_full() {
+    for (int i=0; i<student_list.length ;i++){
+      $.ajax({url: "{{url_for('login.insert_score')}}",
+      async: false,
+      data: {
+         id: student_list[i],
+         score: $('input[id=student_list[i]]').val(),
+         subject_id: {{g.Subject_id}},
+         year: {{g.Year}},
+         work_id: {{g.work_id}}
+            },
+      dataType: 'json',
+      success: function(data){
+        authentication=data.authen;
+        }
+      });
+    }
+}
 
 
 </script>

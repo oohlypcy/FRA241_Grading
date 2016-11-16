@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+<meta http-equiv="refresh" content="disabled" id="meta-refresh">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var mr = document.getElementById("meta-refresh");
+mr.parentNode.removeChild(mr);
+</script>
 <title>teacher_add_ta</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/w3.css">
@@ -63,7 +69,7 @@
                 <option value="FRA222">FRA222</option>
               </select><br><br>
             Add TA:
-              <input type="text" id="TA_id"><button type="button" onclick="show_TA_name()" value="choose" id="show_TA_name">Choose</button><br>
+              <input id="TA_id" type="text" ><button onclick="show_TA_name()" value="choose" id="show_TA_name1">Choose</button><br>
             Semester:
               <select name="semester">
                 <option value="2559">2559</option>
@@ -113,16 +119,12 @@ function w3_close() {
 }
 
 function show_TA_name(){
-  var TA = ["TA1", "TA2", "TA3"];
-  // pull TA name from db-
-  var x = document.getElementById("show_TA_name");
-  var y = document.getElementsByID('TA_id').value;
-  for (i=0; i<=2; i++){
-    if (y==TA[i]){
-      document.getElementById("Show_TA_list").innerHTML = TA[i];
-    }
+  var x = document.getElementById('TA_id').value;
+  var y = "TA1";
+  if (x==y){
+    document.getElementById("show_TA_list").innerHTML = x;
   }
-  return false;
+  return false
 }
 </script>
 

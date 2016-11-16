@@ -42,6 +42,7 @@ def Subject_Score(url_Subject_id, url_Year,url_user_id):
 
 @classpage.route('/<work_id>/score')
 def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
+    g.work_id=work_id
     connect = sqlite3.connect('Data.db')
     g.id = url_user_id
     c= connect.cursor()
