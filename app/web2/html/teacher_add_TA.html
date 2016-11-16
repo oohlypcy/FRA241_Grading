@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Template_teacher</title>
+<title>teacher_add_ta</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
@@ -40,7 +40,7 @@
   </a>
   <h4><b>Menu</b></h4>
   <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_subject.html" class="w3-hover-black">Add subject</a>
-  <a href="#" class="w3-hover-black">Grouping</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
 </nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
@@ -51,7 +51,7 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Add Subject</h1>
+      <h1 class="w3-text-teal">Add Teacher Assistance</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
           <form method="#" action="#">
@@ -63,16 +63,17 @@
                 <option value="FRA222">FRA222</option>
               </select><br><br>
             Add TA:
-              <input type="text" id="TA_id"><button type="button" onclick="show_TA_name()" value="choose">Choose</button><br>
+              <input type="text" id="TA_id"><button type="button" onclick="show_TA_name()" value="choose" id="show_TA_name">Choose</button><br>
             Semester:
               <select name="semester">
                 <option value="2559">2559</option>
                 <option value="2560">2560</option>
                 <option value="2561">2561</option>
               </select><br><br>
+              <p id="show_TA_list">Ta name will show on...</p>
             <input type="submit" value="Add">
           </form>
-          <p id="show_TA_list"></p>
+
           <!-- semester pull semester_data from db -->
           </div>
         </div>
@@ -94,8 +95,6 @@ var mySidenav = document.getElementById("mySidenav");
 // Get the DIV with overlay effect
 var overlayBg = document.getElementById("myOverlay");
 
-var TA = ["TA1", "TA2", "TA3"];
-// pull TA name from db-
 // Toggle between showing and hiding the sidenav, and add overlay effect
 function w3_open() {
     if (mySidenav.style.display === 'block') {
@@ -112,13 +111,18 @@ function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
 }
-show_TA_name(){
-  x = document.getElementById("TA_id");
+
+function show_TA_name(){
+  var TA = ["TA1", "TA2", "TA3"];
+  // pull TA name from db-
+  var x = document.getElementById("show_TA_name");
+  var y = document.getElementsByID('TA_id').value;
   for (i=0; i<=2; i++){
-    if (x==TA[i]){
+    if (y==TA[i]){
       document.getElementById("Show_TA_list").innerHTML = TA[i];
     }
   }
+  return false;
 }
 </script>
 
