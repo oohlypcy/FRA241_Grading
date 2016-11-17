@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, render_template, g, request, json, jsonify
 import sqlite3
 from app.models.user import User
 from app.models.submitWork import  submitWork
-
+from app.models.work import Work
 
 from app.models.subject import Subject
 
@@ -35,10 +35,42 @@ def Subject_work(url_Subject_id, url_Year,url_user_id):
 
 @classpage.route('/Score')
 def Subject_Score(url_Subject_id, url_Year,url_user_id):
+    g.SubjectID = url_Subject_id
+    g.year = url_Year
+    g.UserID = url_user_id
+    g.user = User(g.UserID)
+    subject = Subject(g.SubjectID, g.year)
+    subjectWork = subject.get_work()
+    g.work = []
+    g.all_user_ID = []
+    if g.user.Profile['Role'] == 'teacher':
+        g.workID = []
+        connect = sqlite3.connect("Data.db")
+        c = connect.cursor()
+        all_user_ID = c.execute("SELECT ID FROM Enrol WHERE Subject_ID = ? AND  subject_Year = ?",
+                                (g.SubjectID, g.year))
+        all_user_ID = all_user_ID.fetchall()
+        for x in all_user_ID:
+            if str(x[0]) != str(g.UserID):
+                g.all_user_ID.append(x[0])
+        c.close()
+        for x in subjectWork:
+            for selectUser in g.all_user_ID:
+                submitwork = submitWork(x[2], g.year, g.SubjectID, selectUser)
+                work = Work(g.SubjectID, g.year, x[2])
+                g.work.append([selectUser, x[2], submitwork.Mark, work.Fullmark])
+                if [x[2], work.Fullmark] not in g.workID:
+                    g.workID.append([x[2], work.Fullmark])
+        print g.workID
+        print g.work
+        return render_template("Score2.html")
 
-
-
-    return render_template("Score.html")
+    else:
+        for x in subjectWork:
+            submitwork = submitWork(x[2], g.year, g.SubjectID, g.UserID)
+            work = Work(g.SubjectID, g.year, x[2])
+            g.work.append([x[2], submitwork.Mark, work.Fullmark])
+        return render_template("Score2.html")
 
 @classpage.route('/<work_id>/score')
 def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):

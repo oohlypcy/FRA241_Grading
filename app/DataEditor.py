@@ -302,8 +302,8 @@ class Data:
 
 a = Data()
 
-# a.edit("DELETE FROM User WHERE ID = 'wanway'")#can do all code with SQL
-# a.EnrolInsert('58340500000','FRA222','59')
+# a.edit("DELETE FROM Enrol WHERE ID = '58340500000'")#can do all code with SQL
+# a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
 a.show()
 
