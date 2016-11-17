@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<title>Template</title>
+<title>teacher_add_subject</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+<link rel="stylesheet" href="../css/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+<!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -16,23 +16,8 @@
     }
     body,td,th {
 	     font-family: Verdana, Geneva, sans-serif;
-	      font-size: 18px;
+	      font-size: 16px;
       }
-    table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 50%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
 </style>
 <body>
 
@@ -43,13 +28,21 @@ tr:nth-child(even) {
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="https://trello.com/b/LQX8QwF9/fra241-group2" class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Assignment</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Project</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Score</a></li>
+    <li><a href="#" class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</a></li>
   </ul>
 </div>
+
+<!-- Sidenav -->
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+</nav>
+
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
@@ -58,48 +51,37 @@ tr:nth-child(even) {
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Score</h1>
+      <h1 class="w3-text-teal">Add Subject</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-            <table>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Score</th>
-              </tr>
-
-                {% for i in g.a %}
-                <tr>
-                  <td>{{g.student2[i]}}</td>
-                  <td>{{g.student1[i]}}</td>
-                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" style="width:90%" required></td>
-                </tr>
-                {% endfor %}
-
-            </table>
-            <p>
-            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
-            <button type="button" class="w3-btn w3-green" onclick="cancel()">Cancel</button>
-            </p>
-
-          </div>
-          <div class="w3-col l6 w3-center">
-            <img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>
+          <form method="#" action="#">
+            Subject name:
+              <input type="text" id="subject_name" name="subject_name" required=""><br>
+            Subject code:
+              <input type="text" id="subject_code" name="subject_code" required=""><br>
+            Subject details:
+              <textarea rows="" cols="" wrap="soft" id="subject_details" name="subject_details">
+              </textarea><br>
+            score reference:
+              <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
+              </textarea><br>
+            Choose students group:<br>
+              <input type="radio" name="group" value="All">All<br>
+              <input type="radio" name="group" value="SecA">SecA<br>
+              <input type="radio" name="group" value="SecB">SecB<br>
+            Semester:
+                <select name="semester">
+                <option value="2559">2559</option>
+                <option value="2560">2560</option>
+                <option value="2561">2561</option>
+              </select><br><br>
+              <input type="submit" value="create">
+          </form>
+          <!-- semester pull semester_data from db -->
           </div>
         </div>
     </div>
-    <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-    </div>
   </div>
-
-
-
-  <footer id="myFooter">
-    <div class="w3-container w3-theme-l2 w3-padding-32">
-      <h4>Footer</h4>
-    </div>
 
     <!--div class="w3-container w3-theme-l1">
       <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>

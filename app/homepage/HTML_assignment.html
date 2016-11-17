@@ -6,7 +6,11 @@
 <title>FRA221_Grading - Assignment</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+{% if g.user.Profile['Role'] == 'student' %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% else %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
@@ -139,10 +143,7 @@ function w3_open() {
 }
 
 // Close the sidenav with the close button
-function w3_close() {
-    mySidenav.style.display = "none";
-    overlayBg.style.display = "none";
-}
+
 
 
 <!--the table code starts-->

@@ -5,7 +5,11 @@
 <title>FRA221_Grading - Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+{% if g.user.Profile['Role'] == 'student' %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% else %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
@@ -39,7 +43,6 @@
     <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
     {% if g.user.Profile['Role']== 'student' %}
     <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score1</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('score.scores',url_user_id_=g.id)}}" class="w3-hover-white">Score2</a></li>
     {% endif %}
     <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>

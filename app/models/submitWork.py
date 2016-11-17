@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 from flask import url_for
 
 
@@ -52,17 +53,14 @@ class submitWork:
         # return mark [list]
         return mark
 
+
+
     def Get_submit_date(self):
-        # mark = []
-        # connect = sqlite3.connect("Data.db")
-        # c = connect.cursor()
-        # get mark
-        # mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = "
-        #               + str(self.WorkID) + " AND ID = " + str(self.ID) +
-        #               " AND Year = " + str(self.Year) +
-        #                " AND Subject_ID = " + str(self.Subject_Id))
-        # mark = mark.fetchone()
-        pass
+        time = datetime.datetime.now()
+        date = [str(time.day),str(time.month),str(time.year)]
+
+        #return day month year
+        return date
         # return self.submit_date
 
     def Get_status(self):
@@ -81,6 +79,7 @@ class submitWork:
     def Get_address(self):  # address
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
+
         # get address of work
         work_address = c.execute("SELECT Address from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?"
                                  ,(str(self.WorkID),str(self.Year),str(self.Subject_Id)))

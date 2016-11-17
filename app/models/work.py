@@ -11,7 +11,7 @@ class Work:
         self.Subject_ID = Subject_ID
         self.year = year
         self.Work_Id = Work_ID
-        self.Type = ""
+        self.Type = self.Get_type()
         self.Date_check = ""
         self.status=self.Get_status()
         self.submit_work = self.Get_submit_work()
@@ -84,6 +84,20 @@ class Work:
         # # return grad 'str'
         # return str(grad[0])
         pass
+
     def Mark_decending(self):
         # get mark as key then use sortbykey u canuse map lambda whatever
         pass
+
+    def Get_type(self):
+        connect = sqlite3.connect("Data.db")
+        c = connect.cursor()
+        #select type from work with Subject_ID, Year, WorkID
+        type = c.execute("SELECT type from work WHERE Subject_ID = ? AND Year = ? AND WorkID = ?",
+                         (str(self.Subject_ID),str(self.year),str(self.Work_Id)))
+        type = type.fetchone()# close connection
+        c.close()
+        type_list = []
+        for x in type:
+            type_list.append(x)
+        return type_list
