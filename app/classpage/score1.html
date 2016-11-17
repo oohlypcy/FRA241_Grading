@@ -109,20 +109,15 @@ tr:nth-child(even) {
             </form>
 
           </div>
-          <div class="w3-col l6 w3-center">
-            <img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>
-          </div>
         </div>
     </div>
     <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
     </div>
   </div>
 
 
 
-  <footer id="myFooter">
+  <!--footer id="myFooter">
     <div class="w3-container w3-theme-l2 w3-padding-32">
       <h4>Footer</h4>
     </div>
@@ -164,7 +159,7 @@ function myFunction() {
 var student_list = {{g.student2}};
 function Score_full() {
     for (int i=0; i<student_list.length ;i++){
-      $.ajax({url: "{{url_for('login.insert_score')}}",
+      $.ajax({url: "{{url_for('login.insert_mark')}}",
       async: false,
       data: {
          id: student_list[i],

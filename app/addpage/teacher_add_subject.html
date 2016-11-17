@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
-<title>Template</title>
+<title>teacher_add_subject</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
-{% if g.user.Profile['Role'] == 'student' %}
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
-{% else %}
+<link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
-{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+<!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -20,13 +16,10 @@
     }
     body,td,th {
 	     font-family: Verdana, Geneva, sans-serif;
-	      font-size: 18px;
+	      font-size: 16px;
       }
 </style>
 <body>
-
-<!--favicon-->
-<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
 
 <!--Navbar-->
 <div class="w3-top">
@@ -35,15 +28,20 @@
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
-    {% if g.user.Profile['Role']== 'student' %}
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score1</a></li>
-    {% endif %}
-    <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
+    <li><a href="#" class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</a></li>
   </ul>
 </div>
+
+<!-- Sidenav -->
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+</nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -53,21 +51,38 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Center">My profile</h1>
+      <h1 class="w3-text-teal">Add Subject</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-            {% for x in g.show_list %}
-              <h3 style="display: inline"><b>{{x}}</b></h3>
-              <span class="w3-text-cyan"> : {{g.user.Profile[x]}}</span><br><br>
-            {% endfor %}
-          </div>
-          <div class="w3-col l6 w3-center">
-            <img src = "{{g.user.Picture}}" style="width:50%; height:30%;"/>
+          <form method="#" action="#">
+            Subject name:
+              <input type="text" id="subject_name" name="subject_name" required=""><br>
+            Subject code:
+              <input type="text" id="subject_code" name="subject_code" required=""><br>
+            Subject details:
+              <textarea rows="" cols="" wrap="soft" id="subject_details" name="subject_details">
+              </textarea><br>
+            score reference:
+              <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
+              </textarea><br>
+            Choose students group:<br>
+              <input type="radio" name="group" value="All">All<br>
+              <input type="radio" name="group" value="SecA">SecA<br>
+              <input type="radio" name="group" value="SecB">SecB<br>
+            Semester:
+                <select name="semester">
+                <option value="2559">2559</option>
+                <option value="2560">2560</option>
+                <option value="2561">2561</option>
+              </select><br><br>
+              <input type="submit" value="create">
+          </form>
+          <!-- semester pull semester_data from db -->
           </div>
         </div>
     </div>
   </div>
-  <!-- Pagination -->
+
     <!--div class="w3-container w3-theme-l1">
       <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </div-->
