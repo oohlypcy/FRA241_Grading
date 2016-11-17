@@ -26,6 +26,32 @@
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 18px;
       }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+        }
+
+   td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+        }
+
+   tr:nth-child(even) {
+    background-color: #dddddd;
+        }
+   th {
+    display: table-cell;
+    vertical-align: center;
+    font-weight: bold;
+    text-align: center;
+      }
+   tr {
+    display: table-row;
+    vertical-align: center;
+    border-color: inherit;
+      }
 </style>
 <body>
 
@@ -61,11 +87,11 @@
     <div class="w3-row w3-padding-64">
 <div class="w3-col l6 w3-center">
   {% for x in g.subject %}
-      <table>
+      <table align="center">
         <tr>
           <th>{{x}}</th>
-          <th>mark</th>
-          <th>full mark</th>
+          <th>Mark</th>
+          <th>Full Mark</th>
         </tr>
         {% for y in g.work %}
           {% if y[0] == x %}
