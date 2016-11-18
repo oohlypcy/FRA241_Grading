@@ -104,5 +104,7 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     else:
         g.score = c.execute("SELECT * from SubmitWork WHERE  Subject_ID =  ? AND Year = ? AND ID = ? AND WorkID = ?",
                             (url_Subject_id, url_Year, url_user_id, work_id))
-        g.score = g.score.fetchone()[6]
+        g.score = g.score.fetchone()
+        if g.score != None:
+            g.score=g.score[6]
         return render_template("score1.html")
