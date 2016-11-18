@@ -61,8 +61,7 @@ def Subject_Score(url_Subject_id, url_Year,url_user_id):
                 g.work.append([selectUser, x[2], submitwork.Mark, work.Fullmark])
                 if [x[2], work.Fullmark] not in g.workID:
                     g.workID.append([x[2], work.Fullmark])
-        print g.workID
-        print g.work
+
         return render_template("Score2.html")
 
     else:
