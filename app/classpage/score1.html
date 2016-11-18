@@ -106,14 +106,42 @@ tr:nth-child(even) {
                   <td>{{g.score}}</td>
                  </tr>
                   {% endif %}
-
             </table>
             <p>
             <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
              <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
             </p>
             </form>
-
+          <table>
+              <tr>
+                <th>Group</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+                <form id="myForm2">
+                {% if g.user.Profile['Role'] == 'teacher' %}
+                {% for i in g.a %}
+                <tr>
+                  <td>Group</td>
+                  <td>{{g.student2[i]}}</td>
+                  <td>{{g.student1[i]}}</td>
+                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
+                </tr>
+                {% endfor %}
+                  {% else %}
+                <tr>
+                    <td>{{g.user.id}}</td>
+                    <td>{{g.user.Profile['name']}}</td>
+                  <td>{{g.score}}</td>
+                 </tr>
+                  {% endif %}
+          </table>
+            <p>
+            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
+             <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
+            </p>
+            </form>
           </div>
         </div>
     </div>
@@ -161,6 +189,9 @@ function w3_close() {
 }
 function myFunction() {
     document.getElementById("myForm").reset();
+}
+function myFunction2() {
+    document.getElementById("myForm2").reset();
 }
 var student_list = {{g.student2}};
 function Score_full() {
