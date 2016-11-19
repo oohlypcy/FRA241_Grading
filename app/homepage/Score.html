@@ -6,8 +6,7 @@
           href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
     <title>FRA221_Grading - Score</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{url_for('static',filename=" w3.css
-    ")}}">
+    <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
     {% if g.user.Profile['Role'] == 'student' %}
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
     {% else %}
@@ -84,6 +83,7 @@
     <img src="http://image.coolz-server.com/s/v6pge483">
 </div>
 
+
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
      id="myOverlay"></div>
@@ -97,6 +97,7 @@
     <div class="w3-row w3-padding-64">
         <div class="w3-col l6 w3-center">
             {% for x in g.subject %}
+
             <table class="w3-table-all w3-centered">
                 <tr>
                     <th>{{x}}</th>
@@ -112,6 +113,16 @@
                 </tr>
                 {% endif %}
                 {% endfor %}
+                {% for y in g.total_mark %}
+                {% if y[0] == x %}
+                <tr>
+                    <td>Total</td>
+                    <td> {{y[1]}}</td><!--point/full point-->
+                    <td> {{y[2]}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+
             </table>
             {% endfor %}
         </div>

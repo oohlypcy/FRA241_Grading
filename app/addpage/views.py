@@ -12,6 +12,7 @@ Addpage = Blueprint('Addpage', __name__, url_prefix="/<url_user_id>", template_f
 
 @Addpage.url_value_preprocessor
 def addpage(endpoint, url_user_id):
+    g.id = url_user_id['url_user_id']
     g.user = User(url_user_id['url_user_id'])
 
 

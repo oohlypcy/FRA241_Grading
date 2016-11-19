@@ -39,7 +39,7 @@
     <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
     <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
        {% if g.user.Profile['Role']== 'student' %}
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score1</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
     {% endif %}
 <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
@@ -48,6 +48,14 @@
 <div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
   <img src="http://image.coolz-server.com/s/v6pge483">
 </div>
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="{{url_for('Addpage.add_subject',url_user_id=g.id)}}" class="w3-hover-black">Add subject</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+</nav>
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
@@ -80,8 +88,6 @@
                     </div>
                   </li>
                   {% endfor %}
-                  <a href="{{url_for('Addpage.add_subject',url_user_id=g.id)}}" > <button>ADD</button></a>
-
               </ul>
           </div>
         </div>
