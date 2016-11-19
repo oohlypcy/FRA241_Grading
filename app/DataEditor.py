@@ -284,14 +284,17 @@ class Data:
             print "***************"
 
         print("-----------enrol-----------")
-        cursor = c.execute("SELECT ID, Subject_ID, subject_year from Enrol")
+        cursor = c.execute("SELECT * from Enrol")
         for row in cursor:
+            print row
             print "ID = ",row[0]
             print "Subject ID = ",row[1]
             print "Subject year = ",row[2]
+            print "Enrol_Type = ", row[3]
+            print "SECTION = ", row[4]
         print "***************"
 
-        # c.executescript("""DELETE  FROM User WHERE ID = '58340500000' AND Password = 'asdf'""")  # delete data in table subject
+        # c.executescriptc ("""DELETE  FROM User WHERE ID = '58340500000' AND Password = 'asdf'""")  # delete data in table subject
         # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
         # conn.commit()
         c.close()
@@ -299,7 +302,18 @@ class Data:
 # c.executescript("""DROP TABLE User""") #delete table
 # c.executescript("""DELETE FROM subject WHERE Subject_ID = 'FRA142'""") #delete data in table subject
 # c.executescript("""DELETE FROM work WHERE Subject_ID ='FRA222'""") #delete work
-
+#c.execute("UPDATE SubmitWork SET Status = ? WHERE Status = ?",('sent',' not send'))
+#c.execute("ALTER TABLE enrol ADD  COLUMN Enrol_Type varchar(45) DEFAULT NULL")
+#c.execute("ALTER TABLE enrol ADD  COLUMN SECTION varchar(45) DEFAULT NULL")
+#c.execute("UPDATE enrol SET Enrol_Type = ?,SECTION = ? WHERE ID = ?",('student','A','58340500017'))
+#c.execute("UPDATE enrol SET Enrol_Type = ?,SECTION = ? WHERE ID = ?",('student','A','58340500005'))
+#c.execute("UPDATE enrol SET Enrol_Type = ? WHERE ID = ?",('teacher','58340500000'))
+conn = sqlite3.connect('Data.db')
+c = conn.cursor()
+c.execute("UPDATE work SET Status = 'Closed' ")
+c.execute("UPDATE work SET Status = 'Closed' ")
+conn.commit()
+c.close
 a = Data()
 
 # a.edit("DELETE FROM Enrol WHERE ID = '58340500000'")#can do all code with SQL
