@@ -44,10 +44,10 @@ def CurrentSubject(url_user_id):
 def CurrentWork(url_user_id):
     year = datetime.date.today()
     if year.month <= 4:
-        year = int(str(year.year + 542)[2:4])
+        Year = int(str(year.year + 542)[2:4])
     else:
-        year = int(str(year.year + 543)[2:4])
-
+        Year = int(str(year.year + 543)[2:4])
+    year.ti
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
     g.subject = sorted(g.subject)
@@ -62,7 +62,7 @@ def CurrentWork(url_user_id):
             try:
                 # k = submitWork(work[2], year, work[0], g.user.id)
                 g.address.append(str(
-                    url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=year, work_id=work[2],
+                    url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
                             url_user_id=g.user.id)))
                 g.status.append("send")
             # work doesn't submit
