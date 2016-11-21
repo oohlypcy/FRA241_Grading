@@ -28,6 +28,9 @@ def add_subject(url_user_id):
 
 @Addpage.route('/<url_Subject_id>/<url_Year>/add_student')
 def add_student(url_user_id, url_Subject_id, url_Year):
+    g.year = url_Year
+    g.subject_id = url_Subject_id
+    g.id = url_user_id
     conn = sqlite3.connect('Data.db')
     currentAcademicYear = datetime.date.today()
     if currentAcademicYear.month <= 4:
@@ -40,6 +43,35 @@ def add_student(url_user_id, url_Subject_id, url_Year):
     c = conn.cursor()
     subject_list = c.execute("SELECT Subject_ID from subject WHERE  Year =  ? ", (currentAcademicYear,))
     g.subject_list = subject_list.fetchall()
+    people = c.execute("SELECT ID from Enrol WHERE subject_Year =  ? AND Subject_ID = ? AND Enrol_Type = ? ",
+                       (g.year,g.subject_id,'student')).fetchall()
+    g.people = people
+    print people
+    c.close()
+    print g.subject_list
+    return render_template('teacher_add_TA.html')
+
+
+@Addpage.route('/<url_Subject_id>/<url_Year>/add_TA')
+def add_TA(url_user_id, url_Subject_id, url_Year):
+    g.year = url_Year
+    g.subject_id = url_Subject_id
+    g.id = url_user_id
+    conn = sqlite3.connect('Data.db')
+    currentAcademicYear = datetime.date.today()
+    if currentAcademicYear.month <= 4:
+        currentAcademicYear = currentAcademicYear.year + 542
+    else:
+        currentAcademicYear = currentAcademicYear.year + 543
+    g.YEAR = [x + currentAcademicYear for x in range(0, 3)]
+    print g.YEAR
+    currentAcademicYear = str(int(str(currentAcademicYear)[2:4]))
+    c = conn.cursor()
+    subject_list = c.execute("SELECT Subject_ID from subject WHERE  Year =  ? ", (currentAcademicYear,))
+    g.subject_list = subject_list.fetchall()
+    people = c.execute("SELECT ID from Enrol WHERE subject_Year = ? AND Subject_ID = ? AND Enrol_Type = ? ",(g.year,g.subject_id,'teacher')).fetchall()
+    g.people = people
+    print people
     c.close()
     print g.subject_list
     return render_template('teacher_add_TA.html')
@@ -52,6 +84,7 @@ def manage_group(url_user_id, url_Subject_id, url_Year, work_id):
         return render_template('student_grouping.html')
     else:
         return render_template('grouping.html')
+
 
 @Addpage.route('/Add_subject_db')
 def Add_subject_db(url_user_id):
@@ -69,4 +102,11 @@ def Add_subject_db(url_user_id):
     print grading_from_form
     print sec_from_form
     print year_from_form
+    return jsonify(authen=True)
+
+
+@Addpage.route('/Add_subject_db')
+def get_TA(url_user_id):
+    conn = sqlite3.connect('Data.db')  # connect Data.db
+    c = conn.cursor()
     return jsonify(authen=True)
