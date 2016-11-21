@@ -356,13 +356,15 @@ class Data:
 # a.edit("DELETE FROM Enrol WHERE ID = '58340500000'")#can do all code with SQL
 # a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
-# a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
-# a = Data()
+# a.edit("UPDAT E work SET Year = 59 WHERE WorkID ='hamID'")
+a = Data()
 # a.edit('DELETE FROM Groups WHERE ID = 1 ')
 # a.GroupInsert('FRA22','59','hamID','58340500005')
 # a.GroupInsert('FRA22','59','hamID','58340500017')
 # a.edit("UPDATE Groups SET Subject_ID = 'FRA222'")
-# a.show()
+# a.SubmitworkInsert("FRA222",'59','hamID','58340500017',None,'Sent','20')
+# a.edit('UPDATE work SET WorkID = "hamID1" WHERE lim_member = 1 ')
+a.show()
 
 
 # teacher id = '58340500000' <> password = 'password'
