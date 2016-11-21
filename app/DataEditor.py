@@ -255,8 +255,9 @@ class Data:
             print "***************"
 
         print("-----------subject-----------")
-        cursor = c.execute("SELECT Subject_ID, Year, Description,FullMark, Grading from subject")
+        cursor = c.execute("SELECT * from subject")
         for row in cursor:
+            print  row
             print "Subject ID = ", row[0]
             print "Year = ", row[1]
             print "Description = ", row[2]
@@ -302,10 +303,12 @@ class Data:
             print "SECTION = ", row[4]
         print "***************"
 
-        # c.executescriptc ("""DELETE  FROM User WHERE ID = '58340500000' AND Password = 'asdf'""")  # delete data in table subject
-        # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
+        # c.executescript("""DELETE  FROM Enrol WHERE Subject_ID = 'FRA161'""")
+        # c.executescript("""DELETE  FROM subject WHERE Subject_ID = 'explore'""")# delete data in table subject
         # conn.commit()
-        c.close()
+        # # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
+        # # conn.commit()
+        # c.close()
 
 
 # c.executescript("""DROP TABLE User""") #delete table
@@ -336,16 +339,16 @@ class Data:
 # print c.fetchone()
 # h.close()
 # ham = s.cursor()
-#
+#ham.execute("UPDATE work SET type = ? WHERE WorkID = ? AND lim_member = ?", ('project', 'hamID', '3'))
 # s.commit()
 # ham.close()
 # # print h.execute("SELECT * from User").fetchall()
 # # print h.execute("SELECT * from User").fetchone()
-s = sqlite3.connect('Data.db')
-ham = s.cursor()
-ham.execute("UPDATE work SET type = ? WHERE WorkID = ? AND lim_member = ?", ('project', 'hamID', '3'))
-s.commit()
-s.close()
+# s = sqlite3.connect('Data.db')
+# ham = s.cursor()
+# ham.execute("ALTER TABLE subject ADD  COLUMN Name varchar(45) DEFAULT NULL")
+# s.commit()
+# s.close()
 # a.edit('DELETE FROM User WHERE ID = 58340500026')
 # a.UserInsert('58340500026','Boomming26*','mr.','Naris','As',None,'student','FIBO','robotic & automation','58','default3.png')
 # a.EnrolInsert('58340500026','FRA221','59')
