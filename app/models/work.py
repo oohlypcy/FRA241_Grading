@@ -97,7 +97,5 @@ class Work:
                          (str(self.Subject_ID),str(self.year),str(self.Work_Id)))
         type = type.fetchone()# close connection
         c.close()
-        type_list = []
-        for x in type:
-            type_list.append(x)
-        return type_list
+
+        return type[0]
