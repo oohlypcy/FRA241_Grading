@@ -320,9 +320,9 @@ class Data:
 # c.execute("UPDATE work SET Status = 'Closed' ")
 # conn.commit()
 # c.close
-s = sqlite3.connect('Data.db')
-h = s.cursor()
-h.execute("ALTER TABLE work ADD COLUMN ")
+# s = sqlite3.connect('Data.db')
+# h = s.cursor()
+# h.execute("ALTER TABLE work ADD COLUMN ")
 # print c.fetchall()
 # #ham.execute(
 #     "INSERT INTO 'work'(`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES(?,?,?,?,?,?,?,?,?);",
@@ -330,19 +330,20 @@ h.execute("ALTER TABLE work ADD COLUMN ")
 # #ham.execute(
 #     "INSERT INTO 'work'(`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES(?,?,?,?,?,?,?,?,?);",
 #     ('FRA222', '2016', 'hamID', '2016-09-07', 'Active', 'class_assignment', '20', None, 1))
-print c.fetchone()
-h.close()
-ham = s.cursor()
-
-s.commit()
-ham.close()
-# print h.execute("SELECT * from User").fetchall()
-# print h.execute("SELECT * from User").fetchone()
+# print c.fetchone()
+# h.close()
+# ham = s.cursor()
+#
+# s.commit()
+# ham.close()
+# # print h.execute("SELECT * from User").fetchall()
+# # print h.execute("SELECT * from User").fetchone()
 a = Data()
 
 # a.edit("DELETE FROM Enrol WHERE ID = '58340500000'")#can do all code with SQL
 # a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
+a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
 a.show()
 
 
