@@ -52,8 +52,10 @@
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
+  {% if g.user.Profile['Role']== 'teacher' %}
   <a href="{{url_for('Addpage.add_TA',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add TA</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+  {% endif %}
+  <a href="{{url_for('Addpage.add_student',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add student</a>
 </nav>
 
 
@@ -74,7 +76,6 @@
                   <li><a href="{{url_for('classpage.Subject_Score', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Score</a></li>
 
                 </ul>
-                <a href="{{url_for('Addpage.add_student',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" > <button>ADD</button></a>
 
           </div>
         </div>

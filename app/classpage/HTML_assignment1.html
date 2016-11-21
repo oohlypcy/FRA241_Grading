@@ -48,6 +48,7 @@ table, td {
   </ul>
 </div>
 <!-- Overlay effect when opening sidenav on small screens -->
+{% if g.user.Profile['Role'] == 'teacher' %}
 <nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
     <i class="fa fa-remove"></i>
@@ -56,7 +57,7 @@ table, td {
   <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
   <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
 </nav>
-
+{% endif %}
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
@@ -95,7 +96,7 @@ table, td {
   </div>
 
 
-<button onclick="myFunction()">Try it</button>
+<!--button onclick="myFunction()">Try it</button>
 <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" > <button>ADD</button></a>
 
     <!-- - -->
@@ -123,9 +124,9 @@ table, td {
     <!--</ul>-->
   <!--</div>-->
 
-  <footer id="myFooter">
+  <footer id="myFooter" style="position:absolute;bottom:0;width:100%;">
     <div class="w3-container w3-theme-l2 w3-padding-32">
-      <h4>FRA 241 FIBOgrading project 2016</h4>
+      <h4 class="w3-bottom-align w3-left-align">FRA 241 FIBOgrading project 2016</h4>
     </div>
 
     <!--div class="w3-container w3-theme-l1">
