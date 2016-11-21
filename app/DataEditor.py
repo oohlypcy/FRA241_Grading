@@ -280,7 +280,7 @@ class Data:
         cursor = c.execute("SELECT Subject_ID, Year, WorkID, Deadlines, status, FullMark, lim_member from work")
         for row in cursor:
             print "Subject ID = ", row[0]
-            print "Year = ", row[1]
+            print "Yer = ", row[1]
             print "WorkID = ", row[2]
             print "Deadline = ", row[3]
             print "status = ", row[4]
@@ -338,8 +338,8 @@ class Data:
 # ham.close()
 # # print h.execute("SELECT * from User").fetchall()
 # # print h.execute("SELECT * from User").fetchone()
-a = Data()
-# a.edit('DELETE FROM User WHERE id = 583405000026')
+
+# a.edit('DELETE FROM User WHERE ID = 58340500026')
 # a.UserInsert('58340500026','Boomming26*','mr.','Naris','As',None,'student','FIBO','robotic & automation','58','default3.png')
 # a.EnrolInsert('58340500026','FRA221','59')
 # a.EnrolInsert('58340500026','FRA222','59')
@@ -347,13 +347,22 @@ a = Data()
 # a.EnrolInsert('58340500043','FRA221','59')
 # a.EnrolInsert('58340500043','FRA222','59')
 # a.EnrolInsert('58340500043','FRA241','59')
-# a.edit('DELETE FROM User WHERE id = 583405000043')
-# a.UserInsert('5834050043','Boomming43*','ms.','laksawan','yuttanakorn',None,'student','FIBO','robotic & automation','58','default2.png')
+# a.SubmitworkInsert('FRA241','59','1','58340500043','http://google.com/','sent',None)
+# a.SubmitworkInsert('FRA241','59','2','58340500043','http://google.com/','sent',None)
+# a.SubmitworkInsert('FRA241','59','3','58340500043','http://google.com/','sent',None)
+# a.edit('DELETE FROM SubmitWork WHERE ID = 58340500043')
+# a.edit('DELETE FROM User WHERE id = 5834050043')
+# a.UserInsert('58340500043','Boomming43*','ms.','laksawan','yuttanakorn',None,'student','FIBO','robotic & automation','58','default2.png')
 # a.edit("DELETE FROM Enrol WHERE ID = '58340500000'")#can do all code with SQL
 # a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
 # a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
-a.show()
+# a = Data()
+# a.edit('DELETE FROM Groups WHERE ID = 1 ')
+# a.GroupInsert('FRA22','59','hamID','58340500005')
+# a.GroupInsert('FRA22','59','hamID','58340500017')
+# a.edit("UPDATE Groups SET Subject_ID = 'FRA222'")
+# a.show()
 
 
 # teacher id = '58340500000' <> password = 'password'

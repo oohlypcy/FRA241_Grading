@@ -86,22 +86,43 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         g.student2 = []
         g.student3 = []
         g.single_score = []
+        g.group_user = []
         ID_student1 = ID_student.fetchall()
+        #find group_limit
+        group_limit = c.execute("SELECT lim_member from Work WHERE Subject_ID =  ? AND Year = ? AND WorkID = ?",(url_Subject_id,url_Year,g.work_id))
+        g.group_limit = group_limit.fetchone()[0]
         for row in ID_student1:
+
             sudent = User(str(row[0]))
+
             if sudent.Profile['Role'] == 'student':
                 NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
                 NAME_student = NAME_student.fetchall()
+                # non group work
                 single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ?",
                                              (str(row[0]), url_Subject_id))
                 single_score_student = single_score_student.fetchall()
-                print  single_score_student
                 # ID_student = ID_student.fetchall()
-                g.single_score.append(str(single_score_student[0][0]))
+                try :
+                    g.single_score.append(str(single_score_student[0][0]))
+                except Exception:
+                    g.single_score.append(None)
                 g.student1.append(str(NAME_student[0][1]))
                 g.student2.append(str(row[0]))
-        print g.student2
+
+                #group work
+                g.group_user.append(g.work_id)
+                group_ID_student = c.execute("SELECT ID from Groups WHERE ID = ? AND Subject_ID = ? AND Year = ? AND WorkID = ?",(str(row[0]),g.Subject_id,g.Year,g.work_id))
+                group_ID_student = group_ID_student.fetchone()
+                try :
+                    g.group_user[g.work_id].append(str(group_ID_student[0]))
+                except :
+                    pass
+
+        print g.group_user
+
         g.a = range(len(g.student2))
+
         c.close()
 
 
@@ -116,7 +137,6 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
 
 @classpage.route('/insert_mark')
 def insert_mark(url_Subject_id, url_Year,url_user_id):
-    print 555
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
     id_from_form = request.values.get('id')
@@ -124,9 +144,19 @@ def insert_mark(url_Subject_id, url_Year,url_user_id):
     subject_id_from_form = url_Subject_id
     year_from_form = url_Year
     work_id_from_form = request.values.get('work_id')
+    fullMark = Work(subject_id_from_form,year_from_form,work_id_from_form)
+    submit = c.execute("SELECT Status FROM SubmitWork WHERE Subject_ID = ? AND Year = ? AND WorkID = ? AND ID = ?",(subject_id_from_form,year_from_form,work_id_from_form,id_from_form))
+    submit = submit.fetchone()
+    print submit
+    if int(score_from_form) <= int(fullMark.Fullmark):
+        if submit != None:
+            c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
+                    (score_from_form, subject_id_from_form, year_from_form, id_from_form, work_id_from_form))
+        else:
 
-    c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
-            (score_from_form, subject_id_from_form, year_from_form, id_from_form, work_id_from_form))
+            c.execute("""INSERT INTO `SubmitWork` (`Subject_ID`, `Year`, `WorkID`, `ID`, `Address`, `Status`, `Mark`) VALUES
+                   (?,?,?,?,?,?,?);""", (subject_id_from_form, year_from_form, work_id_from_form, id_from_form, 'http://google.com', 'sent', score_from_form))
+
     conn.commit()
     c.close()
     return jsonify(authen=True)

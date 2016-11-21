@@ -145,7 +145,7 @@ tr:nth-child(even) {
                             {% if g.user.Profile['Role'] == 'teacher' %}
                             {% for i in g.a %}
                             <tr>
-                                <td>Group</td>
+                                <td>{{g.work_id}}</td>
                                 <td>{{g.student2[i]}}</td>
                                 <td>{{g.student1[i]}}</td>
                                 <td>
