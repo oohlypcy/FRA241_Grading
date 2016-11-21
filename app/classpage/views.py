@@ -18,7 +18,6 @@ def class_process(endpoint, url_Subject_id):
     g.Year = url_Subject_id['url_Year']
     g.user = User(g.id)
 
-
 @classpage.route('/')
 def Subjects(url_Subject_id, url_Year,url_user_id):
     return render_template('sub-1.html')
@@ -80,6 +79,8 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     g.user = User(url_user_id)
     g.Subject_id = url_Subject_id
     g.Year = url_Year
+    g.work=Work(g.Subject_id,g.Year,g.work_id)
+    print g.work.Type
     if g.user.Profile['Role']=='teacher':
         ID_student = c.execute("SELECT ID from Enrol WHERE  Subject_ID =  ? AND Subject_Year = ?",(url_Subject_id,url_Year))
         g.student1 = []

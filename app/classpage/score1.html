@@ -85,6 +85,9 @@ tr:nth-child(even) {
     </a>
     <h4><b>Menu</b></h4>
     <a href="#" class="w3-hover-black">upload work</a>
+    {% if g.work.lim_member > 1 %}
+    <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,work_id=g.work_id)}}" class="w3-hover-black">manage group</a>
+    {% endif %}
     <!--a href="http://facebook.com/" class="w3-hover-black">facebook</a>
     <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt</a>
     <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/login_from_w3.html"
