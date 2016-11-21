@@ -71,7 +71,8 @@ def add_TA(url_user_id, url_Subject_id, url_Year):
     subject_list = c.execute("SELECT Subject_ID from subject WHERE  Year =  ? ", (currentAcademicYear,))
     g.subject_list = subject_list.fetchall()
     people = c.execute("SELECT ID from Enrol WHERE subject_Year = ? AND Subject_ID = ? AND Enrol_Type = ? ",(g.year,g.subject_id,'teacher')).fetchall()
-    g.people = people
+    print people
+    g.people = [int(x[0]) for x in people]
     print people
     c.close()
     print g.subject_list
@@ -106,8 +107,23 @@ def Add_subject_db(url_user_id):
     return jsonify(authen=True)
 
 
-@Addpage.route('/Add_subject_db')
+@Addpage.route('/get_TA')
 def get_TA(url_user_id):
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
+    return jsonify(authen=True)
+
+@Addpage.route('/<url_Subject_id>/<url_Year>/delpeople')
+def removeperson(url_user_id, url_Subject_id, url_Year):
+    conn = sqlite3.connect('Data.db')  # connect Data.db
+    c = conn.cursor()
+    id_from_form = request.values.get('id')
+    print id_from_form
+    return jsonify(authen=True)
+@Addpage.route('/<url_Subject_id>/<url_Year>/addpeople')
+def addperson(url_user_id, url_Subject_id, url_Year):
+    conn = sqlite3.connect('Data.db')  # connect Data.db
+    c = conn.cursor()
+    id_from_form = request.values.get('id')
+    print id_from_form
     return jsonify(authen=True)
