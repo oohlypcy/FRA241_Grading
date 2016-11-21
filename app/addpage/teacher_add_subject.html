@@ -70,7 +70,7 @@ mr.parentNode.removeChild(mr);
               <textarea rows="" cols="" wrap="soft" id="subject_details" name="subject_details">
               </textarea><br>
             score reference:
-              <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
+              <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required>
               </textarea><br>
             Choose students group:<br>
               <input type="radio" name="group" value="All">All<br>
@@ -131,13 +131,17 @@ function addsubject(){
   data: {
   subname: $('input[id="subject_name"]').val(),
   subcode: $('input[id="subject_code"]').val(),
+  subdetial: $('textarea[id="subject_details"]').val(),
+  subref: $('textarea[id="score_ref"]').val(),
+  section: $('input[name="group"]:checked').val(),
+  year: $('select[name="semester"]').val(),
   },
   datatype: 'json',
   success: function(data){
-  authentication = data.authen
+  authentication = data.authen;
   }
   });
-  return false;
+  return authentication;
 }
 </script>
 

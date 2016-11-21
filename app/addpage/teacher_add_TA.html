@@ -65,20 +65,25 @@ mr.parentNode.removeChild(mr);
           <form method="#" action="#">
             Subject:
               <select name="subject_code">
-                <option value="FRA221">FRA221</option>
-                <option value="FRA231">FRA231</option>
+                <option value="{{g.subject_id}}">{{g.subject_id}}</option>
+                <!--option value="FRA231">FRA231</option>
                 <option value="FRA241">FRA241</option>
-                <option value="FRA222">FRA222</option>
+                <option value="FRA222">FRA222</option-->
               </select><br><br>
             Add TA:
               <input id="TA_id" type="text" ><button onclick="show_TA_name()" value="choose" id="show_TA_name1">Choose</button><br>
             Semester:
               <select name="semester">
-                <option value="2559">2559</option>
-                <option value="2560">2560</option>
-                <option value="2561">2561</option>
+                <option value="{{g.year}}">{{g.year}}</option>
+                <!--option value="2560">2560</option>
+                <option value="2561">2561</option-->
               </select><br><br>
-              <p id="show_TA_list">Ta name will show on...</p>
+              <div id="showta">
+              <p id="show_TA_list">current TA</p>
+                {% for x in g.people %}
+                <p id="{{x}}"> {{x}} <button class="w3-btn w3-red" onclick="putout({{x}})" >X</button></p>
+                {% endfor %}
+              </div>
             <input type="submit" value="Add">
           </form>
 
@@ -127,6 +132,8 @@ function show_TA_name(){
     document.getElementById("show_TA_list").innerHTML = x;
   }
   return false
+}
+function show_TA(){
 }
 </script>
 
