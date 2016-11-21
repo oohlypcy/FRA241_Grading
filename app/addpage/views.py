@@ -130,7 +130,16 @@ def removeperson(url_user_id, url_Subject_id, url_Year):
     c = conn.cursor()
     id_from_form = request.values.get('id')
     print id_from_form
-    return jsonify(authen=True)
+    k = c.execute("SELECT * from Enrol WHERE ID = ? AND Subject_ID = ? AND subject_Year = ?",
+                  (id_from_form, url_Subject_id, url_Year))
+    if k.fetchone() != None:
+        c.execute("""DELETE FROM Enrol WHERE ID = ? AND Subject_ID = ? AND subject_Year = ?""",(id_from_form, url_Subject_id, url_Year))
+        conn.commit()
+        c.close()
+        conn.close()
+        return jsonify(authen=True)
+    else:
+        return jsonify(authen=False)
 
 
 @Addpage.route('/<url_Subject_id>/<url_Year>/addpeople')
@@ -138,5 +147,25 @@ def addperson(url_user_id, url_Subject_id, url_Year):
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
     id_from_form = request.values.get('id')
+    from_from_form = request.values.get('from')
+    if from_from_form == 'TA':
+        z='teacher'
+    else:
+        z='student'
     print id_from_form
-    return jsonify(authen=True)
+    print from_from_form
+    k=c.execute("SELECT * from Enrol WHERE ID = ? AND Subject_ID = ? AND subject_Year = ?",(id_from_form,url_Subject_id,url_Year))
+    h=c.execute("SELECT * from User WHERE ID = "+str(id_from_form)).fetchone()
+    if h==None:
+        return jsonify(authen=False)
+    if k.fetchone() == None:
+        c.execute("""INSERT INTO 'Enrol' (`ID`, `Subject_ID`, `subject_Year`,`Enrol_Type`,`SECTION`) VALUES
+                (?, ?, ?, ?, ?);""", (
+            id_from_form, url_Subject_id, url_Year, z,
+            'A'))
+        conn.commit()
+        c.close()
+        conn.close()
+        return jsonify(authen=True)
+    else:
+        return jsonify(authen=False)
