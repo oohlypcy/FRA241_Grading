@@ -364,12 +364,32 @@ s.close()
 # a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
 # a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
-# a = Data()
+a = Data()
 # a.edit('DELETE FROM Groups WHERE ID = 1 ')
 # a.GroupInsert('FRA22','59','hamID','58340500005')
 # a.GroupInsert('FRA22','59','hamID','58340500017')
 # a.edit("UPDATE Groups SET Subject_ID = 'FRA222'")
-# #a.show()
+# a.edit("UPDATE work SET WorkID = '1' WHERE Deadlines = '8/11/59' ")
+# a.edit("UPDATE work SET WorkID = '2' WHERE Deadlines = '16/11/59'")
+# a.edit("UPDATE work SET WorkID = '3' WHERE Deadlines = '16/11/59' AND FullMark = '25'")
+# a.edit("UPDATE work SET WorkID = '1' WHERE Deadlines = '30/09/59'")
+# a.edit("UPDATE work SET WorkID = '2' WHERE Deadlines = '20/11/59'")
+# a.edit("UPDATE work SET WorkID = '1' WHERE Deadlines = '01/11/59'")
+# a.edit("UPDATE work SET WorkID = '2' WHERE Deadlines = '18/11/59'")
+#
+# a.edit("UPDATE work SET WorkID = 'hamID1' WHERE Deadlines = '2016-09-07'")
+# a.edit("UPDATE work SET WorkID = 'hamID' WHERE Deadlines = '2016-09-07' AND Type = 'class_assignment' ")
+# a.edit('DELETE FROM Work WHERE WorkID = "2"')
+# a.workInsert("FRA221","59","2","16/11/59","Closed"," not send","20","30","1")
+# a.workInsert("FRA221","59","3","21/11/59","Closed"," not send","20","30","1")
+# a.workInsert("FRA222","59","2","20/11/59","Closed"," not send","25","30","1")
+# a.workInsert("FRA222","59","3","23/11/59","Closed"," not send","25","30","1")
+# a.workInsert("FRA241","59","2","18/11/59","Closed"," not send","15","30","1")
+# a.workInsert("FRA241","59","3","25/11/59","Closed"," not send","15","30","1")
+
+
+
+a.show()
 
 
 # teacher id = '58340500000' <> password = 'password'
