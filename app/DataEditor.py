@@ -277,15 +277,18 @@ class Data:
             print "***************"
 
         print("-----------work-----------")
-        cursor = c.execute("SELECT Subject_ID, Year, WorkID, Deadlines, status, FullMark, lim_member from work")
+        cursor = c.execute("SELECT * from work")
         for row in cursor:
+            print row
             print "Subject ID = ", row[0]
             print "Yer = ", row[1]
             print "WorkID = ", row[2]
             print "Deadline = ", row[3]
             print "status = ", row[4]
-            print "FullMark = ", row[5]
-            print "lim_member = ", row[6]
+            print "Type = ", row[5]
+            print "FullMark = ", row[6]
+            print "Grading = ", row[7]
+            print "lim_member = ", row[8]
             print "***************"
 
         print("-----------enrol-----------")
@@ -338,7 +341,11 @@ class Data:
 # ham.close()
 # # print h.execute("SELECT * from User").fetchall()
 # # print h.execute("SELECT * from User").fetchone()
-
+s = sqlite3.connect('Data.db')
+ham =s.cursor()
+ham.execute("UPDATE work SET type = ? WHERE WorkID = ? AND lim_member = ?",('project','hamID','3'))
+s.commit()
+s.close()
 # a.edit('DELETE FROM User WHERE ID = 58340500026')
 # a.UserInsert('58340500026','Boomming26*','mr.','Naris','As',None,'student','FIBO','robotic & automation','58','default3.png')
 # a.EnrolInsert('58340500026','FRA221','59')
@@ -357,12 +364,12 @@ class Data:
 # a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
 # a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
-# a = Data()
+a = Data()
 # a.edit('DELETE FROM Groups WHERE ID = 1 ')
 # a.GroupInsert('FRA22','59','hamID','58340500005')
 # a.GroupInsert('FRA22','59','hamID','58340500017')
 # a.edit("UPDATE Groups SET Subject_ID = 'FRA222'")
-# a.show()
+a.show()
 
 
 # teacher id = '58340500000' <> password = 'password'
