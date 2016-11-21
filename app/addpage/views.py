@@ -34,6 +34,7 @@ def add_student(url_user_id, url_Subject_id, url_Year):
     g.subject_id = url_Subject_id
     g.id = url_user_id
     conn = sqlite3.connect('Data.db')
+    g.current='student'
     currentAcademicYear = datetime.date.today()
     if currentAcademicYear.month <= 4:
         currentAcademicYear = currentAcademicYear.year + 542
@@ -47,7 +48,7 @@ def add_student(url_user_id, url_Subject_id, url_Year):
     g.subject_list = subject_list.fetchall()
     people = c.execute("SELECT ID from Enrol WHERE subject_Year =  ? AND Subject_ID = ? AND Enrol_Type = ? ",
                        (g.year,g.subject_id,'student')).fetchall()
-    g.people = people
+    g.people = [int(x[0]) for x in people]
     print people
     c.close()
     print g.subject_list
@@ -59,6 +60,7 @@ def add_TA(url_user_id, url_Subject_id, url_Year):
     g.year = url_Year
     g.subject_id = url_Subject_id
     g.id = url_user_id
+    g.current = 'TA'
     conn = sqlite3.connect('Data.db')
     currentAcademicYear = datetime.date.today()
     if currentAcademicYear.month <= 4:
