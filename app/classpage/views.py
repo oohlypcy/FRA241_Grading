@@ -78,6 +78,8 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     g.id = url_user_id
     c= connect.cursor()
     g.user = User(url_user_id)
+    g.Subject_id = url_Subject_id
+    g.Year = url_Year
     if g.user.Profile['Role']=='teacher':
         ID_student = c.execute("SELECT ID from Enrol WHERE  Subject_ID =  ? AND Subject_Year = ?",(url_Subject_id,url_Year))
         g.student1 = []
@@ -98,9 +100,11 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
                 g.single_score.append(str(single_score_student[0][0]))
                 g.student1.append(str(NAME_student[0][1]))
                 g.student2.append(str(row[0]))
+        print g.student2
         g.a = range(len(g.student2))
         c.close()
-        print g.student2
+
+
         return render_template("score1.html",std2=map(json.dumps, g.student2))
     else:
         g.score = c.execute("SELECT * from SubmitWork WHERE  Subject_ID =  ? AND Year = ? AND ID = ? AND WorkID = ?",
@@ -120,11 +124,9 @@ def insert_mark(url_Subject_id, url_Year,url_user_id):
     subject_id_from_form = url_Subject_id
     year_from_form = url_Year
     work_id_from_form = request.values.get('work_id')
-    print  id_from_form
-    print  score_from_form
-    print  subject_id_from_form
-    print year_from_form
-    print work_id_from_form
-    #c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
-    #         (score_from_form, subject_id_from_form, year_from_form, id_from_form, work_id_from_form))
+
+    c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
+            (score_from_form, subject_id_from_form, year_from_form, id_from_form, work_id_from_form))
+    conn.commit()
+    c.close()
     return jsonify(authen=True)

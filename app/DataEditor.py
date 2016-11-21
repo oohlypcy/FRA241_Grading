@@ -339,11 +339,20 @@ class Data:
 # # print h.execute("SELECT * from User").fetchall()
 # # print h.execute("SELECT * from User").fetchone()
 a = Data()
-
+# a.edit('DELETE FROM User WHERE id = 583405000026')
+# a.UserInsert('58340500026','Boomming26*','mr.','Naris','As',None,'student','FIBO','robotic & automation','58','default3.png')
+# a.EnrolInsert('58340500026','FRA221','59')
+# a.EnrolInsert('58340500026','FRA222','59')
+# a.EnrolInsert('58340500026','FRA241','59')
+# a.EnrolInsert('58340500043','FRA221','59')
+# a.EnrolInsert('58340500043','FRA222','59')
+# a.EnrolInsert('58340500043','FRA241','59')
+# a.edit('DELETE FROM User WHERE id = 583405000043')
+# a.UserInsert('5834050043','Boomming43*','ms.','laksawan','yuttanakorn',None,'student','FIBO','robotic & automation','58','default2.png')
 # a.edit("DELETE FROM Enrol WHERE ID = '58340500000'")#can do all code with SQL
 # a.EnrolInsert('58340500000','FRA241','59')
 # a.UserInsert('wanway','password','Ms.','wanway','oneway','wanway@test.com','teacher','FIBO','robotic & automation','59','teacher1.png')
-a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
+# a.edit("UPDATE work SET Year = 59 WHERE WorkID ='hamID'")
 a.show()
 
 

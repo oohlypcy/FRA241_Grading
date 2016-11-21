@@ -23,6 +23,7 @@ def add_assignment(url_user_id, url_Subject_id, url_Year):
 
 @Addpage.route('/add_subject')
 def add_subject(url_user_id):
+
     return render_template('teacher_add_subject.html')
 
 
