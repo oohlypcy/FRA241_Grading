@@ -59,7 +59,14 @@ def Add_subject_db(url_user_id):
     c = conn.cursor()
     Subjectid_from_form = request.values.get('subcode')
     Subject_name_from_form = request.values.get('subname')
+    Subject_detial_from_form = request.values.get('subdetial')
+    grading_from_form = request.values.get('subref')
+    sec_from_form = request.values.get('section')
+    year_from_form = request.values.get('year')
     print Subjectid_from_form
     print Subject_name_from_form
-    print '555'
+    print Subject_detial_from_form
+    print grading_from_form
+    print sec_from_form
+    print year_from_form
     return jsonify(authen=True)
