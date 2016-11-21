@@ -17,7 +17,7 @@ def class_process(endpoint, url_Subject_id):
     g.Subject_id = url_Subject_id['url_Subject_id']
     g.Year = url_Subject_id['url_Year']
     g.user = User(g.id)
-
+    g.work = Work()
 
 @classpage.route('/')
 def Subjects(url_Subject_id, url_Year,url_user_id):
