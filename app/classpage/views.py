@@ -100,7 +100,8 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
                 g.student2.append(str(row[0]))
         g.a = range(len(g.student2))
         c.close()
-        return render_template("score1.html")
+        print g.student2
+        return render_template("score1.html",std2=map(json.dumps, g.student2))
     else:
         g.score = c.execute("SELECT * from SubmitWork WHERE  Subject_ID =  ? AND Year = ? AND ID = ? AND WorkID = ?",
                             (url_Subject_id, url_Year, url_user_id, work_id))
@@ -108,3 +109,22 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         if g.score != None:
             g.score=g.score[6]
         return render_template("score1.html")
+
+@classpage.route('/insert_mark')
+def insert_mark(url_Subject_id, url_Year,url_user_id):
+    print 555
+    conn = sqlite3.connect('Data.db')  # connect Data.db
+    c = conn.cursor()
+    id_from_form = request.values.get('id')
+    score_from_form = request.values.get('score')
+    subject_id_from_form = url_Subject_id
+    year_from_form = url_Year
+    work_id_from_form = request.values.get('work_id')
+    print  id_from_form
+    print  score_from_form
+    print  subject_id_from_form
+    print year_from_form
+    print work_id_from_form
+    #c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
+    #         (score_from_form, subject_id_from_form, year_from_form, id_from_form, work_id_from_form))
+    return jsonify(authen=True)

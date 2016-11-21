@@ -320,15 +320,20 @@ class Data:
 # c.execute("UPDATE work SET Status = 'Closed' ")
 # conn.commit()
 # c.close
-s =sqlite3.connect('Data.db')
-h=s.cursor()
-c=h.execute("SELECT * from User WHERE ID = 58340500017")
+s = sqlite3.connect('Data.db')
+h = s.cursor()
+h.execute("ALTER TABLE work ADD COLUMN ")
 # print c.fetchall()
+# #ham.execute(
+#     "INSERT INTO 'work'(`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES(?,?,?,?,?,?,?,?,?);",
+#     ('FRA222', '2016', 'hamID', '2016-09-07', 'Active', 'class_assignment', '20', None, 3))
+# #ham.execute(
+#     "INSERT INTO 'work'(`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES(?,?,?,?,?,?,?,?,?);",
+#     ('FRA222', '2016', 'hamID', '2016-09-07', 'Active', 'class_assignment', '20', None, 1))
 print c.fetchone()
 h.close()
 ham = s.cursor()
-ham.execute("INSERT INTO 'work'(`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES(?,?,?,?,?,?,?,?,?);",('FRA222', '2016', 'hamID', '2016-09-07', 'Active', 'class_assignment', '20', None, 3))
-ham.execute("INSERT INTO 'work'(`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES(?,?,?,?,?,?,?,?,?);",('FRA222', '2016', 'hamID', '2016-09-07', 'Active', 'class_assignment', '20', None, 1))
+
 s.commit()
 ham.close()
 # print h.execute("SELECT * from User").fetchall()

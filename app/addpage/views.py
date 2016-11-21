@@ -52,3 +52,14 @@ def manage_group(url_user_id, url_Subject_id, url_Year, work_id):
         return render_template('student_grouping.html')
     else:
         return render_template('grouping.html')
+
+@Addpage.route('/Add_subject_db')
+def Add_subject_db(url_user_id):
+    conn = sqlite3.connect('Data.db')  # connect Data.db
+    c = conn.cursor()
+    Subjectid_from_form = request.values.get('subcode')
+    Subject_name_from_form = request.values.get('subname')
+    print Subjectid_from_form
+    print Subject_name_from_form
+    print '555'
+    return jsonify(authen=True)

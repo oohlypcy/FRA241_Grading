@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <!--favicon-->
+<meta http-equiv="refresh" content="disabled" id="meta-refresh">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var mr = document.getElementById("meta-refresh");
+mr.parentNode.removeChild(mr);
+</script>
 <link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
 <title>FRA221_Grading - Score</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,13 +90,14 @@ tr:nth-child(even) {
       <h1 class="w3-text-teal">Score</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
+           <form id="myForm">
             <table>
               <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Score</th>
               </tr>
-                <form id="myForm">
+
                 {% if g.user.Profile['Role'] == 'teacher' %}
                 {% for i in g.a %}
                 <tr>
@@ -111,7 +118,8 @@ tr:nth-child(even) {
             <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
              <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
             </p>
-            </form>
+             </form>
+            <form id="myForm2">
           <table>
               <tr>
                 <th>Group</th>
@@ -119,14 +127,14 @@ tr:nth-child(even) {
                 <th>Name</th>
                 <th>Score</th>
               </tr>
-                <form id="myForm2">
+
                 {% if g.user.Profile['Role'] == 'teacher' %}
                 {% for i in g.a %}
                 <tr>
                   <td>Group</td>
                   <td>{{g.student2[i]}}</td>
                   <td>{{g.student1[i]}}</td>
-                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
+                    <td><!--input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required--></td>
                 </tr>
                 {% endfor %}
                   {% else %}
@@ -138,7 +146,7 @@ tr:nth-child(even) {
                   {% endif %}
           </table>
             <p>
-            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
+            <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
              <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
             </p>
             </form>
@@ -193,17 +201,20 @@ function myFunction() {
 function myFunction2() {
     document.getElementById("myForm2").reset();
 }
-var student_list = {{g.student2}};
+
+</script>
+<script type="text/javascript">
 function Score_full() {
-    for (int i=0; i<student_list.length ;i++){
-      $.ajax({url: "{{url_for('login.insert_mark')}}",
+var student_list = {{g.student2|safe}};
+  var authentication;
+    for (var i=0; i<student_list.length ;i++){
+    score1=getElementById(student_list[i]).value;
+      $.ajax({url: "{{url_for('classpage.insert_mark',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}",
       async: false,
       data: {
          id: student_list[i],
          score: $('input[id=student_list[i]]').val(),
-         subject_id: {{g.Subject_id}},
-         year: {{g.Year}},
-         work_id: {{g.work_id}}
+         work_id: "{{g.work_id}}",
             },
       dataType: 'json',
       success: function(data){
@@ -212,9 +223,35 @@ function Score_full() {
       });
     }
 }
-
+function Scorefull(){
+console.log(".....")
+    var studentlist ={{g.student2|safe}};
+    var authentication;
+    return false;
+    for(var i=0;i<studentlist.length;i++){
+    console.log(".....")
+        score1=Document.getElementById(student_list[i]).value;
+        $.ajax({ url: "{{url_for('classpage.insert_mark',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}",
+            async: false,
+            data: {
+            id:studentlist[i],
+            score: score1,
+            work_id: "{{g.work_id}}",
+                },
+            dataType: 'json',
+            success: function(data){
+            authentication=data.authen;
+            }
+            });
+    }
+    return false;
+}
+</script>
+<script type="text/javascript">
 
 </script>
 
+
+</script>
 </body>
 </html>

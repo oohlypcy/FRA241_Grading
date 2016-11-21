@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+<meta http-equiv="refresh" content="disabled" id="meta-refresh">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var mr = document.getElementById("meta-refresh");
+mr.parentNode.removeChild(mr);
+</script>
 <title>teacher_add_subject</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
@@ -55,11 +61,11 @@
       <h1 class="w3-text-teal">Add Subject</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-          <form method="#" action="#">
+          <form>
             Subject name:
-              <input type="text" id="subject_name" name="subject_name" required=""><br>
+              <input type="text" id="subject_name" name="subject_name" required><br>
             Subject code:
-              <input type="text" id="subject_code" name="subject_code" required=""><br>
+              <input type="text" id="subject_code" name="subject_code" required><br>
             Subject details:
               <textarea rows="" cols="" wrap="soft" id="subject_details" name="subject_details">
               </textarea><br>
@@ -76,7 +82,7 @@
                 <option value="2560">2560</option>
                 <option value="2561">2561</option>
               </select><br><br>
-              <input type="submit" value="create">
+              <button class="w3-btn w3-red" onclick="return addsubject()" >create</button>
           </form>
           <!-- semester pull semester_data from db -->
           </div>
@@ -92,7 +98,7 @@
 <!-- END MAIN -->
 </div>
 
-<script>
+<script type="text/javascript">
 // Get the Sidenav
 var mySidenav = document.getElementById("mySidenav");
 
@@ -114,6 +120,24 @@ function w3_open() {
 function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
+}
+</script>
+<script type="text/javascript">
+function addsubject(){
+  var authentication=false;
+  $.ajax({ url: "{{url_for('Addpage.Add_subject_db',url_user_id=g.id)}}",
+  method: "GET",
+  async: false,
+  data: {
+  subname: $('input[id="subject_name"]').val(),
+  subcode: $('input[id="subject_code"]').val(),
+  },
+  datatype: 'json',
+  success: function(data){
+  authentication = data.authen
+  }
+  });
+  return false;
 }
 </script>
 

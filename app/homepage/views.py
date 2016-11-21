@@ -47,7 +47,7 @@ def CurrentWork(url_user_id):
         Year = int(str(year.year + 542)[2:4])
     else:
         Year = int(str(year.year + 543)[2:4])
-    year.ti
+    #    year.time
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
     g.subject = sorted(g.subject)
