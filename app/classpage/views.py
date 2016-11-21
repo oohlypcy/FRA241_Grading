@@ -88,11 +88,12 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         g.student3 = []
         g.single_score = []
         g.group_user = []
+        g.group_work = []
         ID_student1 = ID_student.fetchall()
         #find group_limit
         group_limit = c.execute("SELECT lim_member from Work WHERE Subject_ID =  ? AND Year = ? AND WorkID = ?",(url_Subject_id,url_Year,g.work_id))
         g.group_limit = group_limit.fetchone()[0]
-        g.group_user.append(g.work_id)
+
         for row in ID_student1:
 
             sudent = User(str(row[0]))
@@ -114,14 +115,14 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
 
                 #group work
 
-
-                group_ID_student = c.execute("SELECT WorkID,ID from Groups WHERE ID = ? AND Subject_ID = ? AND Year = ? AND WorkID = ?",(str(row[0]),g.Subject_id,g.Year,g.work_id))
+                group_ID_student = c.execute("SELECT WorkID, ID from Groups WHERE ID = ? AND Subject_ID = ? AND Year = ? AND WorkID = ?",(str(row[0]),g.Subject_id,g.Year,g.work_id))
                 group_ID_student = group_ID_student.fetchone()
-                print group_ID_student
-                try :
-                    g.group_user[g.work_id].append(str(group_ID_student))
-                except :
-                    pass
+
+                # user_group_score = c.execute("SELECT Mark from SubmitWork WHERE ID = ? AND WorkID = ? AND Subject_ID = ? AND Year = ?",(str(group_ID_student[1]),str(group_ID_student[0]),g.Subject_id,g.Year))
+                # user_group_score = user_group_score.fetchall()
+                # print user_group_score
+                if group_ID_student != None :
+                    g.group_user.append([group_ID_student[0],group_ID_student[1],NAME_student[0][1]])
 
         print g.group_user
 
@@ -150,7 +151,6 @@ def insert_mark(url_Subject_id, url_Year,url_user_id):
     fullMark = Work(subject_id_from_form,year_from_form,work_id_from_form)
     submit = c.execute("SELECT Status FROM SubmitWork WHERE Subject_ID = ? AND Year = ? AND WorkID = ? AND ID = ?",(subject_id_from_form,year_from_form,work_id_from_form,id_from_form))
     submit = submit.fetchone()
-    print submit
     if int(score_from_form) <= int(fullMark.Fullmark):
         if submit != None:
             c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
