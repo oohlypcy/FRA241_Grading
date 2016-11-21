@@ -29,6 +29,7 @@ class User:
         k = mydata.fetchone()
         # make it into dict
         Profiledict = {'name':str(k[2])+str(k[3])+" "+str(k[4])}
+
         for x, y in zip(k, column):
             Profiledict[str(y)] = str(x)
         # close connection

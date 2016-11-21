@@ -4,6 +4,7 @@ from app.models.user import User
 from app.models.subject import Subject
 from app.models.submitWork import submitWork
 from app.models.work import Work
+from app.DataEditor import Data
 import datetime
 
 # create Blueprint class with name importname Blueprintfolders
@@ -104,6 +105,8 @@ def Add_subject_db(url_user_id):
     print grading_from_form
     print sec_from_form
     print year_from_form
+    a = Data()
+    a.subjectInsert(Subject_ID=Subjectid_from_form,Year=year_from_form,Description=Subject_detial_from_form,FullMark='100',Grading=grading_from_form)
     return jsonify(authen=True)
 
 
