@@ -6,11 +6,14 @@
 <script type="text/javascript">
 var mr = document.getElementById("meta-refresh");
 mr.parentNode.removeChild(mr);
+
 </script>
-<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
+<link rel="shortcut icon" type="image/x-icon"
+      href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
 <title>FRA221_Grading - Score</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+<link rel="stylesheet" href="{{url_for('static',filename=" w3.css
+")}}">
 {% if g.user.Profile['Role'] == 'student' %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
 {% else %}
@@ -45,131 +48,143 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
 </style>
 <body>
 <!--black ribbon for HM King RAMA IX-->
 <div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
-  <img src="http://image.coolz-server.com/s/v6pge483">
+    <img src="http://image.coolz-server.com/s/v6pge483">
 </div>
 <!--Navbar-->
 <div class="w3-top">
-  <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
-    <!--li == show list item -->
-    <li class="w3-opennav w3-right w3-hide-large">
-      <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    </li>
-        <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
-    {% if g.user.Profile['Role']== 'student' %}
- <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
-     {% endif %}  <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
-  </ul>
+    <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
+        <!--li == show list item -->
+        <li class="w3-opennav w3-right w3-hide-large">
+            <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i
+                    class="fa fa-bars"></i></a>
+        </li>
+        <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}" class="w3-theme-l1">Home</a></li>
+        <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}"
+                                     class="w3-hover-white">Subject</a></li>
+        <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a>
+        </li>
+        {% if g.user.Profile['Role']== 'student' %}
+        <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}"
+                                     class="w3-hover-white">Score</a></li>
+        {% endif %}
+        <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a>
+        </li>
+    </ul>
 </div>
 
 <!-- Sidenav -->
-<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
-    <i class="fa fa-remove"></i>
-  </a>
-  <h4><b>Menu</b></h4>
-  <a href="http://google.co.th/" class="w3-hover-black">google</a>
-  <a href="http://facebook.com/" class="w3-hover-black">facebook</a>
-  <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/login_from_w3.html" class="w3-hover-black">Log out</a>
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;"
+     id="mySidenav">
+    <a href="javascript:void(0)" onclick="w3_close()"
+       class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+        <i class="fa fa-remove"></i>
+    </a>
+    <h4><b>Menu</b></h4>
+    <a href="http://google.co.th/" class="w3-hover-black">google</a>
+    <a href="http://facebook.com/" class="w3-hover-black">facebook</a>
+    <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt</a>
+    <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/login_from_w3.html"
+       class="w3-hover-black">Log out</a>
 </nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+     id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
 <div class="w3-main" style="margin-left:250px">
 
-  <div class="w3-row w3-padding-64">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Score</h1>
-        <div class="w3-row w3-container">
-          <div class="w3-col l6 w3-white w3-left">
-           <form id="myForm">
-            <table>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Score</th>
-              </tr>
+    <div class="w3-row w3-padding-64">
+        <div class="w3-twothird w3-container">
+            <h1 class="w3-text-teal">Score</h1>
+            <div class="w3-row w3-container">
+                <div class="w3-col l6 w3-white w3-left">
+                    <form id="myForm">
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                            </tr>
 
-                {% if g.user.Profile['Role'] == 'teacher' %}
-                {% for i in g.a %}
-                <tr>
-                  <td>{{g.student2[i]}}</td>
-                  <td>{{g.student1[i]}}</td>
-                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
-                </tr>
-                {% endfor %}
-                  {% else %}
-                <tr>
-                    <td>{{g.user.id}}</td>
-                    <td>{{g.user.Profile['name']}}</td>
-                  <td>{{g.score}}</td>
-                 </tr>
-                  {% endif %}
-            </table>
-            <p>
-            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
-             <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
-            </p>
-             </form>
-            <form id="myForm2">
-          <table>
-              <tr>
-                <th>Group</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Score</th>
-              </tr>
+                            {% if g.user.Profile['Role'] == 'teacher' %}
+                            {% for i in g.a %}
+                            <tr>
+                                <td>{{g.student2[i]}}</td>
+                                <td>{{g.student1[i]}}</td>
+                                <td><input id="{{g.student2[i]}}" class="w3-input" type="text"
+                                           placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td>{{g.user.id}}</td>
+                                <td>{{g.user.Profile['name']}}</td>
+                                <td>{{g.score}}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                        <p>
+                            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
+                            <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
+                        </p>
+                    </form>
+                    <form id="myForm2">
+                        <table>
+                            <tr>
+                                <th>Group</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                            </tr>
 
-                {% if g.user.Profile['Role'] == 'teacher' %}
-                {% for i in g.a %}
-                <tr>
-                  <td>Group</td>
-                  <td>{{g.student2[i]}}</td>
-                  <td>{{g.student1[i]}}</td>
-                    <td><!--input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required--></td>
-                </tr>
-                {% endfor %}
-                  {% else %}
-                <tr>
-                    <td>{{g.user.id}}</td>
-                    <td>{{g.user.Profile['name']}}</td>
-                  <td>{{g.score}}</td>
-                 </tr>
-                  {% endif %}
-          </table>
-            <p>
-            <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
-             <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
-            </p>
-            </form>
-          </div>
+                            {% if g.user.Profile['Role'] == 'teacher' %}
+                            {% for i in g.a %}
+                            <tr>
+                                <td>Group</td>
+                                <td>{{g.student2[i]}}</td>
+                                <td>{{g.student1[i]}}</td>
+                                <td>
+                                    <!--input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required--></td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td>{{g.user.id}}</td>
+                                <td>{{g.user.Profile['name']}}</td>
+                                <td>{{g.score}}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                        <p>
+                            <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
+                            <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="w3-third w3-container">
         </div>
     </div>
-    <div class="w3-third w3-container">
-    </div>
-  </div>
 
 
+    <!--footer id="myFooter">
+      <div class="w3-container w3-theme-l2 w3-padding-32">
+        <h4>Footer</h4>
+      </div>
 
-  <!--footer id="myFooter">
-    <div class="w3-container w3-theme-l2 w3-padding-32">
-      <h4>Footer</h4>
-    </div>
+      <!--div class="w3-container w3-theme-l1">
+        <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+      </div-->
+    </footer>
 
-    <!--div class="w3-container w3-theme-l1">
-      <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </div-->
-  </footer>
-
-<!-- END MAIN -->
+    <!-- END MAIN -->
 </div>
 
 <script>
@@ -201,6 +216,7 @@ function myFunction() {
 function myFunction2() {
     document.getElementById("myForm2").reset();
 }
+
 
 </script>
 <script type="text/javascript">
@@ -246,12 +262,12 @@ console.log(".....")
     }
     return false;
 }
+
 </script>
 <script type="text/javascript">
 
 </script>
 
 
-</script>
 </body>
 </html>
