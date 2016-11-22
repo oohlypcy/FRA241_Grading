@@ -42,6 +42,7 @@ def Subject_Score(url_Subject_id, url_Year,url_user_id):
     subjectWork = subject.get_work()
     g.work = []
     g.all_user_ID = []
+    g.score = []
     if g.user.Profile['Role'] == 'teacher':
         g.workID = []
         connect = sqlite3.connect("Data.db")
@@ -55,12 +56,20 @@ def Subject_Score(url_Subject_id, url_Year,url_user_id):
         c.close()
         for x in subjectWork:
             for selectUser in g.all_user_ID:
-                submitwork = submitWork(x[2], g.year, g.SubjectID, selectUser)
+                try :
+                    submitwork = submitWork(x[2], g.year, g.SubjectID, selectUser)
+                    address = submitwork.Address
+
+                except Exception:
+                    address = None
                 work = Work(g.SubjectID, g.year, x[2])
-                g.work.append([selectUser, x[2], submitwork.Mark, work.Fullmark])
+                g.work.append([selectUser, x[2], address, work.Fullmark])
+                g.score.append([selectUser,g.SubjectID,x[2],submitwork.Mark])
+
                 if [x[2], work.Fullmark] not in g.workID:
                     g.workID.append([x[2], work.Fullmark])
 
+        print g.score
         return render_template("Score2.html")
 
     else:

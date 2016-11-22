@@ -94,9 +94,9 @@ tr:nth-child(even) {
                 {% for x in g.all_user_ID %}
                   <tr>
                     <td>{{x}}</td>
-                    {% for y in g.work %}
+                    {% for y in g.score %}
                       {% if y[0] == x %}
-                        <td>{{y[2][0]}}</td>
+                        <td>{{y[3][0]}}</td>
                       {% endif %}
                     {% endfor %}
                   </tr>
