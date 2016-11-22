@@ -409,6 +409,8 @@ a = Data()
 # a.workInsert("FRA241","59","2","03/11/59","Closed","not sent","25","40","1")
 # a.workInsert("FRA241","59","3","08/11/59","Closed","not sent","30","40","1")
 # a.workInsert("FRA222","59","hamID1","30/12/59","Actice","project","40",None,"2")
+# a.SubmitworkInsert("FRA222","59","hamID1","58340500017","http://google.com/","sent","30")
+
 a.show()
 
 

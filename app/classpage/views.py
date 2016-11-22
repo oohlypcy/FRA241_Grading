@@ -120,10 +120,12 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
                 group_ID_student = c.execute("SELECT WorkID, ID, Group_ID from Groups WHERE ID = ? AND Subject_ID = ? AND Year = ? AND WorkID = ?",(str(row[0]),g.Subject_id,g.Year,g.work_id))
                 group_ID_student = group_ID_student.fetchone()
 
-
+                print group_ID_student
                 if group_ID_student != None:
                     user_group_score = c.execute("SELECT Mark from SubmitWork WHERE ID = ? AND WorkID = ? AND Subject_ID = ? AND Year = ?",(str(group_ID_student[1]),str(group_ID_student[0]),g.Subject_id,g.Year))
                     user_group_score = user_group_score.fetchone()
+                    if user_group_score!= None:
+                        user_group_score = user_group_score[0]
                     g.group_user.append([group_ID_student[2],group_ID_student[1],NAME_student[0][1],user_group_score])
         g.a = range(len(g.student2))
         g.b = range(len(g.group_user))
