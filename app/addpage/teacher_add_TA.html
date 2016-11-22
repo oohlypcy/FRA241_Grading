@@ -150,21 +150,32 @@ var authentication;
   },
   dataType: 'json',
   success: function(data){
-  authentiction=data.authen;
+  authentication=data.authen;
+  if(authentication === true){
+  $("#a".replace('a',userid)).remove();
+  }
   }
   });
+
   return authentication;
 }
 function choose_TA_name(){
+var TA_id = document.getElementById("TA_id").value;
 var authentication;
   $.ajax({ url : "{{url_for('Addpage.addperson',url_user_id=g.id,url_Subject_id=g.subject_id,url_Year=g.year)}}",
   async: false,
   data: {
     id: $('input[id="TA_id"]').val(),
+    from: "{{g.current}}"
   },
   dataType: 'json',
   success: function(data){
-  authentiction=data.authen;
+  authentication=data.authen;
+  if(authentication === true){
+  $( "#showta" ).append( "<p id=x> x </p>".replace('x',TA_id));
+  document.getElementById(TA_id).innerHTML = TA_id+" ";
+  $( "#a".replace('a',TA_id) ).append( "<button class=\"w3-btn w3-red\" onclick=\"return putout(x)\">X</button>".replace('x',TA_id));
+  }
   }
   });
   return authentication;

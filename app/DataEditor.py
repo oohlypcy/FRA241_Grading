@@ -44,8 +44,7 @@ class Data:
               `Subject_ID` varchar(45) NOT NULL,
               `Year` int(11) NOT NULL,
               `WorkID` int(11) NOT NULL,
-              `ID` bigint(11) NOT NULL,
-              `Group_ID` varchar(45) DEFAULT NULL
+              `ID` bigint(11) NOT NULL
             )""")
         except Exception:
             print "Table Groups has created"
@@ -131,11 +130,11 @@ class Data:
         c.close()
 
     # insert data in Groups table
-    def GroupInsert(self, Subject_ID, Year, WorkID, ID,Group_ID):  # not NULL all
+    def GroupInsert(self, Subject_ID, Year, WorkID, ID):  # not NULL all
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`, `Group_ID`) VALUES
-         (?,?,?,?,?);""", (Subject_ID, Year, WorkID, ID, Group_ID))
+        c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`) VALUES
+         (?,?,?,?);""", (Subject_ID, Year, WorkID, ID))
         conn.commit()  # save data into db
         c.close()
 
@@ -240,13 +239,12 @@ class Data:
             print "***************"
 
         print("-----------Groups-----------")
-        cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID, Group_ID from Groups")
+        cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID from Groups")
         for row in cursor:
             print "Subject_ID = ", row[0]
             print "Year = ", row[1]
             print "WorkID = ", row[2]
             print "ID = ", row[3]
-            print "Group_ID = ",row[4]
             print "***************"
 
         print("-----------media-----------")
@@ -257,8 +255,9 @@ class Data:
             print "***************"
 
         print("-----------subject-----------")
-        cursor = c.execute("SELECT Subject_ID, Year, Description,FullMark, Grading from subject")
+        cursor = c.execute("SELECT * from subject")
         for row in cursor:
+            print  row
             print "Subject ID = ", row[0]
             print "Year = ", row[1]
             print "Description = ", row[2]
@@ -303,14 +302,13 @@ class Data:
             print "Enrol_Type = ", row[3]
             print "SECTION = ", row[4]
         print "***************"
-        c.execute(
-            "SELECT * from Groups WHERE Subject_ID ='FRA222' AND Year = '59' AND WorkID = 'hamID1'")
-        print  c.fetchall()
 
-        # c.executescriptc ("""DELETE  FROM User WHERE ID = '58340500000' AND Password = 'asdf'""")  # delete data in table subject
-        # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
+        # c.executescript("""DELETE  FROM Enrol WHERE Subject_ID = 'FRA161'""")
+        # c.executescript("""DELETE  FROM subject WHERE Subject_ID = 'explore'""")# delete data in table subject
         # conn.commit()
-        c.close()
+        # # c.execute("UPDATE User SET ID = '58340500000' WHERE Role ='teacher'")
+        # # conn.commit()
+        # c.close()
 
 
 # c.executescript("""DROP TABLE User""") #delete table
@@ -341,14 +339,14 @@ class Data:
 # print c.fetchone()
 # h.close()
 # ham = s.cursor()
-#
+#ham.execute("UPDATE work SET type = ? WHERE WorkID = ? AND lim_member = ?", ('project', 'hamID', '3'))
 # s.commit()
 # ham.close()
 # # print h.execute("SELECT * from User").fetchall()
 # # print h.execute("SELECT * from User").fetchone()
 # s = sqlite3.connect('Data.db')
 # ham = s.cursor()
-# ham.execute("UPDATE work SET type = ? WHERE WorkID = ? AND lim_member = ?", ('project', 'hamID', '3'))
+# ham.execute("ALTER TABLE subject ADD  COLUMN Name varchar(45) DEFAULT NULL")
 # s.commit()
 # s.close()
 # a.edit('DELETE FROM User WHERE ID = 58340500026')
@@ -391,15 +389,8 @@ a = Data()
 # a.workInsert("FRA222","59","3","23/11/59","Closed"," not send","25","30","1")
 # a.workInsert("FRA241","59","2","18/11/59","Closed"," not send","15","30","1")
 # a.workInsert("FRA241","59","3","25/11/59","Closed"," not send","15","30","1")
-# a.SubmitworkInsert("FRA222","59","hamID1","583405000005",None,"sent","15")
-# a.edit("UPDATE SubmitWork SET WorkID = 'hamID1' WHERE WorkID = 'hamID'")
-# a.edit("UPDATE SubmitWork SET ID = '58340500005' WHERE ID = '583405000005'")
-# a.edit("ALTER TABLE Groups ADD Group_ID varchar(45) DEFAULT NULL")
-# a.edit("ALTER TABLE Groups DROP COLUMN Group_name ")# a.edit("UPDATE Groups SET Group_name = ''")
-# a.edit("UPDATE Groups SET Group_ID = 1 WHERE WorkID = 'hamID1'")
-# a.GroupInsert("FRA222","59","hamID1","5834500043","2")
-# a.GroupInsert("FRA222","59","hamID1","5834500026","2")
-# a.edit("UPDATE Enrol SET Section = 'A' WHERE ID = '58340500043'")
+
+
 
 a.show()
 
