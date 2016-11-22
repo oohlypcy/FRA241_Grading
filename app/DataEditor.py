@@ -45,6 +45,7 @@ class Data:
               `Year` int(11) NOT NULL,
               `WorkID` int(11) NOT NULL,
               `ID` bigint(11) NOT NULL
+              `Group_ID` varchar(45) DEFAULT NULL
             )""")
         except Exception:
             print "Table Groups has created"
@@ -130,11 +131,11 @@ class Data:
         c.close()
 
     # insert data in Groups table
-    def GroupInsert(self, Subject_ID, Year, WorkID, ID):  # not NULL all
+    def GroupInsert(self, Subject_ID, Year, WorkID, ID, Group_ID):  # not NULL all
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`) VALUES
-         (?,?,?,?);""", (Subject_ID, Year, WorkID, ID))
+        c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`, `Group_ID`) VALUES
+         (?,?,?,?,?);""", (Subject_ID, Year, WorkID, ID, Group_ID))
         conn.commit()  # save data into db
         c.close()
 
@@ -239,12 +240,13 @@ class Data:
             print "***************"
 
         print("-----------Groups-----------")
-        cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID from Groups")
+        cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID, Group_ID from Groups")
         for row in cursor:
             print "Subject_ID = ", row[0]
             print "Year = ", row[1]
             print "WorkID = ", row[2]
             print "ID = ", row[3]
+            print "Group_ID = ",row[4]
             print "***************"
 
         print("-----------media-----------")
@@ -389,9 +391,24 @@ a = Data()
 # a.workInsert("FRA222","59","3","23/11/59","Closed"," not send","25","30","1")
 # a.workInsert("FRA241","59","2","18/11/59","Closed"," not send","15","30","1")
 # a.workInsert("FRA241","59","3","25/11/59","Closed"," not send","15","30","1")
+# a.edit("ALTER TABLE Groups ADD Group_ID varchar(45) DEFAULT NULL")
+# a.edit("UPDATE Groups SET Group_ID = '1'")
+# a.GroupInsert("FRA222","59","hamID1","58340500026","2")
+# a.GroupInsert("FRA222","59","hamID1","58340500043","2")
+# a.edit("UPDATE Enrol SET SECTION = 'A'  WHERE ID = '58340500043'")
 
-
-
+# a.edit("DELETE FROM Work WHERE WorkID = 'hamID'")
+# a.edit("UPDATE Work SET WorkID = 'hamID1' WHERE Type = 'project'")
+# a.edit("UPDATE Work SET WorkID = 'hamID' WHERE Type = 'class_assignment'")
+# a.workInsert("FRA221","59","2","11/11/59","Closed","not sent","25","40","1")
+# a.workInsert("FRA221","59","3","14/11/59","Closed","not sent","30","40","1")
+# a.edit("DELETE FROM Work WHERE WorkID = 'hamID1' AND Subject_ID ='FRA222' ")
+# a.workInsert("FRA222","59","2","25/11/59","Closed","not sent","20","40","1")
+# a.workInsert("FRA222","59","3","27/11/59","Closed","not sent","15","40","1")
+# a.edit("DELETE FROM Work WHERE WorkID = 'hamID1' AND Subject_ID ='FRA241' ")
+# a.workInsert("FRA241","59","2","03/11/59","Closed","not sent","25","40","1")
+# a.workInsert("FRA241","59","3","08/11/59","Closed","not sent","30","40","1")
+# a.workInsert("FRA222","59","hamID1","30/12/59","Actice","project","40",None,"2")
 a.show()
 
 
