@@ -253,7 +253,7 @@ var student_list = {{g.student2|safe}};
 function Scorefull(){
 console.log(".....")
 
-    var student_list ={{g.group_user|safe}};
+    var student_list ={{g.group_user|tojson|safe}};
     console.log(student_list);
     var authentication;
 
@@ -262,9 +262,9 @@ console.log(".....")
         $.ajax({ url: "{{url_for('classpage.insert_mark',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}",
             async: false,
             data: {
-            id: Document.getElementById(student_list[i][1]).value,
+            id: student_list[i][1],
             score: $('input[id="student_list"]'.replace("student_list",student_list[i][1])).val(),
-            work_id: {{g.work_id}},
+            work_id: "{{g.work_id}}",
                 },
             dataType: 'json',
             success: function(data){
@@ -272,7 +272,7 @@ console.log(".....")
             }
             });
     }
-     return false;
+
 }
 
 </script>

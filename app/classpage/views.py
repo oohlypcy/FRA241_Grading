@@ -153,8 +153,12 @@ def insert_mark(url_Subject_id, url_Year,url_user_id):
     year_from_form = url_Year
     work_id_from_form = request.values.get('work_id')
     fullMark = Work(subject_id_from_form,year_from_form,work_id_from_form)
+    print id_from_form
+    print score_from_form
+    # print
     submit = c.execute("SELECT Status FROM SubmitWork WHERE Subject_ID = ? AND Year = ? AND WorkID = ? AND ID = ?",(subject_id_from_form,year_from_form,work_id_from_form,id_from_form))
     submit = submit.fetchone()
+    print submit
     if int(score_from_form) <= int(fullMark.Fullmark):
         if submit != None:
             c.execute("UPDATE SubmitWork SET Mark = ? WHERE Subject_ID = ? AND Year = ? AND ID = ? AND WorkID = ? ",
