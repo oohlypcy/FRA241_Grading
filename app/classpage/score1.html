@@ -107,66 +107,73 @@ tr:nth-child(even) {
             <div class="w3-row w3-container">
                 <div class="w3-col l6 w3-white w3-left">
                     <form id="myForm">
-                        <table>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Score</th>
-                            </tr>
+                        {% if g.work.lim_member == 1 %}
+                            <table>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
 
-                            {% if g.user.Profile['Role'] == 'teacher' %}
-                            {% for i in g.a %}
-                            <tr>
-                                <td>{{g.student2[i]}}</td>
-                                <td>{{g.student1[i]}}</td>
-                                <td><input id="{{g.student2[i]}}" class="w3-input" type="text"
-                                           placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
-                            </tr>
-                            {% endfor %}
-                            {% else %}
-                            <tr>
-                                <td>{{g.user.id}}</td>
-                                <td>{{g.user.Profile['name']}}</td>
-                                <td>{{g.score}}</td>
-                            </tr>
-                            {% endif %}
-                        </table>
+                                {% if g.user.Profile['Role'] == 'teacher' %}
+                                {% for i in g.a %}
+                                <tr>
+                                    <td>{{g.student2[i]}}</td>
+                                    <td>{{g.student1[i]}}</td>
+                                    <td><input id="{{g.student2[i]}}" class="w3-input" type="text"
+                                               placeholder="{{g.single_score[i]}}" style="width:90%" required></td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td>{{g.user.id}}</td>
+                                    <td>{{g.user.Profile['name']}}</td>
+                                    <td>{{g.score}}</td>
+                                </tr>
+                                {% endif %}
+                            </table>
+
                         <p>
                             <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
                             <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
                         </p>
+                        {% endif %}
                     </form>
                     <form id="myForm2">
-                        <table>
-                            <tr>
-                                <th>Group</th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Score</th>
-                            </tr>
+                        {% if g.work.lim_member > 1 %}
+                            <table>
+                                <tr>
+                                    <th>Group</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
 
-                            {% if g.user.Profile['Role'] == 'teacher' %}
-                            {% for i in g.a %}
-                            <tr>
-                                <td>{{g.work_id}}</td>
-                                <td>{{g.student2[i]}}</td>
-                                <td>{{g.student1[i]}}</td>
-                                <td>
-                                    <!--input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required--></td>
-                            </tr>
-                            {% endfor %}
-                            {% else %}
-                            <tr>
-                                <td>{{g.user.id}}</td>
-                                <td>{{g.user.Profile['name']}}</td>
-                                <td>{{g.score}}</td>
-                            </tr>
-                            {% endif %}
-                        </table>
+                                {% if g.user.Profile['Role'] == 'teacher' %}
+                                {% for i in g.b %}
+                                <tr>
+                                    <td>{{g.group_user[i][0]}}</td>
+                                    <td>{{g.group_user[i][1]}}</td>
+                                    <td>{{g.group_user[i][2]}}</td>
+                                    <td><input id="{{g.group_user[i][1]}}" class="w3-input" type="text"
+                                               placeholder="{{g.group_user[i][3][0]}}" style="width:90%" required></td>
+                                        <!--input id="{{g.student2[i]}}" class="w3-input" type="text" placeholder="{{g.single_score[i]}}" style="width:90%" required--></td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td>{{g.user.id}}</td>
+                                    <td>{{g.user.Profile['name']}}</td>
+                                    <td>{{g.score}}</td>
+                                </tr>
+                                {% endif %}
+                            </table>
+
                         <p>
                             <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
                             <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
                         </p>
+                        {% endif %}
                     </form>
                 </div>
             </div>
@@ -241,21 +248,23 @@ var student_list = {{g.student2|safe}};
         }
       });
     }
+
 }
 function Scorefull(){
 console.log(".....")
-    var studentlist ={{g.student2|safe}};
+
+    var student_list ={{g.group_user|safe}};
+    console.log(student_list);
     var authentication;
-    return false;
-    for(var i=0;i<studentlist.length;i++){
+
+    for(var i=0;i<student_list.length;i++){
     console.log(".....")
-        score1=Document.getElementById(student_list[i]).value;
         $.ajax({ url: "{{url_for('classpage.insert_mark',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}",
             async: false,
             data: {
-            id:studentlist[i],
-            score: score1,
-            work_id: "{{g.work_id}}",
+            id: Document.getElementById(student_list[i][1]).value,
+            score: $('input[id="student_list"]'.replace("student_list",student_list[i][1])).val(),
+            work_id: {{g.work_id}},
                 },
             dataType: 'json',
             success: function(data){
@@ -263,7 +272,7 @@ console.log(".....")
             }
             });
     }
-    return false;
+     return false;
 }
 
 </script>

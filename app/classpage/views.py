@@ -80,7 +80,7 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     g.Subject_id = url_Subject_id
     g.Year = url_Year
     g.work=Work(g.Subject_id,g.Year,g.work_id)
-    print g.work.Type
+
     if g.user.Profile['Role']=='teacher':
         ID_student = c.execute("SELECT ID from Enrol WHERE  Subject_ID =  ? AND Subject_Year = ?",(url_Subject_id,url_Year))
         g.student1 = []
@@ -88,8 +88,8 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         g.student3 = []
         g.single_score = []
         g.group_user = []
-        g.group_work = []
         ID_student1 = ID_student.fetchall()
+
         #find group_limit
         group_limit = c.execute("SELECT lim_member from Work WHERE Subject_ID =  ? AND Year = ? AND WorkID = ?",(url_Subject_id,url_Year,g.work_id))
         g.group_limit = group_limit.fetchone()[0]
@@ -101,9 +101,10 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
             if sudent.Profile['Role'] == 'student':
                 NAME_student = c.execute("SELECT ID,Name from User WHERE  ID =" + str(row[0]))
                 NAME_student = NAME_student.fetchall()
+
                 # non group work
-                single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ?",
-                                             (str(row[0]), url_Subject_id))
+                single_score_student = c.execute("SELECT Mark from SubMitWork WHERE  ID = ? AND Subject_ID = ? AND WorkID = ?",
+                                             (str(row[0]), url_Subject_id,g.work_id))
                 single_score_student = single_score_student.fetchall()
                 # ID_student = ID_student.fetchall()
                 try :
@@ -115,19 +116,17 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
 
                 #group work
 
-                group_ID_student = c.execute("SELECT WorkID, ID from Groups WHERE ID = ? AND Subject_ID = ? AND Year = ? AND WorkID = ?",(str(row[0]),g.Subject_id,g.Year,g.work_id))
+
+                group_ID_student = c.execute("SELECT WorkID, ID, Group_ID from Groups WHERE ID = ? AND Subject_ID = ? AND Year = ? AND WorkID = ?",(str(row[0]),g.Subject_id,g.Year,g.work_id))
                 group_ID_student = group_ID_student.fetchone()
 
-                # user_group_score = c.execute("SELECT Mark from SubmitWork WHERE ID = ? AND WorkID = ? AND Subject_ID = ? AND Year = ?",(str(group_ID_student[1]),str(group_ID_student[0]),g.Subject_id,g.Year))
-                # user_group_score = user_group_score.fetchall()
-                # print user_group_score
-                if group_ID_student != None :
-                    g.group_user.append([group_ID_student[0],group_ID_student[1],NAME_student[0][1]])
 
-        print g.group_user
-
+                if group_ID_student != None:
+                    user_group_score = c.execute("SELECT Mark from SubmitWork WHERE ID = ? AND WorkID = ? AND Subject_ID = ? AND Year = ?",(str(group_ID_student[1]),str(group_ID_student[0]),g.Subject_id,g.Year))
+                    user_group_score = user_group_score.fetchone()
+                    g.group_user.append([group_ID_student[2],group_ID_student[1],NAME_student[0][1],user_group_score])
         g.a = range(len(g.student2))
-
+        g.b = range(len(g.group_user))
         c.close()
         return render_template("score1.html",std2=map(json.dumps, g.student2))
     else:
@@ -137,10 +136,13 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         if g.score != None:
             g.score=g.score[6]
         c.close()
+
+
         return render_template("score1.html")
 
 @classpage.route('/insert_mark')
 def insert_mark(url_Subject_id, url_Year,url_user_id):
+    print 555
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
     id_from_form = request.values.get('id')
