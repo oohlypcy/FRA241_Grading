@@ -29,6 +29,7 @@ class User:
         k = mydata.fetchone()
         # make it into dict
         Profiledict = {'name':str(k[2])+str(k[3])+" "+str(k[4])}
+
         for x, y in zip(k, column):
             Profiledict[str(y)] = str(x)
         # close connection
@@ -68,7 +69,6 @@ class User:
             if str(x[2]) == str(currentAcademicYear):
                 sub['current'].append(Subject(x[1],x[2]))
             else:
-                print x[0],x[1]
                 sub['past'].append(Subject(x[1],x[2]))
         c.close()
         return sub
