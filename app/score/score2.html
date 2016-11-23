@@ -33,6 +33,24 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+    .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
+
 </style>
 <body>
 
@@ -106,7 +124,8 @@ tr:nth-child(even) {
       <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
     </div>
   </div>
-
+<!--black ribbon for HM King RAMA IX-->
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 
 
   <footer id="myFooter">
