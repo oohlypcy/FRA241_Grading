@@ -55,7 +55,7 @@ class submitWork:
 
 
 
-    def Get_submit_date(self,date):
+    def Get_submit_date(self):
         time = datetime.datetime.now()
         date = [str(time.day),str(time.month),str(time.year)]
 

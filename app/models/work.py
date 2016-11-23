@@ -18,6 +18,7 @@ class Work:
         self.Deadline = self.Get_deadline()
         self.Fullmark = self.Get_fullmark()
         self.grad = self.Get_grad()
+        self.lim_member=self.Get_lim_member()
 
     def Get_deadline(self):
         connect = sqlite3.connect("Data.db")
@@ -30,6 +31,17 @@ class Work:
         c.close()
         # return deadline 'str'
         return str(deadline[0])
+
+    def Get_lim_member(self):
+        connect = sqlite3.connect("Data.db")
+        c = connect.cursor()
+        # get deadline
+        member_list = c.execute("SELECT lim_member from work WHERE WorkID = ?  AND Year = ?  AND Subject_ID = ? ",
+                                (str(self.Work_Id), str(self.year), str(self.Subject_ID)))
+        lim_member = member_list.fetchone()
+        # close connection
+        c.close()
+        return lim_member[0]
 
     def Get_fullmark(self):
         connect = sqlite3.connect("Data.db")
@@ -97,7 +109,5 @@ class Work:
                          (str(self.Subject_ID),str(self.year),str(self.Work_Id)))
         type = type.fetchone()# close connection
         c.close()
-        type_list = []
-        for x in type:
-            type_list.append(x)
-        return type_list
+
+        return type[0]

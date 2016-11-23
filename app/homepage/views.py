@@ -5,6 +5,7 @@ from app.models.subject import Subject
 from app.models.submitWork import submitWork
 from app.models.work import Work
 import datetime
+
 # create Blueprint class with name importname Blueprintfolders
 Homepage = Blueprint('homepage', __name__, url_prefix="/<url_user_id>", template_folder='', static_folder='')
 
@@ -43,24 +44,26 @@ def CurrentSubject(url_user_id):
 def CurrentWork(url_user_id):
     year = datetime.date.today()
     if year.month <= 4:
-        year = int(str(year.year +542)[2:4])
-    else :
-        year = int(str(year.year +543)[2:4])
-
+        Year = int(str(year.year + 542)[2:4])
+    else:
+        Year = int(str(year.year + 543)[2:4])
+    #    year.time
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
     g.subject = sorted(g.subject)
-    #sent work data to html
+    # sent work data to html
     g.work = []
     g.address = []
     g.status = []
     for subject in g.subject:
-        data =[]
+        data = []
         for work in subject.get_work():
             # check work from submit work
-            try :
+            try:
                 # k = submitWork(work[2], year, work[0], g.user.id)
-                g.address.append(str(url_for('classpage.Subject_work_score',url_Subject_id = work[0],url_Year =  year,work_id = work[2],url_user_id = g.user.id)))
+                g.address.append(str(
+                    url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
+                            url_user_id=g.user.id)))
                 g.status.append("send")
             # work doesn't submit
             except Exception:
@@ -83,13 +86,16 @@ def CurrentScore(url_user_id):
 
     g.id = url_user_id
     g.user = User(g.id)
-    #get subject
+    # get subject
     g.subject = []
     g.work = []
     g.fullmark = []
     g.subject_list = g.user.Subject['current']
-    g.subject_list=sorted(g.subject_list)
-    for subject in g.subject_list :
+    g.subject_list = sorted(g.subject_list)
+    g.total_mark = []
+    for subject in g.subject_list:
+        total = 0
+        full_total = 0
         # g.subject.append(subject.get_work())
         for work in subject.get_work():
             fullmark = Work(work[0], year, work[2])
@@ -99,11 +105,13 @@ def CurrentScore(url_user_id):
             try:
                 position = work[2]
                 workID = work[0]
-                work = submitWork(work[2],year,work[0],g.id )
-                g.work.append([workID,position,work.Get_Mark(), fullmark.Get_fullmark()])
+                work = submitWork(work[2], year, work[0], g.id)
+                g.work.append([workID, position, work.Get_Mark(), fullmark.Get_fullmark()])
+                total = total + int(work.Get_Mark()[0])
             except Exception:
-                g.work.append([workID,position,None, fullmark.Get_fullmark()])
-
-
-    #create a being that process data (go get filter etc.)
+                g.work.append([workID, position, None, fullmark.Get_fullmark()])
+                total = total + 0
+            full_total = full_total + fullmark.Get_fullmark()
+        g.total_mark.append([subject.Subject_Id, int(total), int(full_total)])
+    # create a being that process data (go get filter etc.)
     return render_template('Score.html')
