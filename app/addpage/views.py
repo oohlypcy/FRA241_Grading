@@ -82,6 +82,20 @@ def add_TA(url_user_id, url_Subject_id, url_Year):
     return render_template('teacher_add_TA.html')
 
 
+@Addpage.route('/<url_Subject_id>/<url_Year>/add_works')
+def add_works(url_user_id, url_Subject_id, url_Year):
+    g.year = url_Year
+    g.subject_id = url_Subject_id
+    g.id = url_user_id
+    subsubject_from_form = request.values.get('subsubject')
+    subtypework_from_form = request.values.get('subtypework')
+    subgroup_from_form = request.values.get('subgroup')
+    subdetail_from_form = request.values.get('subdetail')
+    subdate_from_form = request.values.get('subdate')
+    subtime_from_form = request.values.get('subtime')
+    return render_template('teacher_add_works.html')
+
+
 @Addpage.route('/<url_Subject_id>/<url_Year>/<work_id>/manage_group')
 def manage_group(url_user_id, url_Subject_id, url_Year, work_id):
     g.user = User(url_user_id)
