@@ -89,7 +89,7 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
     g.Subject_id = url_Subject_id
     g.Year = url_Year
     g.work=Work(g.Subject_id,g.Year,g.work_id)
-
+    g.group_user = []
     if g.user.Profile['Role']=='teacher':
         ID_student = c.execute("SELECT ID from Enrol WHERE  Subject_ID =  ? AND Subject_Year = ?",(url_Subject_id,url_Year))
         g.student1 = []
@@ -146,6 +146,7 @@ def Subject_work_score(url_Subject_id, url_Year,url_user_id,work_id):
         g.score = g.score.fetchone()
         if g.score != None:
             g.score=g.score[6]
+        print g.group_user
         c.close()
 
 
