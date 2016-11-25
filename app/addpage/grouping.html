@@ -78,26 +78,34 @@
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
           <form method="#" action="#">
-            subject:
-            <select name="subject_code">
-              <option value="FRA221">FRA221</option>
-              <option value="FRA231">FRA231</option>
-              <option value="FRA241">FRA241</option>
-              <option value="FRA222">FRA222</option>
-            </select><br><br>
-            Assingment id.
+
+            Assignment id.
             <select name="assignment_id">
-              <option value="ass1">#1</option>
-              <option value="ass2">#2</option>
-              <option value="ass3">#3</option>
-              <option value="ass4">#4</option>
+              {% for x in g.work_ID %}
+                <option value="{{x}}">{{x}}</option>
+              {% endfor %}
             </select><br><br>
             Group NO.
             <input type="text" id="group_num" name="group_num">
             Members/Group:
             <input type="text" id="members" name="members"><br>
             <button type="button" onclick="random_group()" id="random" value="random">random</button><br><br>
-            <input type="submit" value="Grouping">
+
+            <button type="button" onclick="grouping()" id="grouping" value="grouping">Grouping</button><br><br>
+            <table  class="w3-table-all w3-centered">
+              <tr>
+                  <th>Work ID</th>
+                  <th>Group</th>
+                  <th>ID</th>
+              </tr>
+              {% for x in g.group_id %}
+              <tr>
+                  <td>{{x[2]}}</td>
+                  <td>{{x[0]}}</td>
+                  <td>{{x[1]}}</td>
+              </tr>
+              {% endfor %}
+            </table>
           </form>
           <!-- semester pull semester_data from db -->
           </div>
@@ -137,6 +145,23 @@ function w3_close() {
     overlayBg.style.display = "none";
 }
 function random_group(){
+  var authentication
+  $.ajax({ url : "{{url_for('Addpage.random_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year) }}",
+  async : false,
+  data: {
+     work_id: $('select[name="assignment_id"]').val(),
+     group_number: $('input[id="group_num"]').val(),
+     group_limit: $('input[id="members"]').val(),
+  },
+  dataType: 'json',
+  success :function(data){
+  authentication = data.authen;
+  }
+  });
+  return true;
+}
+
+function grouping(){
 
 }
 </script>

@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, render_template, g, request, json, jsonify, 
 import sqlite3
 from app.models.user import User
 from app.models.subject import Subject
+import random
 from app.models.submitWork import submitWork
 from app.models.work import Work
 from app.DataEditor import Data
@@ -20,6 +21,9 @@ def addpage(endpoint, url_user_id):
 @Addpage.route('/<url_Subject_id>/<url_Year>/add_work')
 def add_assignment(url_user_id, url_Subject_id, url_Year):
     return 'boo'
+
+
+
 
 
 @Addpage.route('/add_subject')
@@ -82,9 +86,26 @@ def add_TA(url_user_id, url_Subject_id, url_Year):
     return render_template('teacher_add_TA.html')
 
 
-@Addpage.route('/<url_Subject_id>/<url_Year>/<work_id>/manage_group')
-def manage_group(url_user_id, url_Subject_id, url_Year, work_id):
+@Addpage.route('/<url_Subject_id>/<url_Year>/manage_group')
+def manage_group( url_Subject_id, url_user_id, url_Year):
     g.user = User(url_user_id)
+    g.Subject_id = url_Subject_id
+    g.Year = url_Year
+    connect = sqlite3.connect('Data.db')
+    c= connect.cursor()
+    c.execute("SELECT Group_ID, ID, WorkID from Groups WHERE Subject_ID = ? AND Year = ? ",
+                (g.Subject_id, g.Year))
+    g.group_id = c.fetchall()
+    c.close()
+    g.id = url_user_id
+    g.Subject_id = url_Subject_id
+    g.Year = url_Year
+    g.work_ID = []
+    work = Subject(g.Subject_id,g.Year)
+    work = work.get_work()
+    #find all work in that subject
+    for x in work:
+        g.work_ID.append(x[2])
     if g.user.Profile['Role'] == 'student':
         return render_template('student_grouping.html')
     else:
@@ -169,3 +190,52 @@ def addperson(url_user_id, url_Subject_id, url_Year):
         return jsonify(authen=True)
     else:
         return jsonify(authen=False)
+
+@Addpage.route('/<url_Subject_id>/<url_Year>/random_group')
+def random_group(url_user_id,url_Subject_id,url_Year):
+    # work_ID, group_number, group_limit
+
+    g.id = url_user_id
+    g.Subject_id = url_Subject_id
+    g.Year = url_Year
+    user = []
+    user_group = []
+    groupID = []
+    g.group = []
+
+    workID_from_form = request.values.get('work_id')
+    group_from_form = request.values.get('group_number')
+    limit_from_form = request.values.get('group_limit')
+    connect = sqlite3.connect("Data.db")
+    c = connect.cursor()
+    c.execute("SELECT ID from Enrol WHERE Subject_ID = ? AND Subject_Year = ? ",(g.Subject_id,g.Year))
+    User = c.fetchall()
+    c.execute("SELECT lim_member from work WHERE Subject_ID = ? AND Year = ? AND workID = ?",(g.Subject_id,g.Year,workID_from_form))
+    lim_member = c.fetchone()
+
+    c.execute("SELECT Group_ID, ID, WorkID from Groups WHERE WorkID = ? AND Subject_ID = ? AND Year = ? ",(workID_from_form,g.Subject_id,g.Year))
+    g.group_id = c.fetchall()
+    for x in g.group_id:
+        if str(x[0]) not in g.group:
+            g.group.append(str(x[0]))
+        groupID.append(str(x[1]))
+
+
+    for x in User:
+        if str(g.id) != str(x[0]) and str(x[0]) not in groupID :
+            user.append(str(x[0]))
+    if user != [] and str(group_from_form) not in g.group and str(lim_member[0]) != '1' :
+        for x in range(int(limit_from_form)):
+            if user != []:
+                choice = random.choice(user)
+                user.remove(choice)
+                user_group.append(choice)
+        for x in user_group:
+            c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`, `Group_ID`) VALUES
+                                (?,?,?,?,?); """, (g.Subject_id, g.Year, workID_from_form, x, group_from_form))
+            connect.commit()
+    else:
+        print "pass"
+
+    c.close()
+    return jsonify(authen=True)

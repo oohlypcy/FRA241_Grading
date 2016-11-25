@@ -38,8 +38,6 @@ def CurrentSubject(url_user_id):
     g.user = User(g.id)
     g.subject_list = g.user.Subject['current']
 
-    for x in g.subject_list:
-        print x
     return render_template('sub.html')
 
 
