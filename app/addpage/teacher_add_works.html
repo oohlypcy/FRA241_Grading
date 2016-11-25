@@ -8,6 +8,7 @@ mr.parentNode.removeChild(mr);
 </script>
 <title>teacher_add_work</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
@@ -65,7 +66,9 @@ mr.parentNode.removeChild(mr);
           <form method="#" action="#">
             Subject:
               <select name="subject_code">
-                <option value="{{g.subject_id}}">{{g.subject_id}}</option>
+                {% for x in range(0,g.math) %}
+                <option value="{{g.subject_id}}">{{g.subject_id[x]}}</option>
+                {% endfor %}
               </select><br><br>
             Type of work:
               <select name="type">
@@ -127,7 +130,7 @@ function w3_close() {
 }
 function addwork(){
   var authentication2=false;
-  $.ajax({ url: "{{url_for('Addpage.Add_subject_db',url_user_id=g.id)}}",
+  $.ajax({ url: "{{url_for('Addpage.sub_add_works',url_user_id=g.id)}}",
   method: "GET",
   async: false,
   data: {
