@@ -26,6 +26,23 @@
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 18px;
       }
+
+      .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
 </style>
 <body>
 
@@ -46,9 +63,8 @@
   </ul>
 </div>
 <!--black ribbon for HM King RAMA IX-->
-<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
-  <img src="http://image.coolz-server.com/s/v6pge483">
-</div>
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
+
 <nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
     <i class="fa fa-remove"></i>

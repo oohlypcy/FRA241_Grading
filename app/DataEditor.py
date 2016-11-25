@@ -410,6 +410,19 @@ a = Data()
 # a.workInsert("FRA241","59","3","08/11/59","Closed","not sent","30","40","1")
 # a.workInsert("FRA222","59","hamID1","30/12/59","Actice","project","40",None,"2")
 # a.SubmitworkInsert("FRA222","59","hamID1","58340500017","http://google.com/","sent","30")
+# a.edit("UPDATE work SET Deadlines = '8/11/2559' WHERE Subject_ID = 'FRA221' AND WorkID ='1' ")
+# a.edit("UPDATE work SET Deadlines = '30/09/2559' WHERE Subject_ID = 'FRA222' AND WorkID ='1' ")
+# a.edit("UPDATE work SET Deadlines = '01/11/2559' WHERE Subject_ID = 'FRA241' AND WorkID ='1' ")
+# a.edit("UPDATE work SET Deadlines = '09/07/2016' WHERE Subject_ID = 'FRA222' AND WorkID ='hamID' ")
+# a.edit("UPDATE work SET Deadlines = '11/11/2559' WHERE Subject_ID = 'FRA221' AND WorkID ='2' ")
+# a.edit("UPDATE work SET Deadlines = '14/11/2559' WHERE Subject_ID = 'FRA221' AND WorkID ='3' ")
+# a.edit("UPDATE work SET Deadlines = '25/11/2559' WHERE Subject_ID = 'FRA222' AND WorkID ='2' ")
+# a.edit("UPDATE work SET Deadlines = '27/11/2559' WHERE Subject_ID = 'FRA222' AND WorkID ='3' ")
+# a.edit("UPDATE work SET Deadlines = '03/11/2559' WHERE Subject_ID = 'FRA241' AND WorkID ='2' ")
+# a.edit("UPDATE work SET Deadlines = '08/11/2559' WHERE Subject_ID = 'FRA241' AND WorkID ='3' ")
+# a.edit("UPDATE work SET Deadlines = '30/12/2559' WHERE Subject_ID = 'FRA222' AND WorkID ='hamID1' ")
+
+
 
 a.show()
 
