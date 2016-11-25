@@ -61,7 +61,7 @@ class User:
             currentAcademicYear = currentAcademicYear.year + 542
         else:
             currentAcademicYear = currentAcademicYear.year + 543
-        currentAcademicYear = int(str(currentAcademicYear)[2:4])
+        currentAcademicYear = int(str(currentAcademicYear)[0:4])
         connect = sqlite3.connect('Data.db')
         c= connect.cursor()
         cursor = c.execute("SELECT * from enrol WHERE ID = "+str(self.id))

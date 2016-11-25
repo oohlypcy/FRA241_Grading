@@ -37,6 +37,9 @@ def CurrentSubject(url_user_id):
     g.id = url_user_id
     g.user = User(g.id)
     g.subject_list = g.user.Subject['current']
+
+    for x in g.subject_list:
+        print x
     return render_template('sub.html')
 
 
@@ -44,10 +47,11 @@ def CurrentSubject(url_user_id):
 def CurrentWork(url_user_id):
     year = datetime.date.today()
     if year.month <= 4:
-        Year = int(str(year.year + 542)[2:4])
+        Year = int(str(year.year + 542)[0:4])
     else:
-        Year = int(str(year.year + 543)[2:4])
+        Year = int(str(year.year + 543)[0:4])
     #    year.time
+
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
     g.subject = sorted(g.subject)
@@ -80,9 +84,9 @@ def CurrentWork(url_user_id):
 def CurrentScore(url_user_id):
     year = datetime.date.today()
     if year.month <= 4:
-        year = int(str(year.year + 542)[2:4])
+        year = int(str(year.year + 542)[0:4])
     else:
-        year = int(str(year.year + 543)[2:4])
+        year = int(str(year.year + 543)[0:4])
 
     g.id = url_user_id
     g.user = User(g.id)
@@ -98,6 +102,7 @@ def CurrentScore(url_user_id):
         full_total = 0
         # g.subject.append(subject.get_work())
         for work in subject.get_work():
+
             fullmark = Work(work[0], year, work[2])
             if work[0] not in g.subject:
                 # get subject id 1 time / 1 subject
