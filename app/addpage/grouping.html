@@ -6,7 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% if g.user.Profile.get('Role') == 'teacher' %}
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% else %}
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
@@ -62,8 +66,8 @@
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+  <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
+  <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Grouping Random</a>
 </nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
@@ -78,26 +82,51 @@
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
           <form method="#" action="#">
-            subject:
-            <select name="subject_code">
-              <option value="FRA221">FRA221</option>
-              <option value="FRA231">FRA231</option>
-              <option value="FRA241">FRA241</option>
-              <option value="FRA222">FRA222</option>
-            </select><br><br>
-            Assingment id.
+
+            Assignment id.
             <select name="assignment_id">
-              <option value="ass1">#1</option>
-              <option value="ass2">#2</option>
-              <option value="ass3">#3</option>
-              <option value="ass4">#4</option>
+              {% for x in g.work_ID %}
+                <option value="{{x}}">{{x}}</option>
+              {% endfor %}
             </select><br><br>
+              {% if g.user.Profile['Role'] == "teacher"  %}
             Group NO.
             <input type="text" id="group_num" name="group_num">
             Members/Group:
             <input type="text" id="members" name="members"><br>
             <button type="button" onclick="random_group()" id="random" value="random">random</button><br><br>
-            <input type="submit" value="Grouping">
+             {% endif %}
+            <table  class="w3-table-all w3-centered">
+                <tr>
+                    <th>workID</th>
+                    <th>ID</th>
+                </tr>
+                {% for x in g.unGroup %}
+                <tr>
+                    <td>{{x[1]}}</td>
+                    <td>{{x[0]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            Group NO.
+            <input type="text" id="group_num2" name="group_num2"><br>
+            User ID:
+            <input type="text" id="member2" name="member2"><br>
+            <button type="button" onclick="grouping()" id="Grouping" value="Grouping">Grouping</button><br><br>
+            <table  class="w3-table-all w3-centered">
+              <tr>
+                  <th>Work ID</th>
+                  <th>Group</th>
+                  <th>ID</th>
+              </tr>
+              {% for x in g.group_id %}
+              <tr>
+                  <td>{{x[2]}}</td>
+                  <td>{{x[0]}}</td>
+                  <td>{{x[1]}}</td>
+              </tr>
+              {% endfor %}
+            </table>
           </form>
           <!-- semester pull semester_data from db -->
           </div>
@@ -137,7 +166,37 @@ function w3_close() {
     overlayBg.style.display = "none";
 }
 function random_group(){
-
+  var authentication
+  $.ajax({ url : "{{url_for('Addpage.random_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year) }}",
+  async : false,
+  data: {
+     work_id: $('select[name="assignment_id"]').val(),
+     group_number: $('input[id="group_num"]').val(),
+     group_limit: $('input[id="members"]').val(),
+  },
+  dataType: 'json',
+  success :function(data){
+  authentication = data.authen;
+  }
+  });
+  return authentication;
+}
+function grouping(){
+  var authentication
+  console.log("test");
+  $.ajax({ url : "{{url_for('Addpage.add_user_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year) }}",
+  async : false,
+  data: {
+     work_id: $('select[name="assignment_id"]').val(),
+     group_number: $('input[id="group_num2"]').val(),
+     member: $('input[id="member2"]').val(),
+  },
+  dataType: 'json',
+  success :function(data){
+  authentication = data.authen;
+  }
+  });
+  return authentication;
 }
 </script>
 

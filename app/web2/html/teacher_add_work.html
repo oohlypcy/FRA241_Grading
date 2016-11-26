@@ -6,15 +6,10 @@
 var mr = document.getElementById("meta-refresh");
 mr.parentNode.removeChild(mr);
 </script>
-<title>teacher_add_subject</title>
+<title>teacher_add_work</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
-{% if g.user.Profile['Role'] == 'student' %}
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
-{% else %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
-{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
@@ -29,28 +24,8 @@ mr.parentNode.removeChild(mr);
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 16px;
       }
-
-          .black-ribbon {
-  position: fixed;
-  z-index: 9999;
-  width: 120px;
-}
-@media only all and (min-wi;dth: 768px) {
-  .black-ribbon {
-    width: auto;
-  }
-}
-
-.stick-left { left: 0; }
-.stick-right { right: 0; }
-.stick-top { top: 0; }
-.stick-bottom { bottom: 0; }
-
 </style>
 <body>
-
-<!--black ribbon for HM King RAMA IX-->
-<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 
 <!--Navbar-->
 <div class="w3-top">
@@ -59,8 +34,8 @@ mr.parentNode.removeChild(mr);
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li><a href="#" class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</a></li> <!--index is testing file-->
   </ul>
 </div>
 
@@ -70,8 +45,10 @@ mr.parentNode.removeChild(mr);
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_subject.html" class="w3-hover-black">Add subject</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html">Add TA</a>
+  <!-- <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_work.html">Add work</a> -->
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping random</a>
 </nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
@@ -82,32 +59,38 @@ mr.parentNode.removeChild(mr);
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Add Subject</h1>
+      <h1 class="w3-text-teal">Add Work</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-          <form>
-            Subject name:
-              <input type="text" id="subject_name" name="subject_name" required><br>
-            Subject code:
-              <input type="text" id="subject_code" name="subject_code" required><br>
-            Subject details:
-              <textarea rows="" cols="" wrap="soft" id="subject_details" name="subject_details">
-              </textarea><br>
-            score reference:
-              <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required>
-              </textarea><br>
-            Choose students group:<br>
-              <input type="radio" name="group" value="All">All<br>
-              <input type="radio" name="group" value="SecA">SecA<br>
-              <input type="radio" name="group" value="SecB">SecB<br>
-            Semester:
-                <select name="semester">
-                <option value="2559">2559</option>
-                <option value="2560">2560</option>
-                <option value="2561">2561</option>
+          <form method="#" action="#">
+            Subject:
+              <select name="subject_code">
+                <option value="FRA221">FRA221</option>
+                <option value="FRA231">FRA231</option>
+                <option value="FRA241">FRA241</option>
+                <option value="FRA222">FRA222</option>
               </select><br><br>
-              <button class="w3-btn w3-red" onclick="return addsubject()" >create</button>
+            Type of work:
+              <select name="type">
+                <option value="homework">homework</option>
+                <option value="assignment">assignment</option>
+                <option value="work">work</option>
+                <option value="project">project</option>
+              </select><br><br>
+            <input type="radio"/>Group<input type="text" id="#">/Gr.<br>
+            <input type="radio"/>Individual<br><br>
+            <!-- Grouping by teacher<br> <!--confused about --> -->
+              <!-- <input type="checkbox" name="teacher_grouping" value="yes">Yes<input type="text" id="members" name="members"><br> -->
+              <!-- <input type="checkbox" name="teacher_grouping" value="no">No<br><br> -->
+            work detail:
+              <br><textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
+              </textarea><br><br>
+            Deadline:<br>
+              <input type="date" name="date"><br>
+              <input type="time" name="time"><br><br>
+              <input type="submit" value="Add">
           </form>
+
           <!-- semester pull semester_data from db -->
           </div>
         </div>
@@ -122,7 +105,7 @@ mr.parentNode.removeChild(mr);
 <!-- END MAIN -->
 </div>
 
-<script type="text/javascript">
+<script>
 // Get the Sidenav
 var mySidenav = document.getElementById("mySidenav");
 
@@ -144,28 +127,6 @@ function w3_open() {
 function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
-}
-</script>
-<script type="text/javascript">
-function addsubject(){
-  var authentication=false;
-  $.ajax({ url: "{{url_for('Addpage.Add_subject_db',url_user_id=g.id)}}",
-  method: "GET",
-  async: false,
-  data: {
-  subname: $('input[id="subject_name"]').val(),
-  subcode: $('input[id="subject_code"]').val(),
-  subdetial: $('textarea[id="subject_details"]').val(),
-  subref: $('textarea[id="score_ref"]').val(),
-  section: $('input[name="group"]:checked').val(),
-  year: $('select[name="semester"]').val(),
-  },
-  datatype: 'json',
-  success: function(data){
-  authentication = data.authen;
-  }
-  });
-  return authentication;
 }
 </script>
 

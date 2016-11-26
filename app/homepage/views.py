@@ -5,6 +5,7 @@ from app.models.subject import Subject
 from app.models.submitWork import submitWork
 from app.models.work import Work
 import datetime
+from operator import itemgetter
 
 # create Blueprint class with name importname Blueprintfolders
 Homepage = Blueprint('homepage', __name__, url_prefix="/<url_user_id>", template_folder='', static_folder='')
@@ -37,6 +38,7 @@ def CurrentSubject(url_user_id):
     g.id = url_user_id
     g.user = User(g.id)
     g.subject_list = g.user.Subject['current']
+
     return render_template('sub.html')
 
 
@@ -44,10 +46,11 @@ def CurrentSubject(url_user_id):
 def CurrentWork(url_user_id):
     year = datetime.date.today()
     if year.month <= 4:
-        Year = int(str(year.year + 542)[2:4])
+        Year = int(str(year.year + 542)[0:4])
     else:
-        Year = int(str(year.year + 543)[2:4])
-    #    year.time
+        Year = int(str(year.year + 543)[0:4])
+    # year.time
+
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
     g.subject = sorted(g.subject)
@@ -57,7 +60,7 @@ def CurrentWork(url_user_id):
     g.status = []
     for subject in g.subject:
         data = []
-        for work in subject.get_work():
+        for work in sorted(subject.get_work(), key=itemgetter(2)):
             # check work from submit work
             try:
                 # k = submitWork(work[2], year, work[0], g.user.id)
@@ -70,9 +73,7 @@ def CurrentWork(url_user_id):
                 g.address.append(None)
                 g.status.append("not send")
             g.work.append(work)
-
     g.lenght = range(len(g.work))
-
     return render_template("HTML_assignment.html")
 
 
@@ -80,9 +81,9 @@ def CurrentWork(url_user_id):
 def CurrentScore(url_user_id):
     year = datetime.date.today()
     if year.month <= 4:
-        year = int(str(year.year + 542)[2:4])
+        year = int(str(year.year + 542)[0:4])
     else:
-        year = int(str(year.year + 543)[2:4])
+        year = int(str(year.year + 543)[0:4])
 
     g.id = url_user_id
     g.user = User(g.id)
@@ -97,7 +98,7 @@ def CurrentScore(url_user_id):
         total = 0
         full_total = 0
         # g.subject.append(subject.get_work())
-        for work in subject.get_work():
+        for work in sorted(subject.get_work(), key=itemgetter(2)):
             fullmark = Work(work[0], year, work[2])
             if work[0] not in g.subject:
                 # get subject id 1 time / 1 subject
@@ -106,12 +107,13 @@ def CurrentScore(url_user_id):
                 position = work[2]
                 workID = work[0]
                 work = submitWork(work[2], year, work[0], g.id)
-                g.work.append([workID, position, work.Get_Mark(), fullmark.Get_fullmark()])
                 total = total + int(work.Get_Mark()[0])
+                g.work.append([workID, position, work.Get_Mark(), fullmark.Get_fullmark()])
             except Exception:
                 g.work.append([workID, position, None, fullmark.Get_fullmark()])
                 total = total + 0
             full_total = full_total + fullmark.Get_fullmark()
         g.total_mark.append([subject.Subject_Id, int(total), int(full_total)])
     # create a being that process data (go get filter etc.)
+    g.subject = sorted(g.subject)
     return render_template('Score.html')
