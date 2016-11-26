@@ -110,7 +110,7 @@ def CurrentScore(url_user_id):
                 total = total + int(work.Get_Mark()[0])
                 g.work.append([workID, position, work.Get_Mark(), fullmark.Get_fullmark()])
             except Exception:
-                g.work.append([workID, position, None, fullmark.Get_fullmark()])
+                g.work.append([workID, position, [0,], fullmark.Get_fullmark()])
                 total = total + 0
             full_total = full_total + fullmark.Get_fullmark()
         g.total_mark.append([subject.Subject_Id, int(total), int(full_total)])

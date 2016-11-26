@@ -28,6 +28,14 @@ def add_assignment(url_user_id, url_Subject_id, url_Year):
 
 @Addpage.route('/add_subject')
 def add_subject(url_user_id):
+    g.user = User(url_user_id)
+    conn = sqlite3.connect('Data.db')
+    c=conn.cursor()
+    subject = c.execute("SELECT * from Subject")
+    subject = subject.fetchall()
+    print subject
+    g.subject_list = [str(x[0]) for x in subject]
+    print g.subject_list
     return render_template('teacher_add_subject.html')
 
 
