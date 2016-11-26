@@ -129,8 +129,7 @@ def Add_subject_db(url_user_id):
         (?,?,?,?,?,?);""",(Subjectid_from_form,year_from_form,Subject_detial_from_form,'100',grading_from_form,Subject_name_from_form))
         c.execute("""INSERT INTO 'Enrol' (`ID`, `Subject_ID`, `subject_Year`,`Enrol_Type`,`SECTION`) VALUES
         (?, ?, ?, ?, ?);""", (
-            url_user_id, Subjectid_from_form, year_from_form, 'teacher',
-        None))
+            url_user_id, Subjectid_from_form, year_from_form, 'teacher',None))
         conn.commit()
         c.close()
         return jsonify(authen=True)
