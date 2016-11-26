@@ -93,16 +93,35 @@ def manage_group( url_Subject_id, url_user_id, url_Year):
     g.user = User(url_user_id)
     g.Subject_id = url_Subject_id
     g.Year = url_Year
+    g.unGroup = []
+    g.nonGroup = []
     connect = sqlite3.connect('Data.db')
     c= connect.cursor()
     c.execute("SELECT Group_ID, ID, WorkID from Groups WHERE Subject_ID = ? AND Year = ? ",
                 (g.Subject_id, g.Year))
     g.group_id = c.fetchall()
+    c.execute("SELECT ID from Enrol WHERE Subject_ID = ? AND subject_Year = ?",(g.Subject_id,g.Year))
+    Id = c.fetchall()
+    c.execute("SELECT workID, lim_member from work WHERE Subject_ID = ? AND Year = ?",(g.Subject_id,g.Year))
+    nongroup = c.fetchall()
+    c.execute("SELECT ID, WorkID from Groups WHERE Subject_ID = ? AND Year = ? ",
+              (g.Subject_id, g.Year))
+    group_done = c.fetchall()
+    for x in nongroup:
+        if str(x[1]) != '1':
+            for y in Id:
+                a = User(str(y)[1:-3])
+                a = a.Profile.get('Role')
+                if a != 'teacher':
+                    g.unGroup.append([str(y)[1:-3],x[0]])
+    for x in group_done:
+        if [str(x[0]),x[1]] in g.unGroup:
+            g.unGroup.remove([str(x[0]),x[1]])
+
     c.close()
     g.id = url_user_id
-    g.Subject_id = url_Subject_id
-    g.Year = url_Year
     g.work_ID = []
+
     work = Subject(g.Subject_id,g.Year)
     work = work.get_work()
     #find all work in that subject
@@ -236,8 +255,37 @@ def random_group(url_user_id,url_Subject_id,url_Year):
             c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`, `Group_ID`) VALUES
                                 (?,?,?,?,?); """, (g.Subject_id, g.Year, workID_from_form, x, group_from_form))
             connect.commit()
+        c.close()
+        return jsonify(authen=True)
     else:
         print "pass"
+        c.close()
+        return jsonify(authen=False)
 
-    c.close()
-    return jsonify(authen=True)
+@Addpage.route('/<url_Subject_id>/<url_Year>/add_user_group')
+def add_user_group(url_user_id,url_Subject_id,url_Year):
+    print "555";
+    workID_from_form = request.values.get('work_id')
+    group_from_form = request.values.get('group_number')
+    member_from_form = request.values.get('member')
+    connect = sqlite3.connect('Data.db')
+    c = connect.cursor()
+    c.execute("SELECT ID from Groups WHERE ID = ? AND WorkID = ? AND Subject_ID = ? AND Year = ? ",(member_from_form,workID_from_form,url_Subject_id,url_Year))
+    Id = c.fetchone()
+    c.execute("SELECT ID grom Enrols WHERE ID = ?",(member_from_form))
+    c_Id = c.fetchone()
+    print workID_from_form
+    print group_from_form
+    print member_from_form
+    print Id
+    if Id == None and c_Id != None:
+        print "checkd"
+        c.execute("""INSERT INTO `Groups` (`Subject_ID`, `Year`, `WorkID`, `ID`, `Group_ID`) VALUES
+                 (?,?,?,?,?);""", (url_Subject_id, url_Year, workID_from_form, member_from_form, group_from_form))
+        connect.commit()
+        c.close()
+        return jsonify(authen = True)
+    else :
+        print "pass"
+        c.close()
+        return jsonify(authen = False)
