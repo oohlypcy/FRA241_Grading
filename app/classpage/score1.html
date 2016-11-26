@@ -102,7 +102,11 @@ tr:nth-child(even) {
     <h4><b>Menu</b></h4>
     <a href="#" class="w3-hover-black">upload work</a>
     {% if g.work.lim_member > 1 %}
-    <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,work_id=g.work_id)}}" class="w3-hover-black">manage group</a>
+    {% if g.user.Profile['Role'] == 'teacher' %}
+        <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,workID=g.work_id,mode = 'random')}}" class="w3-hover-black">Grouping Random</a>
+
+    {% endif %}
+    <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,workID=g.work_id,mode = 'choose')}}" class="w3-hover-black">manage group</a>
     {% endif %}
     <!--a href="http://facebook.com/" class="w3-hover-black">facebook</a>
     <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt</a>

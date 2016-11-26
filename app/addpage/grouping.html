@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% if g.user.Profile.get('Role') == 'teacher' %}
 <title>teacher_grouping</title>
+{% else %}
+<title>grouping</title>
+{% endif %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 var mr = document.getElementById("meta-refresh");
@@ -65,14 +69,7 @@ mr.parentNode.removeChild(mr);
 </div>
 
 <!-- Sidenav -->
-<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
-    <i class="fa fa-remove"></i>
-  </a>
-  <h4><b>Menu</b></h4>
-  <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
-  <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Grouping Random</a>
-</nav>
+
 
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -87,27 +84,23 @@ mr.parentNode.removeChild(mr);
           <div class="w3-col l6 w3-white w3-left">
           <form method="#" action="#">
 
-            Assignment id.
-            <select name="assignment_id">
-              {% for x in g.work_ID %}
-                <option value="{{x}}">{{x}}</option>
-              {% endfor %}
-            </select><br><br>
+
+            {% if g.mode == 'random' %}
             {% if g.user.Profile['Role'] == "teacher"  %}
-            Group NO.
+
+              Group NO.
             <input type="text" id="group_num" name="group_num">
             Members/Group:
             <input type="text" id="members" name="members"><br>
             <button  onclick="random_group()" id="random" value="random">random</button><br><br>
              {% endif %}
+              {% else %}
             <table  class="w3-table-all w3-centered">
                 <tr>
-                    <th>workID</th>
                     <th>ID</th>
                 </tr>
                 {% for x in g.unGroup %}
                 <tr>
-                    <td>{{x[1]}}</td>
                     <td>{{x[0]}}</td>
                 </tr>
                 {% endfor %}
@@ -117,21 +110,23 @@ mr.parentNode.removeChild(mr);
             User ID:
             <input type="text" id="member2" name="member2"><br>
             <button  onclick="grouping()" id="Grouping" value="Grouping">Grouping</button><br><br>
-            <table  >
+            {% endif %}
+              <table  >
               <tr>
-                  <th>Work ID</th>
                   <th>Group</th>
                   <th>ID</th>
               </tr>
 
                 {% for x in g.group_id %}
                   <tr>
-                      <td>{{x[2]}}</td>
                       <td>{{x[0]}}</td>
                       <td>{{x[1]}}</td>
-                      {% if g.user.Profile.get('Role') == 'teacher' %}
-                        <td><button class="w3-btn w3-red" onclick="return putout('{{x[2]}}',{{x[0]}},{{x[1]}})" >X</button></td>
+
+                      {% if g.user.Profile.get('Role') == 'teacher' or x[1] == g.id %}
+                        <td><button class="w3-btn w3-red" onclick="return putout({{x[0]}},{{x[1]}})" >X</button></td>
+
                       {% endif %}
+
                   </tr>
 
               {% endfor %}
@@ -182,10 +177,9 @@ function w3_close() {
 }
 function random_group(){
   var authentication
-  $.ajax({ url : "{{url_for('Addpage.random_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year) }}",
+  $.ajax({ url : "{{url_for('Addpage.random_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year,workID = g.workID) }}",
   async : false,
   data: {
-     work_id: $('select[name="assignment_id"]').val(),
      group_number: $('input[id="group_num"]').val(),
      group_limit: $('input[id="members"]').val(),
   },
@@ -199,10 +193,9 @@ function random_group(){
 function grouping(){
   var authentication
   console.log("test");
-  $.ajax({ url : "{{url_for('Addpage.add_user_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year) }}",
+  $.ajax({ url : "{{url_for('Addpage.add_user_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year,workID = g.workID) }}",
   async : false,
   data: {
-     work_id: $('select[name="assignment_id"]').val(),
      group_number: $('input[id="group_num2"]').val(),
      member: $('input[id="member2"]').val(),
   },
@@ -216,10 +209,9 @@ function grouping(){
 
 function putout(workID,group,id){
 var authentication;
-    $.ajax({ url : "{{url_for('Addpage.remove_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year) }}",
+    $.ajax({ url : "{{url_for('Addpage.remove_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,workID = g.workID) }}",
      async: false,
      data: {
-        workID: workID,
         group: group,
         id: id,
      },
@@ -227,7 +219,7 @@ var authentication;
     success: function(data){
     authentication = data.authen;
     if(authentication === true){
-    $("#a".replace('a',workID,group,id)).remove();
+    $("#a".replace('a',group,id)).remove();
     }
     }
     });

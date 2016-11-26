@@ -74,7 +74,7 @@ table, td {
 {% if g.user.Profile['Role'] == 'teacher' %}
   <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
 {% endif %}
-  <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Grouping Random</a>
+
 </nav>
 
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>

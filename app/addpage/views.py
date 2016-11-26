@@ -96,18 +96,23 @@ def add_TA(url_user_id, url_Subject_id, url_Year):
     return render_template('teacher_add_TA.html')
 
 
-@Addpage.route('/<url_Subject_id>/<url_Year>/manage_group')
-def manage_group( url_Subject_id, url_user_id, url_Year):
+@Addpage.route('/<url_Subject_id>/<url_Year>/<workID>/<mode>/manage_group')
+def manage_group( url_Subject_id, url_user_id, url_Year, workID, mode):
     g.user = User(url_user_id)
     g.Subject_id = url_Subject_id
     g.Year = url_Year
+    g.id = url_user_id
+
+    g.mode = mode
     g.unGroup = []
     g.nonGroup = []
     connect = sqlite3.connect('Data.db')
     c= connect.cursor()
-    c.execute("SELECT Group_ID, ID, WorkID from Groups WHERE Subject_ID = ? AND Year = ? ",
-                (g.Subject_id, g.Year))
+    c.execute("SELECT Group_ID, ID from Groups WHERE Subject_ID = ? AND Year = ? AND WorkID = ?",
+                (g.Subject_id, g.Year,workID))
     g.group_id = c.fetchall()
+    g.group_id = [[str(x[0]),str(x[1])] for x in g.group_id]
+    print g.group_id
     c.execute("SELECT ID from Enrol WHERE Subject_ID = ? AND subject_Year = ?",(g.Subject_id,g.Year))
     Id = c.fetchall()
     c.execute("SELECT workID, lim_member from work WHERE Subject_ID = ? AND Year = ?",(g.Subject_id,g.Year))
@@ -326,17 +331,19 @@ def add_user_group(url_user_id,url_Subject_id,url_Year):
         c.close()
         return jsonify(authen = False)
 
-@Addpage.route('/<url_Subject_id>/<url_Year>/remove_group')
-def remove_group(url_user_id,url_Subject_id,url_Year):
+@Addpage.route('/<url_Subject_id>/<url_Year>/<workID>/remove_group')
+def remove_group(url_user_id,url_Subject_id,url_Year,workID):
     print "test"
-    workID_from_form = request.values.get('workID')
+
     group_from_form = request.values.get('group')
     id_from_form = request.values.get('id')
     connect = sqlite3.connect('Data.db')
     c = connect.cursor()
+
+
     c.execute("""DELETE FROM Groups WHERE Subject_ID = ? AND Year = ? AND WorkID = ?
                 AND ID = ? AND Group_ID = ? """,(url_Subject_id,url_Year,
-                workID_from_form,id_from_form,group_from_form))
+                workID,id_from_form,group_from_form))
     connect.commit()
     c.close()
     return jsonify(authen = True)
