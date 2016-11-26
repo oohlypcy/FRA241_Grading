@@ -78,17 +78,21 @@ def CurrentWork(url_user_id):
         data = []
         for work in sorted(subject.get_work(), key=itemgetter(2)):
             # check work from submit work
-            try:
-                # k = submitWork(work[2], year, work[0], g.user.id)
-                g.address.append(str(
-                    url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
-                            url_user_id=g.user.id)))
-                g.status.append("send")
-            # work doesn't submit
-            except Exception:
-                g.address.append(None)
-                g.status.append("not send")
-            g.work.append(work)
+            deadline = work[3].split('/')
+            deadline = datetime.date(int(deadline[2]), int(deadline[1]), int(deadline[0]))
+            today = datetime.date(Year,year.month,year.day)
+            if deadline > today:
+                g.work.append(work)
+                try:
+                    # k = submitWork(work[2], year, work[0], g.user.id)
+                    g.address.append(str(
+                        url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
+                                url_user_id=g.user.id)))
+                    g.status.append("send")
+                # work doesn't submit
+                except Exception:
+                    g.address.append(None)
+                    g.status.append("not send")
     g.lenght = range(len(g.work))
     return render_template("HTML_assignment.html")
 
@@ -126,7 +130,7 @@ def CurrentScore(url_user_id):
                 total = total + int(work.Get_Mark()[0])
                 g.work.append([workID, position, work.Get_Mark(), fullmark.Get_fullmark()])
             except Exception:
-                g.work.append([workID, position, [0,], fullmark.Get_fullmark()])
+                g.work.append([workID, position, [0, ], fullmark.Get_fullmark()])
                 total = total + 0
             full_total = full_total + fullmark.Get_fullmark()
         g.total_mark.append([subject.Subject_Id, int(total), int(full_total)])

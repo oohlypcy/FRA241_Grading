@@ -52,9 +52,10 @@ def Subject_Score(url_Subject_id, url_Year, url_user_id):
         all_user_ID = c.execute("SELECT ID FROM Enrol WHERE Subject_ID = ? AND  subject_Year = ?",
                                 (g.SubjectID, g.year))
         all_user_ID = all_user_ID.fetchall()
+        all_user_ID = sorted([x[0] for x in all_user_ID])
         for x in all_user_ID:
-            if str(x[0]) != str(g.UserID):
-                g.all_user_ID.append(x[0])
+            if str(x) != str(g.UserID):
+                g.all_user_ID.append(x)
         c.close()
         for x in subjectWork:
             for selectUser in g.all_user_ID:
@@ -66,8 +67,11 @@ def Subject_Score(url_Subject_id, url_Year, url_user_id):
                     address = None
                 work = Work(g.SubjectID, g.year, x[2])
                 g.work.append([selectUser, x[2], address, work.Fullmark])
-                g.score.append([selectUser, g.SubjectID, x[2], submitwork.Mark])
-
+                print submitwork.Mark
+                if submitwork.Mark!=0:
+                    g.score.append([selectUser, g.SubjectID, x[2], submitwork.Mark])
+                else:
+                    g.score.append([selectUser, g.SubjectID, x[2],[0,]])
                 if [x[2], work.Fullmark] not in g.workID:
                     g.workID.append([x[2], work.Fullmark])
 
