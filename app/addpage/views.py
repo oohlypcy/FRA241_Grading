@@ -36,6 +36,7 @@ def add_student(url_user_id, url_Subject_id, url_Year):
     g.year = url_Year
     g.subject_id = url_Subject_id
     g.id = url_user_id
+    g.user=User(g.id)
     conn = sqlite3.connect('Data.db')
     g.current = 'student'
     currentAcademicYear = datetime.date.today()
@@ -64,6 +65,7 @@ def add_TA(url_user_id, url_Subject_id, url_Year):
     g.subject_id = url_Subject_id
     g.id = url_user_id
     g.current = 'TA'
+    g.user = User(g.id)
     conn = sqlite3.connect('Data.db')
     currentAcademicYear = datetime.date.today()
     if currentAcademicYear.month <= 4:
