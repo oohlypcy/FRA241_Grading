@@ -133,6 +133,26 @@ def manage_group( url_Subject_id, url_user_id, url_Year):
     else:
         return render_template('grouping.html')
 
+@Addpage.route('/add_works')
+def add_works(url_user_id):
+    subject = User(url_user_id)
+    subject_sub = subject.Subject['current']
+    subject_id = []
+    for x in subject_sub:
+        subject_id.append(x.Subject_Id)
+    g.math = len(subject_id)
+    g.subject_id =  subject_id
+    return render_template('teacher_add_works.html')
+
+@Addpage.route('/sub_add_works')
+def sub_add_works(url_user_id, url_Subject_id, url_Year):
+    subsubject_from_form = request.values.get('subsubject')
+    subtypework_from_form = request.values.get('subtypework')
+    subgroup_from_form = request.values.get('subgroup')
+    subdetail_from_form = request.values.get('subdetail')
+    subdate_from_form = request.values.get('subdate')
+    subtime_from_form = request.values.get('subtime')
+    return render_template('teacher_add_works.html')
 
 @Addpage.route('/Add_subject_db')
 def Add_subject_db(url_user_id):
