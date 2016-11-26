@@ -37,7 +37,23 @@ def Home(url_user_id):
 def CurrentSubject(url_user_id):
     g.id = url_user_id
     g.user = User(g.id)
+    lecturer = []
+    g.lecturer = []
+    g.data = []
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
     g.subject_list = g.user.Subject['current']
+    for i in g.subject_list:
+        c.execute("SELECT ID, Subject_ID from Enrol WHERE Subject_ID = ? AND Subject_Year = ? AND Enrol_Type = 'teacher' ",(i.data['Subject_ID'],i.data['Year']))
+        lecturer.append(c.fetchall())
+        c.execute("SELECT WorkID from work WHERE Year = ? AND Subject_ID = ? ",(i.data['Year'],i.data['Subject_ID']))
+        g.data.append([len(c.fetchall()),i.data['Subject_ID']])
+
+    for i in lecturer:
+        user = User(i[0][0])
+        user = user.Profile['Title'] + user.Profile['Name'] + " " + user.Profile['Surname']
+        g.lecturer.append([user,i[0][1]])
+
 
     return render_template('sub.html')
 

@@ -100,9 +100,16 @@
                       <div class="w3-container" align="Left">
                           <p style="font-size:20px">Title : Digital Electronics{{x.Year}}</p>
                         <p style="font-size:20px">Year : {{x.Year}}</p>
-
-                          <p style="font-size:20px">Lecturer : {{x.Year}}</p>
-                        <p style="font-size:20px">Assignment : {{x.data['Description']}}</p>
+                            {% for y in g.lecturer %}
+                                {% if y[1] == x.Subject_Id %}
+                                  <p style="font-size:20px">Lecturer : {{y[0]}}</p>
+                                {% endif %}
+                            {% endfor %}
+                            {% for y in g.data %}
+                                {% if y[1] == x.Subject_Id %}
+                                    <p style="font-size:20px">Assignment : {{y[0]}}</p>
+                                {% endif %}
+                            {% endfor %}
 
                       </div>
                         <footer class="w3-container w3-teal">
