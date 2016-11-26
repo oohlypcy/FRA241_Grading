@@ -214,12 +214,17 @@ def removeperson(url_user_id, url_Subject_id, url_Year):
     print id_from_form
     k = c.execute("SELECT * from Enrol WHERE ID = ? AND Subject_ID = ? AND subject_Year = ?",
                   (id_from_form, url_Subject_id, url_Year))
-    if k.fetchone() != None:
-        c.execute("""DELETE FROM Enrol WHERE ID = ? AND Subject_ID = ? AND subject_Year = ?""",(id_from_form, url_Subject_id, url_Year))
-        conn.commit()
-        c.close()
-        conn.close()
-        return jsonify(authen=True)
+    f = k.fetchone()
+    ka = c.execute("SELECT * from Enrol WHERE  Subject_ID = ? AND subject_Year = ? AND Enrol_Type = ?",
+                  ( url_Subject_id, url_Year,'teacher'))
+    s=ka.fetchall()
+    if f != None:
+        if len(s) >1:
+            c.execute("""DELETE FROM Enrol WHERE ID = ? AND Subject_ID = ? AND subject_Year = ?""",(id_from_form, url_Subject_id, url_Year))
+            conn.commit()
+            c.close()
+            conn.close()
+            return jsonify(authen=True)
     else:
         return jsonify(authen=False)
 
@@ -340,10 +345,10 @@ def remove_group(url_user_id,url_Subject_id,url_Year,workID):
     connect = sqlite3.connect('Data.db')
     c = connect.cursor()
 
-
     c.execute("""DELETE FROM Groups WHERE Subject_ID = ? AND Year = ? AND WorkID = ?
                 AND ID = ? AND Group_ID = ? """,(url_Subject_id,url_Year,
                 workID,id_from_form,group_from_form))
+
     connect.commit()
     c.close()
     return jsonify(authen = True)
