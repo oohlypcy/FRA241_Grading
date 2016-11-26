@@ -40,6 +40,7 @@ def CurrentSubject(url_user_id):
     lecturer = []
     g.lecturer = []
     g.data = []
+    g.title = []
     conn = sqlite3.connect('Data.db')
     c = conn.cursor()
     g.subject_list = g.user.Subject['current']
@@ -48,11 +49,15 @@ def CurrentSubject(url_user_id):
         lecturer.append(c.fetchall())
         c.execute("SELECT WorkID from work WHERE Year = ? AND Subject_ID = ? ",(i.data['Year'],i.data['Subject_ID']))
         g.data.append([len(c.fetchall()),i.data['Subject_ID']])
-
+        c.execute("SELECT title, Subject_ID from SubjectDetail WHERE Subject_ID = ? AND year = ?",(i.data['Subject_ID'],i.data['Year']))
+        g.title.append(c.fetchone())
+    print g.title
     for i in lecturer:
-        user = User(i[0][0])
-        user = user.Profile['Title'] + user.Profile['Name'] + " " + user.Profile['Surname']
-        g.lecturer.append([user,i[0][1]])
+        print i
+        if i != [] :
+            user = User(i[0][0])
+            user = user.Profile['Title'] + user.Profile['Name'] + " " + user.Profile['Surname']
+            g.lecturer.append([user,i[0][1]])
 
 
     return render_template('sub.html')
@@ -78,21 +83,17 @@ def CurrentWork(url_user_id):
         data = []
         for work in sorted(subject.get_work(), key=itemgetter(2)):
             # check work from submit work
-            deadline = work[3].split('/')
-            deadline = datetime.date(int(deadline[2]), int(deadline[1]), int(deadline[0]))
-            today = datetime.date(Year,year.month,year.day)
-            if deadline > today:
-                g.work.append(work)
-                try:
-                    # k = submitWork(work[2], year, work[0], g.user.id)
-                    g.address.append(str(
-                        url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
-                                url_user_id=g.user.id)))
-                    g.status.append("send")
-                # work doesn't submit
-                except Exception:
-                    g.address.append(None)
-                    g.status.append("not send")
+            try:
+                # k = submitWork(work[2], year, work[0], g.user.id)
+                g.address.append(str(
+                    url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
+                            url_user_id=g.user.id)))
+                g.status.append("send")
+            # work doesn't submit
+            except Exception:
+                g.address.append(None)
+                g.status.append("not send")
+            g.work.append(work)
     g.lenght = range(len(g.work))
     return render_template("HTML_assignment.html")
 
@@ -130,7 +131,7 @@ def CurrentScore(url_user_id):
                 total = total + int(work.Get_Mark()[0])
                 g.work.append([workID, position, work.Get_Mark(), fullmark.Get_fullmark()])
             except Exception:
-                g.work.append([workID, position, [0, ], fullmark.Get_fullmark()])
+                g.work.append([workID, position, [0,], fullmark.Get_fullmark()])
                 total = total + 0
             full_total = full_total + fullmark.Get_fullmark()
         g.total_mark.append([subject.Subject_Id, int(total), int(full_total)])

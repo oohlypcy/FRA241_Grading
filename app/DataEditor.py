@@ -108,6 +108,20 @@ class Data:
             )""")
         except Exception:
             print "Table Work has created"
+
+        try:
+            c.executescript("""
+            CREATE TABLE `SubjectDetail` (
+              `Subject_ID` varchar(45) NOT NULL,
+              `year` varchar(45) NOT NULL,
+              `section` varchar(45) DEFAULT NULL,
+              `day` varchar(45) DEFAULT NULL,
+              `time` varchar(45) DEFAULT NULL,
+              `room` varchar(45) DEFAULT NULL,
+              `title` varchar(45) DEFAULT NULL
+            )""")
+        except Exception:
+            print "Table User has created"
         c.close()
 
     # insert data in User table
@@ -176,6 +190,15 @@ class Data:
         c.execute("""INSERT INTO `work` (`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES
         (?,?,?,?,?,?,?,?,?);""", (Subject_ID, Year, WorkID, Deadlines, status, type, FullMark, Grading, lim_member))
         conn.commit()  # save data into db
+        c.close()
+
+    # insert data in SubjectDetail table
+    def SubjectDetailInsert(self, Subject_ID, year, section, day, time, room, title):
+        conn = sqlite3.connect("Data.db")
+        c = conn.cursor()
+        c.execute("""INSERT INTO `SubjectDetail` (`Subject_ID`, `year`, `section`, `day`, `time`, `room`, `title`) VALUES (?,?,?,?,?,?,?) ;"""
+                  ,(Subject_ID,year,section,day,time,room, title))
+        conn.commit()
         c.close()
 
     # UserInsert(ID='58340500017',Password='Boomming1*',Title='Mr.',Name='Chaiyaporn',Surname='Boonyasathian',E_mail='chaiya45689@gmail.com',Role='student',Faculty='FIBO',Major='robotic and automation',Enrol_Year='58',Picture=None) #insert User
@@ -303,7 +326,15 @@ class Data:
             print "Subject year = ", row[2]
             print "Enrol_Type = ", row[3]
             print "SECTION = ", row[4]
+            print "***************"
+
+        print("--------SubjectDetail---------")
+        cursor2 = c.execute("PRAGMA table_info(SubjectDetail)")
+        print [row[1] for row in cursor2]
+        cursor = c.execute("SELECT * from SubjectDetail")
+        print [row for row in cursor]
         print "***************"
+
 
         # c.executescript("""DELETE  FROM Enrol WHERE Subject_ID = 'FRA161'""")
         # c.executescript("""DELETE  FROM subject WHERE Subject_ID = 'explore'""")# delete data in table subject
@@ -425,6 +456,16 @@ a = Data()
 # a.edit("DELETE FROM Groups WHERE Subject_ID = 'FRA222' AND Group_ID = '2'")
 # a.edit("DELETE FROM Groups WHERE ID = '5834050005'")
 # a.edit("DELETE FROM Groups WHERE Subject_ID = 'FRA221'")
+# c.execute("ALTER TABLE enrol ADD  COLUMN Enrol_Type varchar(45) DEFAULT NULL")
+# a.edit("UPDATE Enrol SET SECTION = 'A' WHERE ID = '58340500000' ")
+# a.edit("UPDATE SubjectDetail SET time = '9:30-12:30' WHERE Subject_ID = 'FRA222'")
+# a.edit("UPDATE SubjectDetail SET Subject_ID = 'FRA221' WHERE Subject_ID = 'FRA241'")
+# a.edit("UPDATE SubjectDetail SET title = 'Digital Electronics' WHERE Subject_ID = 'FRA221'")
+# a.edit("DELETE FROM SubjectDetail WHERE Subject_ID = 'Mth201' AND day = 'wednesday'")
+# a.SubjectDetailInsert("Mth201","2559","A","wednesday","13:30-15:30","CB 2504","Calculus3")
+# a.edit("UPDATE SubjectDetail SET detail = 'for learning about calculus' WHERE Subject_ID = 'Mth201'")
+# a.edit("UPDATE SubjectDetail SET syllabus = 'for know and can use calculator' WHERE Subject_ID = 'Mth201'")
+
 a.show()
 
 

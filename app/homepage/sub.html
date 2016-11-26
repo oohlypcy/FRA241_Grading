@@ -98,7 +98,11 @@
                         </h1>
                       </header>
                       <div class="w3-container" align="Left">
-                          <p style="font-size:20px">Title : Digital Electronics{{x.Year}}</p>
+                          {% for y in g.title %}
+                            {% if y[1] == x.Subject_Id %}
+                                <p style="font-size:20px">Title : {{y[0]}} {{x.Year}}</p>
+                            {% endif %}
+                        {% endfor %}
                         <p style="font-size:20px">Year : {{x.Year}}</p>
                             {% for y in g.lecturer %}
                                 {% if y[1] == x.Subject_Id %}

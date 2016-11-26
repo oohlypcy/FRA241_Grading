@@ -22,6 +22,29 @@ def class_process(endpoint, url_Subject_id):
 
 @classpage.route('/')
 def Subjects(url_Subject_id, url_Year, url_user_id):
+    #title detail, lecturer, day, room, time, syllabus
+    g.lecturer = []
+    g.select= []
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    #user section
+    c.execute("SELECT SECTION from Enrol WHERE ID = ? AND Subject_year = ? AND Subject_ID = ? ",(url_user_id,url_Year,url_Subject_id))
+    section = c.fetchall()
+    print section
+    # title detail syllabus
+    c.execute("SELECT title, detail, syllabus from SubjectDetail WHERE Subject_ID = ? AND year = ?",(url_Subject_id,url_Year))
+    g.data = c.fetchone()
+    #teacher id
+    c.execute("SELECT ID from Enrol WHERE Enrol_Type = 'teacher' AND Subject_ID = ? AND Subject_year = ?",(url_Subject_id,url_Year))
+    Id = c.fetchall()
+    for x in Id:
+        user = User(str(x)[1:-3])
+        # lecturer
+        g.lecturer.append(user.Profile['Title']+user.Profile['Name']+" "+user.Profile['Surname'])
+        for i in section:
+            #day room time
+            c.execute("SELECT day, room, time from SubjectDetail WHERE  Subject_ID = ? AND year = ? AND section = ?",(url_Subject_id,url_Year,i[0]))
+            g.select.append(c.fetchall())
     return render_template('sub-1.html')
 
 
