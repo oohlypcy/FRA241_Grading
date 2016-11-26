@@ -48,6 +48,8 @@ class submitWork:
         mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = ? AND ID = ? AND Year = ? AND Subject_ID = ?"
                          ,(str(self.WorkID),str(self.ID) ,str(self.Year),str(self.Subject_Id)))
         mark = mark.fetchone()
+        if mark == None:
+            return 0
         # close connection
         c.close()
         # return mark [list]
@@ -71,6 +73,8 @@ class submitWork:
             "SELECT status from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?",(str(self.WorkID),
                                                                             str(self.Year), str(self.Subject_Id)))
         status = status.fetchone()
+        if status == None:
+            return 'Not sent'
         # close connection
         c.close()
         # return status 'str'
@@ -84,6 +88,8 @@ class submitWork:
         work_address = c.execute("SELECT Address from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?"
                                  ,(str(self.WorkID),str(self.Year),str(self.Subject_Id)))
         work_address = work_address.fetchone()
+        if work_address == None:
+            return 'N'
         # close connection
         c.close()
         # return address 'str'

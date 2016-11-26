@@ -11,7 +11,11 @@ mr.parentNode.removeChild(mr);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
+{% if g.user.Profile['Role'] == 'student' %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% else %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
@@ -95,7 +99,7 @@ mr.parentNode.removeChild(mr);
                 <option value="FRA222">FRA222</option-->
               </select><br><br>
             Add TA:
-              <input id="TA_id" type="text" ><button onclick="choose_TA_name()" value="choose" id="show_TA_name1">Choose</button><br>
+              <input id="TA_id" type="text" ><button onclick="choose_TA_name()" value="choose" id="show_TA_name1">Add</button><br>
             Semester:
               <select name="semester">
                 <option value="{{g.year}}">{{g.year}}</option>
@@ -109,10 +113,14 @@ mr.parentNode.removeChild(mr);
       <p >current student</p>
       {% endif %}
                 {% for x in g.people %}
-                <p id="{{x}}"> {{x}} <button class="w3-btn w3-red" onclick="return putout({{x}})" >X</button></p>
+                <p id="{{x}}"> {{x}}
+                  {% if g.user.Profile['Role'] != 'student' %}
+                  <button class="w3-btn w3-red" onclick="return putout({{x}})" >X</button>
+                  {% endif %}
+                </p>
                 {% endfor %}
               </div>
-            <input type="submit" value="Add">
+            <!--input type="submit" value="Add"-->
           </form>
 
           <!-- semester pull semester_data from db -->
@@ -194,8 +202,10 @@ var authentication;
   if(authentication === true){
   $( "#showta" ).append( "<p id=x> x </p>".replace('x',TA_id));
   document.getElementById(TA_id).innerHTML = TA_id+" ";
-  $( "#a".replace('a',TA_id) ).append( "<button class=\"w3-btn w3-red\" onclick=\"return putout(x)\">X</button>".replace('x',TA_id));
-  }
+  {% if g.user.Profile['Role'] != 'student' %}
+     $( "#a".replace('a',TA_id) ).append( "<button class=\"w3-btn w3-red\" onclick=\"return putout(x)\">X</button>".replace('x',TA_id));
+   {% endif %}
+ }
   }
   });
   return authentication;
