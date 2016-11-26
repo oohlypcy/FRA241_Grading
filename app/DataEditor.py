@@ -421,9 +421,9 @@ a = Data()
 # a.edit("UPDATE work SET Deadlines = '03/11/2559' WHERE Subject_ID = 'FRA241' AND WorkID ='2' ")
 # a.edit("UPDATE work SET Deadlines = '08/11/2559' WHERE Subject_ID = 'FRA241' AND WorkID ='3' ")
 # a.edit("UPDATE work SET Deadlines = '30/12/2559' WHERE Subject_ID = 'FRA222' AND WorkID ='hamID1' ")
-
-
-
+# a.EnrolInsert("58340500000","Mth201","2559")
+# a.edit("DELETE FROM Groups WHERE Subject_ID = 'FRA222' AND Group_ID = '2'")
+# a.edit("DELETE FROM Groups WHERE ID = '5834050005'")
 a.show()
 
 
