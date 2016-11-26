@@ -115,7 +115,6 @@ def manage_group( url_Subject_id, url_user_id, url_Year):
     for x in group_done:
         if [str(x[0]),x[1]] in g.unGroup:
             g.unGroup.remove([str(x[0]),x[1]])
-
     c.close()
     g.id = url_user_id
     g.work_ID = []
@@ -124,9 +123,11 @@ def manage_group( url_Subject_id, url_user_id, url_Year):
     work = work.get_work()
     #find all work in that subject
     for x in work:
-        g.work_ID.append(x[2])
+        for y in nongroup:
+            if x[2] == y[0]  and str(y[1]) != '1':
+                g.work_ID.append(x[2])
     if g.user.Profile['Role'] == 'student':
-        return render_template('student_grouping.html')
+        return render_template('grouping.html')
     else:
         return render_template('grouping.html')
 
@@ -262,12 +263,13 @@ def random_group(url_user_id,url_Subject_id,url_Year):
 
 @Addpage.route('/<url_Subject_id>/<url_Year>/add_user_group')
 def add_user_group(url_user_id,url_Subject_id,url_Year):
-    print "555";
+    print "555"
     workID_from_form = request.values.get('work_id')
     group_from_form = request.values.get('group_number')
     member_from_form = request.values.get('member')
     connect = sqlite3.connect('Data.db')
     c = connect.cursor()
+    print workID_from_form,group_from_form,member_from_form
     c.execute("SELECT ID from Groups WHERE ID = ? AND WorkID = ? AND Subject_ID = ? AND Year = ? ",(member_from_form,workID_from_form,url_Subject_id,url_Year))
     Id = c.fetchone()
     c.execute("SELECT ID grom Enrols WHERE ID = ?",(member_from_form))
@@ -287,3 +289,4 @@ def add_user_group(url_user_id,url_Subject_id,url_Year):
         print "pass"
         c.close()
         return jsonify(authen = False)
+
