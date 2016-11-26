@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
 {% else %}
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+<link rel="stylesheet" href="https://fonts.googleap is.com/css?family=Roboto">
 {% endif %}
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
 <style>
@@ -89,7 +89,7 @@
                 <option value="{{x}}">{{x}}</option>
               {% endfor %}
             </select><br><br>
-              {% if g.user.Profile['Role'] == "teacher"  %}
+            {% if g.user.Profile['Role'] == "teacher"  %}
             Group NO.
             <input type="text" id="group_num" name="group_num">
             Members/Group:
@@ -127,6 +127,11 @@
               </tr>
               {% endfor %}
             </table>
+              <div id ="showUserGroup">
+
+
+              </div>
+
           </form>
           <!-- semester pull semester_data from db -->
           </div>

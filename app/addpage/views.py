@@ -129,7 +129,7 @@ def manage_group( url_Subject_id, url_user_id, url_Year):
             if x[2] == y[0]  and str(y[1]) != '1':
                 g.work_ID.append(x[2])
     if g.user.Profile['Role'] == 'student':
-        return render_template('grouping.html')
+        return render_template('student_grouping.html')
     else:
         return render_template('grouping.html')
 
