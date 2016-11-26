@@ -125,7 +125,7 @@ def Subject_work_score(url_Subject_id, url_Year, url_user_id, work_id):
                 try:
                     g.single_score.append(str(single_score_student[0][0]))
                 except Exception:
-                    g.single_score.append(None)
+                    g.single_score.append(0)
                 g.student1.append(str(NAME_student[0][1]))
                 g.student2.append(str(row[0]))
 
@@ -145,6 +145,8 @@ def Subject_work_score(url_Subject_id, url_Year, url_user_id, work_id):
                     user_group_score = user_group_score.fetchone()
                     if user_group_score != None:
                         user_group_score = user_group_score[0]
+                    else:
+                        user_group_score = 0
                     g.group_user.append(
                         [group_ID_student[2], group_ID_student[1], NAME_student[0][1], user_group_score])
         g.a = range(len(g.student2))
@@ -156,7 +158,12 @@ def Subject_work_score(url_Subject_id, url_Year, url_user_id, work_id):
                             (url_Subject_id, url_Year, url_user_id, work_id))
         g.score = g.score.fetchone()
         if g.score != None:
-            g.score = g.score[6]
+            if g.score[6]!=None:
+                g.score = g.score[6]
+            else:
+                g.score = 0
+        else:
+            g.score = 0
         print g.group_user
         c.close()
 

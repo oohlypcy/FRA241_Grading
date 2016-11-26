@@ -112,7 +112,9 @@ mr.parentNode.removeChild(mr);
               {% else %}
               <form>
               Subject ID: <select id="subject_code1">
-                  <option value="2559">2559</option>
+                  {% for x in g.subject_list %}
+                  <option value="{{x}}">{{x}}</option>
+                  {% endfor %}
                   </select><br><br>
               Semester:
                 <select name="semester">
