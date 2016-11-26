@@ -119,18 +119,21 @@
                   <th>Group</th>
                   <th>ID</th>
               </tr>
-              {% for x in g.group_id %}
-              <tr>
-                  <td>{{x[2]}}</td>
-                  <td>{{x[0]}}</td>
-                  <td>{{x[1]}}</td>
-              </tr>
-              {% endfor %}
-            </table>
               <div id ="showUserGroup">
-
-
+                {% for x in g.group_id %}
+                  <tr>
+                      <td>{{x[2]}}</td>
+                      <td>{{x[0]}}</td>
+                      <td>{{x[1]}}</td>
+                  </tr>
+                  <button class="w3-btn w3-red" onclick="return putout({{x}})" >X</button>
+              {% endfor %}
               </div>
+            </table>
+
+
+
+
 
           </form>
           <!-- semester pull semester_data from db -->

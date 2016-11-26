@@ -152,6 +152,12 @@ def sub_add_works(url_user_id, url_Subject_id, url_Year):
     subdetail_from_form = request.values.get('subdetail')
     subdate_from_form = request.values.get('subdate')
     subtime_from_form = request.values.get('subtime')
+    # connect = sqlite3.connect("Data.db")
+    # c = connect.cursor()
+    # c.execute("""INSERT INTO `work` (`Subject_ID`, `Year`, `WorkID`, `Deadlines`, `status`, `type`, `FullMark`, `Grading`, `lim_member`) VALUES
+    #         (?,?,?,?,?,?,?,?,?);""", (url_Subject_id,url_Year, WorkID, Deadlines, status, type, FullMark, Grading, lim_member))
+    # connect.commit()
+    # c.close()
     return render_template('teacher_add_works.html')
 
 @Addpage.route('/Add_subject_db')
