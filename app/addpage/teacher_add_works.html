@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <meta http-equiv="refresh" content="disabled" id="meta-refresh">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 var mr = document.getElementById("meta-refresh");
 mr.parentNode.removeChild(mr);
 </script>
-<title>teacher_add_ta</title>
+<title>teacher_add_work</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
-{% if g.user.Profile['Role'] == 'student' %}
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
-{% else %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
-{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
@@ -30,28 +25,8 @@ mr.parentNode.removeChild(mr);
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 16px;
       }
-
-         .black-ribbon {
-  position: fixed;
-  z-index: 9999;
-  width: 120px;
-}
-@media only all and (min-wi;dth: 768px) {
-  .black-ribbon {
-    width: auto;
-  }
-}
-
-.stick-left { left: 0; }
-.stick-right { right: 0; }
-.stick-top { top: 0; }
-.stick-bottom { bottom: 0; }
-
 </style>
 <body>
-
-<!--black ribbon for HM King RAMA IX-->
-<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 
 <!--Navbar-->
 <div class="w3-top">
@@ -73,7 +48,9 @@ mr.parentNode.removeChild(mr);
   </a>
   <h4><b>Menu</b></h4>
   <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_subject.html" class="w3-hover-black">Add subject</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html">Add TA</a>
+  <!-- <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_work.html">Add work</a> -->
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping random</a>
 </nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
@@ -84,44 +61,35 @@ mr.parentNode.removeChild(mr);
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      {% if g.current == 'TA' %}
-      <h1 class="w3-text-teal">Add Teacher Assistance</h1>
-      {% else %}
-      <h1 class="w3-text-teal">Add Student</h1>
-      {% endif %}
+      <h1 class="w3-text-teal">Add Work</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
           <form method="#" action="#">
             Subject:
               <select name="subject_code">
-                <option value="{{g.subject_id}}">{{g.subject_id}}</option>
-                <!--option value="FRA231">FRA231</option>
-                <option value="FRA241">FRA241</option>
-                <option value="FRA222">FRA222</option-->
-              </select><br><br>
-            Add TA:
-              <input id="TA_id" type="text" ><button onclick="choose_TA_name()" value="choose" id="show_TA_name1">Add</button><br>
-            Semester:
-              <select name="semester">
-                <option value="{{g.year}}">{{g.year}}</option>
-                <!--option value="2560">2560</option>
-                <option value="2561">2561</option-->
-              </select><br><br>
-              <div id="showta">
-                {% if g.current == 'TA' %}
-      <p>current TA</p>
-      {% else %}
-      <p >current student</p>
-      {% endif %}
-                {% for x in g.people %}
-                <p id="{{x}}"> {{x}}
-                  {% if g.user.Profile['Role'] != 'student' %}
-                  <button class="w3-btn w3-red" onclick="return putout({{x}})" >X</button>
-                  {% endif %}
-                </p>
+                {% for x in range(0,g.math) %}
+                <option value="{{g.subject_id}}">{{g.subject_id[x]}}</option>
                 {% endfor %}
-              </div>
-            <!--input type="submit" value="Add"-->
+              </select><br><br>
+            Type of work:
+              <select name="type">
+                <option value="homework">homework</option>
+                <option value="assignment">assignment</option>
+                <option value="work">work</option>
+                <option value="project">project</option>
+              </select><br><br>
+            <input type="radio"/>Group<input type="text" id="#">/Gr.<br>
+            <input type="radio"/>Individual<br><br>
+            <!-- Grouping by teacher<br> <!--confused about --> -->
+              <!-- <input type="checkbox" name="teacher_grouping" value="yes">Yes<input type="text" id="members" name="members"><br> -->
+              <!-- <input type="checkbox" name="teacher_grouping" value="no">No<br><br> -->
+            work detail:
+              <br><textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
+              </textarea><br><br>
+            Deadline:<br>
+              <input type="date" name="date"><br>
+              <input type="time" name="time"><br><br>
+              <input type="submit" value="Add">
           </form>
 
           <!-- semester pull semester_data from db -->
@@ -161,55 +129,25 @@ function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
 }
-
-//function show_TA_name(){
-  //  var x = document.getElementById('TA_id').value;
-//  var y = "TA1";
-//  if (x==y){
-//    document.getElementById("show_TA_list").innerHTML = x;
-//  }
-//  return false;
-//}
-function putout(userid){
-var authentication;
-  $.ajax({ url : "{{url_for('Addpage.removeperson',url_user_id=g.id,url_Subject_id=g.subject_id,url_Year=g.year)}}",
+function addwork(){
+  var authentication2=false;
+  $.ajax({ url: "{{url_for('Addpage.sub_add_works',url_user_id=g.id)}}",
+  method: "GET",
   async: false,
   data: {
-    id: userid,
+  subsubject: $('select[name="subject_code"]').val(),
+  subtypework: $('select[name="type"]').val(),
+  subgroup: $('input[type="radio"]:checked').val(),
+  subdetail: $('textarea[id="score_ref"]').val(),
+  subdate: $('input[name="date"]').val(),
+  subtime: $('input[name="time"]').val(),
   },
-  dataType: 'json',
+  datatype: 'json',
   success: function(data){
-  authentication=data.authen;
-  if(authentication === true){
-  $("#a".replace('a',userid)).remove();
-  }
+  authentication2 = data.authen;
   }
   });
-
-  return authentication;
-}
-function choose_TA_name(){
-var TA_id = document.getElementById("TA_id").value;
-var authentication;
-  $.ajax({ url : "{{url_for('Addpage.addperson',url_user_id=g.id,url_Subject_id=g.subject_id,url_Year=g.year)}}",
-  async: false,
-  data: {
-    id: $('input[id="TA_id"]').val(),
-    from: "{{g.current}}"
-  },
-  dataType: 'json',
-  success: function(data){
-  authentication=data.authen;
-  if(authentication === true){
-  $( "#showta" ).append( "<p id=x> x </p>".replace('x',TA_id));
-  document.getElementById(TA_id).innerHTML = TA_id+" ";
-  {% if g.user.Profile['Role'] != 'student' %}
-     $( "#a".replace('a',TA_id) ).append( "<button class=\"w3-btn w3-red\" onclick=\"return putout(x)\">X</button>".replace('x',TA_id));
-   {% endif %}
- }
-  }
-  });
-  return authentication;
+  return authentication2;
 }
 </script>
 

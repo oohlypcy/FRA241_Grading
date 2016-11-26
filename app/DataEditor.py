@@ -424,6 +424,7 @@ a = Data()
 # a.EnrolInsert("58340500000","Mth201","2559")
 # a.edit("DELETE FROM Groups WHERE Subject_ID = 'FRA222' AND Group_ID = '2'")
 # a.edit("DELETE FROM Groups WHERE ID = '5834050005'")
+# a.edit("DELETE FROM Groups WHERE Subject_ID = 'FRA221'")
 a.show()
 
 

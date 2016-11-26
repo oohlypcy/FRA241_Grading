@@ -6,8 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+{% if g.user.Profile.get('Role') == 'teacher' %}
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% else %}
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+<link rel="stylesheet" href="https://fonts.googleap is.com/css?family=Roboto">
+{% endif %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
 <style>
@@ -62,8 +66,8 @@
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
+  <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
+  <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Grouping Random</a>
 </nav>
 
 <!-- Overlay effect when opening sidenav on small screens -->
@@ -85,12 +89,13 @@
                 <option value="{{x}}">{{x}}</option>
               {% endfor %}
             </select><br><br>
+            {% if g.user.Profile['Role'] == "teacher"  %}
             Group NO.
             <input type="text" id="group_num" name="group_num">
             Members/Group:
             <input type="text" id="members" name="members"><br>
             <button type="button" onclick="random_group()" id="random" value="random">random</button><br><br>
-
+             {% endif %}
             <table  class="w3-table-all w3-centered">
                 <tr>
                     <th>workID</th>
@@ -122,6 +127,11 @@
               </tr>
               {% endfor %}
             </table>
+              <div id ="showUserGroup">
+
+
+              </div>
+
           </form>
           <!-- semester pull semester_data from db -->
           </div>
@@ -178,6 +188,7 @@ function random_group(){
 }
 function grouping(){
   var authentication
+  console.log("test");
   $.ajax({ url : "{{url_for('Addpage.add_user_group',url_user_id=g.id,url_Subject_id= g.Subject_id,url_Year = g.Year) }}",
   async : false,
   data: {
