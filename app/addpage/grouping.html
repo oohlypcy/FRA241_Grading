@@ -3,6 +3,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <title>teacher_grouping</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var mr = document.getElementById("meta-refresh");
+mr.parentNode.removeChild(mr);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
@@ -94,7 +98,7 @@
             <input type="text" id="group_num" name="group_num">
             Members/Group:
             <input type="text" id="members" name="members"><br>
-            <button type="button" onclick="random_group()" id="random" value="random">random</button><br><br>
+            <button  onclick="random_group()" id="random" value="random">random</button><br><br>
              {% endif %}
             <table  class="w3-table-all w3-centered">
                 <tr>
@@ -112,7 +116,7 @@
             <input type="text" id="group_num2" name="group_num2"><br>
             User ID:
             <input type="text" id="member2" name="member2"><br>
-            <button type="button" onclick="grouping()" id="Grouping" value="Grouping">Grouping</button><br><br>
+            <button  onclick="grouping()" id="Grouping" value="Grouping">Grouping</button><br><br>
             <table  >
               <tr>
                   <th>Work ID</th>
@@ -125,7 +129,9 @@
                       <td>{{x[2]}}</td>
                       <td>{{x[0]}}</td>
                       <td>{{x[1]}}</td>
-                      <td><button class="w3-btn w3-red" onclick="return putout({{x[2]}})" >X</button></td>
+                      {% if g.user.Profile.get('Role') == 'teacher' %}
+                        <td><button class="w3-btn w3-red" onclick="return putout('{{x[2]}}',{{x[0]}},{{x[1]}})" >X</button></td>
+                      {% endif %}
                   </tr>
 
               {% endfor %}
@@ -210,7 +216,7 @@ function grouping(){
 
 function putout(workID,group,id){
 var authentication;
-    $ajax({ url : "{{url_for('Addpage.remove_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year) }}",
+    $.ajax({ url : "{{url_for('Addpage.remove_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year) }}",
      async: false,
      data: {
         workID: workID,
@@ -218,7 +224,7 @@ var authentication;
         id: id,
      },
     dataType: 'json',
-    success: fuction(data){
+    success: function(data){
     authentication = data.authen;
     if(authentication === true){
     $("#a".replace('a',workID,group,id)).remove();
