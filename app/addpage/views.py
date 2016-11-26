@@ -318,3 +318,17 @@ def add_user_group(url_user_id,url_Subject_id,url_Year):
         c.close()
         return jsonify(authen = False)
 
+@Addpage.route('/<url_Subject_id>/<url_Year>/remove_group')
+def remove_group(url_user_id,url_Subject_id,url_Year):
+    print "test"
+    workID_from_form = request.values.get('workID')
+    group_from_form = request.values.get('group')
+    id_from_form = request.values.get('id')
+    connect = sqlite3.connect('Data.db')
+    c = connect.cursor()
+    c.execute("""DELETE FROM Groups WHERE Subject_ID = ? AND Year = ? AND WorkID = ?
+                AND ID = ? AND Group_ID = ? """,(url_Subject_id,url_Year,
+                workID_from_form,id_from_form,group_from_form))
+    connect.commit()
+    c.close()
+    return jsonify(authen= True)

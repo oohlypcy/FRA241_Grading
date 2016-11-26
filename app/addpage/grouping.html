@@ -113,22 +113,23 @@
             User ID:
             <input type="text" id="member2" name="member2"><br>
             <button type="button" onclick="grouping()" id="Grouping" value="Grouping">Grouping</button><br><br>
-            <table  class="w3-table-all w3-centered">
+            <table  >
               <tr>
                   <th>Work ID</th>
                   <th>Group</th>
                   <th>ID</th>
               </tr>
-              <div id ="showUserGroup">
+
                 {% for x in g.group_id %}
                   <tr>
                       <td>{{x[2]}}</td>
                       <td>{{x[0]}}</td>
                       <td>{{x[1]}}</td>
+                      <td><button class="w3-btn w3-red" onclick="return putout({{x[2]}})" >X</button></td>
                   </tr>
-                  <button class="w3-btn w3-red" onclick="return putout({{x}})" >X</button>
+
               {% endfor %}
-              </div>
+
             </table>
 
 
@@ -205,6 +206,26 @@ function grouping(){
   }
   });
   return authentication;
+}
+
+function putout(workID,group,id){
+var authentication;
+    $ajax({ url : "{{url_for('Addpage.remove_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year) }}",
+     async: false,
+     data: {
+        workID: workID,
+        group: group,
+        id: id,
+     },
+    dataType: 'json',
+    success: fuction(data){
+    authentication = data.authen;
+    if(authentication === true){
+    $("#a".replace('a',workID,group,id)).remove();
+    }
+    }
+    });
+    return authentication;
 }
 </script>
 
