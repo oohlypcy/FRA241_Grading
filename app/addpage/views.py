@@ -72,7 +72,7 @@ def add_timetable(url_user_id):
     else :
         print "2"
         c.close()
-    return jsonify(authen = False)
+        return jsonify(authen = False)
 
 
 @Addpage.route('/add_subject')
@@ -229,7 +229,7 @@ def Add_subject_db(url_user_id):
     Subject_name_from_form = request.values.get('subname')
     Subject_detial_from_form = request.values.get('subdetial')
     grading_from_form = request.values.get('subref')
-    sec_from_form = request.values.get('section')
+    sec_from_form = request.values.get('section`')
     syllabus_from_form = request.values.get('syllabus')
     year_from_form = request.values.get('year')
     conn = sqlite3.connect('Data.db')  # connect Data.db
