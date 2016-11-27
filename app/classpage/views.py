@@ -30,9 +30,11 @@ def Subjects(url_Subject_id, url_Year, url_user_id):
     #user section
     c.execute("SELECT SECTION from Enrol WHERE ID = ? AND Subject_year = ? AND Subject_ID = ? ",(url_user_id,url_Year,url_Subject_id))
     section = c.fetchall()
+
     # title detail syllabus
-    c.execute("SELECT title, detail, syllabus from SubjectDetail WHERE Subject_ID = ? AND year = ?",(url_Subject_id,url_Year))
+    c.execute("SELECT title, Description, syllabus from Subject WHERE Subject_ID = ? AND year = ?",(url_Subject_id,url_Year))
     g.data = c.fetchone()
+    print g.data
     #teacher id
     c.execute("SELECT ID from Enrol WHERE Enrol_Type = 'teacher' AND Subject_ID = ? AND Subject_year = ?",(url_Subject_id,url_Year))
     Id = c.fetchall()

@@ -136,11 +136,11 @@ class Data:
         c.close()
 
     # insert data in Enrol table
-    def EnrolInsert(self, ID, Subject_ID, Subject_Year):  # not NULL all
+    def EnrolInsert(self, ID, Subject_ID, Subject_Year,type,section):  # not NULL all
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("""INSERT INTO `Enrol` (`ID`, `Subject_ID`, `subject_Year`) VALUES
-        (?, ?, ?);""", (ID, Subject_ID, Subject_Year))
+        c.execute("""INSERT INTO `Enrol` (`ID`, `Subject_ID`, `subject_Year`, `Enrol_Type`, `SECTION`) VALUES
+        (?, ?, ?,?,?);""", (ID, Subject_ID, Subject_Year,type,section))
         conn.commit()  # save data into db
         c.close()
 
@@ -154,21 +154,21 @@ class Data:
         c.close()
 
     # insert data in media table
-    def mediaInsert(self, Subject_ID, Year, Description, FullMark, Grading):  # Subject_ID and Year aren't NULL
+    def mediaInsert(self, Subject_ID, Year, filename, time, address, ID):  # Subject_ID and Year aren't NULL
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("""INSERT INTO `media` (`Subject_ID`,`Year`,`Description`,`FullMark`,`Grading`) VALUES
-         (?,?,?,?,?);""", (Subject_ID, Year, Description, FullMark, Grading))
+        c.execute("""INSERT INTO `media` (`Subject_ID`,`Year`,`File_name`,`time`,`address`, `ID`) VALUES
+         (?,?,?,?,?);""", (Subject_ID, Year, filename, time, address, ID))
         conn.commit()  # save data into db
         c.close()
 
     # insert data in subject table
     def subjectInsert(self, Subject_ID, Year, Description, FullMark,
-                      Grading):  # Description, FullMark and Grading default are NULL
+                      Grading,title,syllabus):  # Description, FullMark and Grading default are NULL
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("""INSERT INTO `subject` (`Subject_ID`, `Year`, `Description`, `FullMark`, `Grading`) VALUES
-        (?,?,?,?,?);""", (Subject_ID, Year, Description, FullMark, Grading))
+        c.execute("""INSERT INTO `subject` (`Subject_ID`, `Year`, `Description`, `FullMark`, `Grading`, `titles` , `syllabus`) VALUES
+        (?,?,?,?,?,?,?);""", (Subject_ID, Year, Description, FullMark, Grading,title,syllabus))
         conn.commit()  # save data into db
         c.close()
 
@@ -193,11 +193,11 @@ class Data:
         c.close()
 
     # insert data in SubjectDetail table
-    def SubjectDetailInsert(self, Subject_ID, year, section, day, time, room, title):
+    def SubjectDetailInsert(self, Subject_ID, year, section, day, time, room):
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
-        c.execute("""INSERT INTO `SubjectDetail` (`Subject_ID`, `year`, `section`, `day`, `time`, `room`, `title`) VALUES (?,?,?,?,?,?,?) ;"""
-                  ,(Subject_ID,year,section,day,time,room, title))
+        c.execute("""INSERT INTO `SubjectDetail` (`Subject_ID`, `year`, `section`, `day`, `time`, `room`, `title`, `detail` , `syllabus`) VALUES (?,?,?,?,?,?,?,?,?) ;"""
+                  ,(Subject_ID,year,section,day,time,room, None, None, None))
         conn.commit()
         c.close()
 
@@ -240,6 +240,8 @@ class Data:
         print("-----------User-----------")
         conn = sqlite3.connect("Data.db")
         c = conn.cursor()
+        cursor = c.execute("PRAGMA table_info(User)")
+        print [row[1] for row in cursor]
         cursor = c.execute(
             "SELECT ID, Password, Title, Name, Surname, Role, Faculty, Major, Picture from User")  # choose table for search data
         for row in cursor:
@@ -254,15 +256,10 @@ class Data:
             print "Picture = ", row[8]
             print "***************"
 
-        print("-----------Enrol-----------")
-        cursor = c.execute("SELECT ID, Subject_ID, Subject_Year from Enrol")  # choose table for search data
-        for row in cursor:
-            print "ID = ", row[0]
-            print "Subject_ID = ", row[1]
-            print "Subject_Year = ", row[2]
-            print "***************"
 
         print("-----------Groups-----------")
+        cursor = c.execute("PRAGMA table_info(Groups)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID, Group_ID from Groups")
         for row in cursor:
             print "Subject_ID = ", row[0]
@@ -273,6 +270,8 @@ class Data:
             print "***************"
 
         print("-----------media-----------")
+        cursor = c.execute("PRAGMA table_info(media)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT Subject_ID, Year  from media")  # choose table for search data
         for row in cursor:
             print "Subject_ID = ", row[0]
@@ -280,6 +279,8 @@ class Data:
             print "***************"
 
         print("-----------subject-----------")
+        cursor = c.execute("PRAGMA table_info(subject)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT * from subject")
         for row in cursor:
             print  row
@@ -291,6 +292,8 @@ class Data:
             print "***************"
 
         print("-----------SubmitWork-----------")
+        cursor = c.execute("PRAGMA table_info(SubmitWork)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT Subject_ID, Year, WorkID, ID, Address, Status, Mark from SubmitWork")
         for row in cursor:
             print "Subject ID = ", row[0]
@@ -303,6 +306,8 @@ class Data:
             print "***************"
 
         print("-----------work-----------")
+        cursor = c.execute("PRAGMA table_info(work)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT * from work")
         for row in cursor:
             print row
@@ -318,6 +323,8 @@ class Data:
             print "***************"
 
         print("-----------enrol-----------")
+        cursor = c.execute("PRAGMA table_info(Enrol)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT * from Enrol")
         for row in cursor:
             print row
@@ -329,8 +336,8 @@ class Data:
             print "***************"
 
         print("--------SubjectDetail---------")
-        cursor2 = c.execute("PRAGMA table_info(SubjectDetail)")
-        print [row[1] for row in cursor2]
+        cursor = c.execute("PRAGMA table_info(SubjectDetail)")
+        print [row[1] for row in cursor]
         cursor = c.execute("SELECT * from SubjectDetail")
         print [row for row in cursor]
         print "***************"
@@ -465,7 +472,16 @@ a = Data()
 # a.SubjectDetailInsert("Mth201","2559","A","wednesday","13:30-15:30","CB 2504","Calculus3")
 # a.edit("UPDATE SubjectDetail SET detail = 'for learning about calculus' WHERE Subject_ID = 'Mth201'")
 # a.edit("UPDATE SubjectDetail SET syllabus = 'for know and can use calculator' WHERE Subject_ID = 'Mth201'")
+# a.edit("UPDATE Subject SET title = 'Digital Electronics' WHERE Subject_ID ='FRA221'")
+# a.edit("UPDATE Subject SET title = 'sensor & actuator' WHERE Subject_ID ='FRA222'")
+# a.edit("UPDATE Subject SET title = 'programming' WHERE Subject_ID ='FRA241'")
+# a.edit("UPDATE Subject SET title = 'calculus' WHERE Subject_ID ='Mth201'")
+# a.edit("UPDATE Subject SET syllabus = 'this course is about for know and can use microcontroller' WHERE Subject_ID ='FRA221'")
+# a.edit("UPDATE Subject SET syllabus = 'this course is about for know and can use sensor and actuator' WHERE Subject_ID ='FRA222'")
+# a.edit("UPDATE Subject SET syllabus = 'this course is about for know hot to work with team' WHERE Subject_ID ='FRA241'")
+# a.edit("UPDATE Subject SET syllabus = 'this course is about for know and can use calculator' WHERE Subject_ID ='Mth201'")
 
+# a.edit("DELETE FROM SubjectDetail WHERE Subject_ID = 'FRA241'")
 a.show()
 
 

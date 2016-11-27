@@ -90,7 +90,7 @@ mr.parentNode.removeChild(mr);
       <h1 class="w3-text-teal">Add Subject</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-              {% if g.user.Profile['Role'] != 'student' %}
+
           <form>
             Subject name:
               <input type="text" id="subject_name" name="subject_name" required><br>
@@ -112,24 +112,12 @@ mr.parentNode.removeChild(mr);
                 <option value="2560">2560</option>
                 <option value="2561">2561</option>
               </select><br><br>
+            Syllabus:
+                <textarea rows="" cols="" wrap="soft" id="syllabus" name="syllabus" required>
+              </textarea><br>
               <button class="w3-btn w3-red" onclick="return addsubject()" >create</button>
           </form>
-              {% else %}
-              <form>
-              Subject ID: <select id="subject_code1">
-                  {% for x in g.subject_list %}
-                  <option value="{{x}}">{{x}}</option>
-                  {% endfor %}
-                  </select><br><br>
-              Semester:
-                <select name="semester">
-                <option value="2559">2559</option>
-                <option value="2560">2560</option>
-                <option value="2561">2561</option>
-                </select><br><br>
-              <button class="w3-btn w3-red" onclick="return addsubject()" >create</button>
-              </form>
-              {% endif %}
+
           <!-- semester pull semester_data from db -->
           </div>
         </div>
@@ -181,6 +169,7 @@ function addsubject(){
   subref: $('textarea[id="score_ref"]').val(),
   section: $('input[name="group"]:checked').val(),
   year: $('select[name="semester"]').val(),
+  syllabus : $('select[name="syllabus"]').val(),
   },
   datatype: 'json',
   success: function(data){

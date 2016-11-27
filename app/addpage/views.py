@@ -21,9 +21,58 @@ def addpage(endpoint, url_user_id):
 @Addpage.route('/<url_Subject_id>/<url_Year>/add_work')
 def add_assignment(url_user_id, url_Subject_id, url_Year):
     return 'boo'
+@Addpage.route('/add_timetable2')
+def add_timetable2(url_user_id):
+    connect = sqlite3.connect("Data.db")
+    c = connect.cursor()
+    c.execute("SELECT Subject_ID from Enrol WHERE ID = "+ str(url_user_id))
+    g.subject = c.fetchall()
+    return render_template('teacher_add_timetable.html')
 
+@Addpage.route('/add_timetable')
+def add_timetable(url_user_id):
+    Subjectid_from_form = request.values.get('ID')
+    section_from_form = request.values.get('section')
+    year_from_form = request.values.get('year')
+    day_from_form = request.values.get('day')
+    room_from_form = request.values.get('room')
+    start = request.values.get('start')
+    stop = request.values.get('stop')
+    time =str(start) + "-" + str(stop)
+    connect = sqlite3.connect("Data.db")
+    c = connect.cursor()
+    print room_from_form
+    print Subjectid_from_form,section_from_form,year_from_form,day_from_form,room_from_form,time
 
-
+    if str(section_from_form) == "All":
+        c.execute("SELECT * from Enrol WHERE Subject_ID = ? AND subject_Year = ? AND Enrol_Type = ?  "
+                  , (Subjectid_from_form, year_from_form, 'student'))
+    else:
+        c.execute("SELECT * from Enrol WHERE Subject_ID = ? AND subject_Year = ? AND Enrol_Type = ? AND SECTION = ? "
+                  ,(Subjectid_from_form,year_from_form,'student',section_from_form))
+    k =c.fetchone()
+    if k != None and str(section_from_form) != "All":
+        print "1"
+        c.execute("""INSERT INTO `SubjectDetail` (`Subject_ID`,`year`,`section`,`day`,`time`,`room`,`title`,`detail`,`syllabus`) VALUES
+                    (?,?,?,?,?,?,?,?,?);""", (Subjectid_from_form,year_from_form,section_from_form,day_from_form,time,room_from_form,None,None,None))
+        connect.commit()
+        c.close()
+        return jsonify(authen = True)
+    elif  k != None and str(section_from_form) == "All":
+        c.execute("""INSERT INTO `SubjectDetail` (`Subject_ID`,`year`,`section`,`day`,`time`,`room`,`title`,`detail`,`syllabus`) VALUES
+                            (?,?,?,?,?,?,?,?,?);""", (
+        Subjectid_from_form, year_from_form, 'A', day_from_form, time, room_from_form, None, None, None))
+        c.execute("""INSERT INTO `SubjectDetail` (`Subject_ID`,`year`,`section`,`day`,`time`,`room`,`title`,`detail`,`syllabus`) VALUES
+                                    (?,?,?,?,?,?,?,?,?);""", (
+            Subjectid_from_form, year_from_form, 'B', day_from_form, time, room_from_form, None, None,
+            None))
+        connect.commit()
+        c.close()
+        return jsonify(authen=True)
+    else :
+        print "2"
+        c.close()
+    return jsonify(authen = False)
 
 
 @Addpage.route('/add_subject')
@@ -36,6 +85,7 @@ def add_subject(url_user_id):
     print subject
     g.subject_list = [str(x[0]) for x in subject]
     print g.subject_list
+    return render_template('teacher_add_subject.html')
     return render_template('teacher_add_subject.html')
 
 
@@ -180,14 +230,15 @@ def Add_subject_db(url_user_id):
     Subject_detial_from_form = request.values.get('subdetial')
     grading_from_form = request.values.get('subref')
     sec_from_form = request.values.get('section')
+    syllabus_from_form = request.values.get('syllabus')
     year_from_form = request.values.get('year')
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
     a = c.execute("SELECT * from subject WHERE Subject_ID = ? AND Year = ?",(str(Subjectid_from_form), str(year_from_form[2:4])))
     a = a.fetchone()
     if a==None:
-        c.execute("""INSERT INTO 'subject' (`Subject_ID`, `Year`, `Description`, `FullMark`, `Grading` , `Name` ) VALUES
-        (?,?,?,?,?,?);""",(Subjectid_from_form,year_from_form,Subject_detial_from_form,'100',grading_from_form,Subject_name_from_form))
+        c.execute("""INSERT INTO 'subject' (`Subject_ID`, `Year`, `Description`, `FullMark`, `Grading` , `Title`, `syllabus`  ) VALUES
+        (?,?,?,?,?,?,?);""",(Subjectid_from_form,year_from_form,Subject_detial_from_form,'100',grading_from_form,Subject_name_from_form,syllabus_from_form))
         c.execute("""INSERT INTO 'Enrol' (`ID`, `Subject_ID`, `subject_Year`,`Enrol_Type`,`SECTION`) VALUES
         (?, ?, ?, ?, ?);""", (
             url_user_id, Subjectid_from_form, year_from_form, 'teacher',

@@ -49,7 +49,7 @@ def CurrentSubject(url_user_id):
         lecturer.append(c.fetchall())
         c.execute("SELECT WorkID from work WHERE Year = ? AND Subject_ID = ? ",(i.data['Year'],i.data['Subject_ID']))
         g.data.append([len(c.fetchall()),i.data['Subject_ID']])
-        c.execute("SELECT title, Subject_ID from SubjectDetail WHERE Subject_ID = ? AND year = ?",(i.data['Subject_ID'],i.data['Year']))
+        c.execute("SELECT title, Subject_ID from Subject WHERE Subject_ID = ? AND year = ?",(i.data['Subject_ID'],i.data['Year']))
         g.title.append(c.fetchone())
     print g.title
     for i in lecturer:
