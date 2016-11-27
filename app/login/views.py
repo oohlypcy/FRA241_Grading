@@ -29,7 +29,51 @@ def background_process():
     else:
         return jsonify(authen=False)
 
+@Login.route('/register')
+def register():
 
+    return render_template('add_user.html')
+
+@Login.route('/register_process')
+def register_process():
+    #ID ,Password,Title,Name,Surname,E-mail,Role,Faculty,Major,Enrol-Year, Picture
+    ID = request.values.get('ID')
+    Password = request.values.get('Password')
+    Title = request.values.get('Title')
+    Name = request.values.get('Name')
+    Surname = request.values.get('Surname')
+    Email = request.values.get('Email')
+    Role = request.values.get('Role')
+    Faculty = request.values.get('Faculty')
+    Major = request.values.get('Major')
+    enrol = request.values.get('Enrolyear')
+    Picture = request.values.get('Picture')
+    key = request.values.get('Key')
+    connect = sqlite3.connect("Data.db")
+    c = connect.cursor()
+    print "check0"
+    print Title
+    print key
+    print Name
+    print Role
+    if (Role == "teacher" and key == 'access'):
+        c.execute("""INSERT INTO `User` (`ID`, `Password`, `Title`, `Name`, `Surname`, `E-mail`, `Role`, `Faculty`, `Major`, `Enrol-Year`, `Picture`) VALUES
+                (?,?,?,?,?,?,?,?,?,?,?);""",
+                  (ID, Password, Title, Name, Surname, Email, Role, Faculty, Major, enrol, Picture))
+        print "check1"
+        connect.commit()
+        c.close()
+        return jsonify(authen=True)
+    elif Role == "student":
+        c.execute("""INSERT INTO `User` (`ID`, `Password`, `Title`, `Name`, `Surname`, `E-mail`, `Role`, `Faculty`, `Major`, `Enrol-Year`, `Picture`) VALUES
+                        (?,?,?,?,?,?,?,?,?,?,?);""",
+                  (ID, Password, Title, Name, Surname, Email, Role, Faculty, Major, enrol, Picture))
+        print "check2"
+        connect.commit()
+        c.close()
+        return jsonify(authen = True)
+    else :
+        return jsonify(authen = False)
 # ID = []
 #    Password = []
 #    for row in cursor:

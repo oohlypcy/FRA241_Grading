@@ -45,11 +45,11 @@ def add_timetable(url_user_id):
     print Subjectid_from_form,section_from_form,year_from_form,day_from_form,room_from_form,time
 
     if str(section_from_form) == "All":
-        c.execute("SELECT * from Enrol WHERE Subject_ID = ? AND subject_Year = ? AND Enrol_Type = ?  "
-                  , (Subjectid_from_form, year_from_form, 'student'))
+        c.execute("SELECT * from Enrol WHERE Subject_ID = ? AND subject_Year = ?   "
+                  , (Subjectid_from_form, year_from_form))
     else:
-        c.execute("SELECT * from Enrol WHERE Subject_ID = ? AND subject_Year = ? AND Enrol_Type = ? AND SECTION = ? "
-                  ,(Subjectid_from_form,year_from_form,'student',section_from_form))
+        c.execute("SELECT * from Enrol WHERE Subject_ID = ? AND subject_Year = ? AND SECTION = ? "
+                  ,(Subjectid_from_form,year_from_form,section_from_form))
     k =c.fetchone()
     if k != None and str(section_from_form) != "All":
         print "1"

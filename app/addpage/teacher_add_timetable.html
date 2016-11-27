@@ -94,9 +94,11 @@ mr.parentNode.removeChild(mr);
           <form>
             Subject ID:<br>
                 <!--<input type="text" id="id2" style="width:30%" name="id2" required><br><br>-->
+                  <select name="id">
                   {% for x in g.subject %}
-                    <input type = "radio" name = "id" value="{{x[0]}}">{{x[0]}}</input>
+                    <option value="{{x[0]}}">{{x[0]}}</option>
                   {% endfor %}
+                   </select>
 
 
 
@@ -172,7 +174,7 @@ function addtimetable(){
   method: "GET",
   async: false,
   data: {
-  ID: $('input[name="id"]').val(),
+  ID: $('select[name="id"]').val(),
   section: $('input[name="group"]:checked').val(),
   year: $('select[name="semester"]').val(),
   day: $('select[name="day"]').val(),

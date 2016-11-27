@@ -482,6 +482,8 @@ a = Data()
 # a.edit("UPDATE Subject SET syllabus = 'this course is about for know and can use calculator' WHERE Subject_ID ='Mth201'")
 
 # a.edit("DELETE FROM SubjectDetail WHERE Subject_ID = 'FRA241'")
+
+# a.edit("DELETE FROM User WHERE ID ='58340500010'")
 a.show()
 
 
