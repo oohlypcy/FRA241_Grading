@@ -30,7 +30,6 @@ def Subjects(url_Subject_id, url_Year, url_user_id):
     #user section
     c.execute("SELECT SECTION from Enrol WHERE ID = ? AND Subject_year = ? AND Subject_ID = ? ",(url_user_id,url_Year,url_Subject_id))
     section = c.fetchall()
-    print section
     # title detail syllabus
     c.execute("SELECT title, detail, syllabus from SubjectDetail WHERE Subject_ID = ? AND year = ?",(url_Subject_id,url_Year))
     g.data = c.fetchone()
@@ -90,15 +89,12 @@ def Subject_Score(url_Subject_id, url_Year, url_user_id):
                     address = None
                 work = Work(g.SubjectID, g.year, x[2])
                 g.work.append([selectUser, x[2], address, work.Fullmark])
-                print submitwork.Mark
                 if submitwork.Mark!=0:
                     g.score.append([selectUser, g.SubjectID, x[2], submitwork.Mark])
                 else:
                     g.score.append([selectUser, g.SubjectID, x[2],[0,]])
                 if [x[2], work.Fullmark] not in g.workID:
                     g.workID.append([x[2], work.Fullmark])
-        print g.workID
-        print g.score
         return render_template("Score2.html")
 
     else:
@@ -199,7 +195,6 @@ def Subject_work_score(url_Subject_id, url_Year, url_user_id, work_id):
 
 @classpage.route('/insert_mark')
 def insert_mark(url_Subject_id, url_Year, url_user_id):
-    print 555
     conn = sqlite3.connect('Data.db')  # connect Data.db
     c = conn.cursor()
     id_from_form = request.values.get('id')
