@@ -74,7 +74,7 @@ def Subject_Score(url_Subject_id, url_Year, url_user_id):
                     g.score.append([selectUser, g.SubjectID, x[2],[0,]])
                 if [x[2], work.Fullmark] not in g.workID:
                     g.workID.append([x[2], work.Fullmark])
-
+        print g.workID
         print g.score
         return render_template("Score2.html")
 
@@ -184,6 +184,9 @@ def insert_mark(url_Subject_id, url_Year, url_user_id):
     subject_id_from_form = url_Subject_id
     year_from_form = url_Year
     work_id_from_form = request.values.get('work_id')
+    print id_from_form
+    print score_from_form
+    print work_id_from_form
     fullMark = Work(subject_id_from_form, year_from_form, work_id_from_form)
     print id_from_form
     print score_from_form
