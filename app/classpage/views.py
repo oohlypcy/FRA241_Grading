@@ -104,7 +104,10 @@ def Subject_Score(url_Subject_id, url_Year, url_user_id):
         for x in subjectWork:
             submitwork = submitWork(x[2], g.year, g.SubjectID, g.UserID)
             work = Work(g.SubjectID, g.year, x[2])
-            g.work.append([x[2], submitwork.Mark, work.Fullmark])
+            if submitwork.Get_Mark() == 0:
+                g.work.append([x[2], [submitwork.Mark,], work.Fullmark])
+            else:
+                g.work.append([x[2], submitwork.Mark, work.Fullmark])
         g.workID = [x[0] for x in g.work]
         return render_template("Score2.html")
 
