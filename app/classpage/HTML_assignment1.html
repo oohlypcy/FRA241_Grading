@@ -59,12 +59,24 @@ table, td {
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
     {% if g.user.Profile['Role']== 'student' %}
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
-    {% endif %}
-<li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
+ <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
+     {% endif %}
+      <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
 </div>
 <!-- Overlay effect when opening sidenav on small screens -->
+
+<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+{% if g.user.Profile['Role'] == 'teacher' %}
+  <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
+{% endif %}
+
+</nav>
+
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
@@ -76,23 +88,22 @@ table, td {
 
         <table id="myTable">
             <tr>
-                    <td>SUBJECT </td>
                     <td>Work ID  </td>
                     <td>type  </td>
                     <td>DUE DATE </td>
                     <td>STATUS  </td>
+                    <td>FULLMARK  </td>
                     <td>LINK </td>
                 </tr>
-
-            {% for x in g.lenght %}
+            {% for x in g.subjectwork %}
                         <tr>
                             <!--pull subjectID, WorkID, type, duedate and status-->
-                            <td> {{g.work[x][0]}} </td>
-                            <td> {{g.work[x][2]}}  </td>
-                            <td> {{g.work[x][5]}} </td>
-                            <td> {{g.work[x][3]}} </td>
-                            <td> {{g.status[x]}} </td>
-                            <td> <a href= {{g.address[x]}} style="cursor:pointer"> get link </a> </td>
+                            <td> {{x[2]}} </td>
+                            <td> {{x[5]}} </td>
+                            <td> {{x[3]}} </td>
+                            <td> {{x[4]}} </td>
+                            <td> {{x[6]}}  </td>
+                            <td> <a href= "{{url_for('classpage.Subject_work_score' , url_user_id = g.id ,url_Subject_id = x[0], url_Year = x[1] ,work_id = x[2] )}}" style="cursor:pointer"> get link </a> </td>
                         </tr>
 
             {% endfor %}
@@ -104,7 +115,9 @@ table, td {
   </div>
 
 
-<!--button onclick="myFunction()">Try it</button-->
+<!--button onclick="myFunction()">Try it</button>
+<a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" > <button>ADD</button></a>
+
     <!-- - -->
     <!-- - -->
     <!-- - -->
@@ -132,7 +145,7 @@ table, td {
 
   <footer id="myFooter" style="position:absolute;bottom:0;width:100%;">
     <div class="w3-container w3-theme-l2 w3-padding-32">
-      <h4>FRA 241 FIBOgrading project 2016</h4>
+      <h4 class="w3-bottom-align w3-left-align">FRA 241 FIBOgrading project 2016</h4>
     </div>
 
     <!--div class="w3-container w3-theme-l1">
@@ -162,7 +175,10 @@ function w3_open() {
 }
 
 // Close the sidenav with the close button
-
+function w3_close() {
+    mySidenav.style.display = "none";
+    overlayBg.style.display = "none";
+}
 
 
 <!--the table code starts-->

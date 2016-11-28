@@ -29,6 +29,7 @@ class User:
         k = mydata.fetchone()
         # make it into dict
         Profiledict = {'name':str(k[2])+str(k[3])+" "+str(k[4])}
+
         for x, y in zip(k, column):
             Profiledict[str(y)] = str(x)
         # close connection
@@ -60,7 +61,7 @@ class User:
             currentAcademicYear = currentAcademicYear.year + 542
         else:
             currentAcademicYear = currentAcademicYear.year + 543
-        currentAcademicYear = int(str(currentAcademicYear)[2:4])
+        currentAcademicYear = int(str(currentAcademicYear)[0:4])
         connect = sqlite3.connect('Data.db')
         c= connect.cursor()
         cursor = c.execute("SELECT * from enrol WHERE ID = "+str(self.id))
@@ -68,7 +69,6 @@ class User:
             if str(x[2]) == str(currentAcademicYear):
                 sub['current'].append(Subject(x[1],x[2]))
             else:
-                print x[0],x[1]
                 sub['past'].append(Subject(x[1],x[2]))
         c.close()
         return sub

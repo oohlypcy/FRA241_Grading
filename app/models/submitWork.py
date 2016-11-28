@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 from flask import url_for
 import urllib
 import requests
@@ -12,7 +13,7 @@ class submitWork:
         self.submit_date = self.Get_submit_date()
         self.Mark = self.Get_Mark()
         self.Address = self.Get_address()
-        self.Status = self.Get_Status()
+        self.Status = self.Get_status()
 
     def Get_member_list(self):
         connect = sqlite3.connect("Data.db")
@@ -48,22 +49,21 @@ class submitWork:
         mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = ? AND ID = ? AND Year = ? AND Subject_ID = ?"
                          ,(str(self.WorkID),str(self.ID) ,str(self.Year),str(self.Subject_Id)))
         mark = mark.fetchone()
+        if mark == None:
+            return 0
         # close connection
         c.close()
         # return mark [list]
         return mark
 
+
+
     def Get_submit_date(self):
-        # mark = []
-        # connect = sqlite3.connect("Data.db")
-        # c = connect.cursor()
-        # get mark
-        # mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = "
-        #               + str(self.WorkID) + " AND ID = " + str(self.ID) +
-        #               " AND Year = " + str(self.Year) +
-        #                " AND Subject_ID = " + str(self.Subject_Id))
-        # mark = mark.fetchone()
-        pass
+        time = datetime.datetime.now()
+        date = [str(time.day),str(time.month),str(time.year)]
+
+        #return day month year
+        return date
         # return self.submit_date
 
     def Get_status(self):
@@ -71,10 +71,11 @@ class submitWork:
         c = connect.cursor()
         # get status from work id &subject id
         status = c.execute(
-            "SELECT status from SubmitWork WHERE WorkID = " + str(self.WorkID) +
-            " AND Year = " + str(self.Year) +
-            " AND Subject_ID = " + str(self.Subject_Id))
+            "SELECT status from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?",(str(self.WorkID),
+                                                                            str(self.Year), str(self.Subject_Id)))
         status = status.fetchone()
+        if status == None:
+            return 'Not sent'
         # close connection
         c.close()
         # return status 'str'
@@ -83,15 +84,18 @@ class submitWork:
     def Get_address(self):  # address
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()
+
         # get address of work
         work_address = c.execute("SELECT Address from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?"
                                  ,(str(self.WorkID),str(self.Year),str(self.Subject_Id)))
         work_address = work_address.fetchone()
+        if work_address == None:
+            return 'N'
         # close connection
         c.close()
         # return address 'str'
-        print self.workID,self.Year,self.Subject_Id,work_address
-        return str(work_address[0])
+        # print self.workID,self.Year,self.Subject_Id,work_address
+        return work_address[0]
 
     def Upload(self, repository, name):
 

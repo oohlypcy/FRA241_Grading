@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="refresh" content="disabled" id="meta-refresh">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var mr = document.getElementById("meta-refresh");
+mr.parentNode.removeChild(mr);
+
+
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
+</script>
+ <!--favicon-->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
+<title>FRA221_Grading - Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- stylesheet from folder not in web!-->
+<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+<body>
+<!--black ribbon for HM King RAMA IX-->
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
+<header class="w3-container w3-teal">
+  <h1>Register</h1>
+
+</header>
+<div class="w3-container w3-half w3-margin-top">
+
+<form class="w3-container w3-card-4" id="form_login" >
+        ID:
+        <input id="id"  type="text" style="width:50%" required><br><br>
+        Password:
+        <input id="password"  type="password" style="width:50%" required><br><br>
+        Title:
+
+            <input type = "radio" name = "Title" value = "Mr.">Mr.</input>
+            <input type = "radio" name = "Title" value = "Ms.">Ms.</input>
+            <input type = "radio" name = "Title" value = "Mrs.">Mrs.</input><br><br>
+
+        Name:
+        <input id="name" type="text" style="width:50%" required><br><br>
+        Surname:
+        <input id="surname" type="text" style="width:50%" required><br><br>
+        E-mail:
+        <input id="Email"  type="text" style="width:50%" required><br><br>
+        Role:
+
+        <input type = "radio" name = "Role" value = "student">student</input>
+        <input type = "radio" name = "Role" value = "teacher">teacher</input>
+
+            Secretkey<input id="Key" type="password" style="width:30%"><br>
+
+
+        Faculty:
+        <input id="Faculty" type="text" style="width:50%" required><br><br>
+        Major:
+        <input id="Major"  type="text" style="width:50%" required><br><br>
+        Enrol-Year:
+        <input id="Enrolyear" type="text" style="width:50%" required><br><br>
+        Picture:
+        <input id="Picture" type="text" style="width:50%" required><br><br>
+        <button id ="button" onclick = adduser()>Submit</button>
+        <button id ="button1" onclick = "location.href='{{'register'}}'">Reset</button>
+        <button id ="button2" onclick = "location.href='{{'login'}}'" >back to login</button>
+
+  <!--change # to input_your_email_page
+  should insert input_your_email_page-->
+
+
+</p>
+
+</form>
+
+</div>
+<script type="text/javascript">
+
+function adduser(){
+  var authentication=false;
+  $.ajax({ url: "{{url_for('login.register_process')}}",
+  method: "GET",
+  async: false,
+  data: {
+  ID: $('input[id = "id"]').val(),
+  Password: $('input[id="password"]').val(),
+  Title: $('input[name="Title"]:checked').val(),
+  Name: $('input[id="name"]').val(),
+  Surname: $('input[id="surname"]').val(),
+  Email: $('input[id="Email"]').val(),
+  Role: $('input[name="Role"]:checked').val(),
+  Faculty: $('input[id="Faculty"]').val(),
+  Major: $('input[id="Major"]').val(),
+  EnrolYear: $('input[id="Enrolyear"]').val(),
+  Picture: $('input[id="Picture"]').val(),
+    Key: $('input[id= "Key"]').val(),
+  },
+  datatype: 'json',
+  success: function(data){
+  authentication = data.authen;
+  }
+  });
+  return authentication;
+}
+
+function reset(){
+
+}
+</script>
+
+</body>
+</html>

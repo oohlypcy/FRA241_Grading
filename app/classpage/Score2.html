@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<title>Template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
+{% if g.user.Profile['Role'] == 'student' %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% else %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% endif %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+<style>
+  html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+  .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
+  .w3-navbar li a {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+    body,td,th {
+	     font-family: Verdana, Geneva, sans-serif;
+	      font-size: 18px;
+      }
+    table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+    .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
+</style>
+<body>
+
+<!--black ribbon for HM King RAMA IX-->
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
+
+<!--Navbar-->
+<div class="w3-top">
+  <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
+    <!--li == show list item -->
+    <li class="w3-opennav w3-right w3-hide-large">
+      <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    </li>
+    <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
+    {% if g.user.Profile['Role']== 'student' %}
+ <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
+     {% endif %} <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
+  </ul>
+</div>
+<!-- Overlay effect when opening sidenav on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
+<div class="w3-main" style="margin-left:250px">
+
+  <div class="w3-row w3-padding-64">
+    <div class="w3-twothird w3-container">
+      <h1 class="w3-text-teal">Score : {{g.SubjectID}}</h1>
+        <div class="w3-row w3-container">
+          <div class="w3-col l6 w3-white w3-left">
+            <form>
+            <table>
+              {% if g.user.Profile['Role'] == 'student' %}
+                <tr>
+                  {% for x in g.work %}
+                    <th>work{{x[0]}}({{x[2]}})</th>
+                  {% endfor %}
+                </tr>
+
+
+                  <tr>
+                    {% for x in g.work %}
+                    <td>{{x[1][0]}}</td>
+                    {% endfor %}
+                  </tr>
+
+              {% else %}
+
+                <tr>
+                  <th>ID</th>
+                  {% for x in g.workID %}
+                    <th>work{{x[0]}}({{x[1]}})</th>
+                  {% endfor %}
+                </tr>
+
+                {% for x in g.all_user_ID %}
+                  <tr>
+                    <td>{{x}}</td>
+                    {% for y in g.score %}
+                      {% if y[0] == x %}
+                        <td><input id="{{y[0]}}{{y[2]}}" class="w3-input" type="text"
+                                               placeholder="{{y[3][0]}}" style="width:90%" required></td>
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              {% endif %}
+            </table>
+                                 {% if g.user.Profile['Role'] == 'teacher' %}
+                        <p>
+                            <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
+                            <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
+                        </p>
+                         {% endif %}
+
+            </form>
+          <!--</div>-->
+          <!--<div class="w3-col l6 w3-center">-->
+            <!--<img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>-->
+          <!--</div>-->
+        </div>
+    </div>
+
+  </div>
+
+
+
+  <!--<footer id="myFooter">-->
+    <!--<div class="w3-container w3-theme-l2 w3-padding-32">-->
+      <!--<h4>Footer</h4>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash;div class="w3-container w3-theme-l1">-->
+      <!--<p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>-->
+    <!--</div&ndash;&gt;-->
+  <!--</footer>-->
+
+<!-- END MAIN -->
+</div>
+
+<script>
+// Get the Sidenav
+var mySidenav = document.getElementById("mySidenav");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidenav, and add overlay effect
+function w3_open() {
+    if (mySidenav.style.display === 'block') {
+        mySidenav.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidenav.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidenav with the close button
+function w3_close() {
+    mySidenav.style.display = "none";
+    overlayBg.style.display = "none";
+}
+function Scorefull(){
+console.log(".....")
+
+    var student_list ={{g.all_user_ID|tojson|safe}};
+    var workid_list = {{g.workID|tojson|safe}};
+    console.log(student_list);
+    var authentication;
+
+    for(var i=0;i<student_list.length;i++){
+          for(var k=0;k<workid_list.length;k++){
+
+    console.log(".....")
+    var j = student_list[i]+workid_list[k][0].toString();
+    console.log(j)
+        $.ajax({ url: "{{url_for('classpage.insert_mark',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}",
+            async: false,
+            data: {
+            id: student_list[i],
+            score: $('input[id="student_list"]'.replace("student_list",j)).val(),
+            work_id: workid_list[k][0],
+                },
+            dataType: 'json',
+            success: function(data){
+            authentication=data.authen;
+            }
+            });
+            }
+    }
+
+}
+
+</script>
+
+</body>
+</html>

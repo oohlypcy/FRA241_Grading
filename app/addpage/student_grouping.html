@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
- <!--favicon-->
-<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
- <title>FRA221_Grading - Subject</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<title>student_grouping</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
-{% if g.user.Profile['Role'] == 'student' %}
+<link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
-{% else %}
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
-{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+<!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -22,10 +19,10 @@
     }
     body,td,th {
 	     font-family: Verdana, Geneva, sans-serif;
-	      font-size: 18px;
+	      font-size: 16px;
       }
 
-         .black-ribbon {
+          .black-ribbon {
   position: fixed;
   z-index: 9999;
   width: 120px;
@@ -54,27 +51,25 @@
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-      <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
+   <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
-    {% if g.user.Profile['Role']== 'student' %}
- <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
-     {% endif %}
+       {% if g.user.Profile['Role']== 'student' %}
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
+    {% endif %}
 <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
-  </ul>
+ </ul>
 </div>
 
-<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+<!-- Sidenav -->
+<!--nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
-  {% if g.user.Profile['Role']== 'teacher' %}
-  <a href="{{url_for('Addpage.add_TA',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add TA</a>
-  {% endif %}
-  <a href="{{url_for('Addpage.add_student',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add student</a>
-</nav>
-
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
+  <a href="#" class="w3-hover-black">Grouping</a>
+</nav-->
 
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -84,63 +79,30 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Left">{{g.Subject_id}}</h1>
-        <div class="w3-row w3-container" >
-
-
-          <div class="w3-card-4" style="width:90%;height:40%">
-            <header class="w3-container w3-blue" align="middle">
-                <h1>{{g.data[0]}}</h1>
-            </header>
-
-          <div class="w3-container">
-
-                  <p style="font-size:25px">{{g.data[1]}}</p>
-                {% for x in g.lecturer %}
-                    <p style="font-size:20px">Lecturer : {{x}}</p>
-                {% endfor %}
-                    <table class ="w3-table-all w3-centered">
-                      <tr>
-                          <th>class is on</th>
-                          <th>room</th>
-                          <th>Time</th>
-                      </tr>
-                        {% for x in g.select %}
-                            {% for y in x %}
-                            <tr>
-                                <td>{{y[0]}}</td>
-                                <td>{{y[1]}}</td>
-                                <td>{{y[2]}}</td>
-
-                            </tr>
-                            {% endfor %}
-                        {% endfor %}
-                    </table>
-
-            </div>
-
-          <footer class="w3-container w3-blue">
-                  <p style="font-size:25px" >Course Syllabus</p>
-                  <p style="font-size:20px" class="w3-panel w3-white">this course is about {{g.data[2]}}</p>
-
-
-          </footer>
-          </div>
-
-
-
-          <div class="w3-col l6 w3-center " style="width:90%;height:40%">
-              <ul class="w3-ul w3-hoverable w3-xxlarge w3-panel w3-light-blue">
-                  <li><a href="{{url_for('classpage.Subject_work', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Assignment</a></li>
-                  <li><a href="{{url_for('classpage.Subject_Score', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Score</a></li>
-
-                </ul>
-
+      <h1 class="w3-text-teal">Grouping</h1>
+        <div class="w3-row w3-container">
+          <div class="w3-col l6 w3-white w3-left">
+          <form method="#" action="#">
+            subject:
+            <select name="subject_code">
+              <option value="FRA221">FRA221</option>
+              <option value="FRA231">FRA231</option>
+              <option value="FRA241">FRA241</option>
+              <option value="FRA222">FRA222</option>
+            </select><br><br>
+            Group Name:
+            <input type="text" id="group_name" name="group_name">
+            Members:
+            <input type="text" id="members" name="members"><br>
+            <button type="button" onclick="#" id="#" value="grouping">plus</button><br><br>
+            <input type="submit" value="Grouping">
+          </form>
+          <!-- semester pull semester_data from db -->
           </div>
         </div>
     </div>
   </div>
-  <!-- Pagination -->
+
     <!--div class="w3-container w3-theme-l1">
       <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </div-->
@@ -171,6 +133,9 @@ function w3_open() {
 function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
+}
+function grouping(){
+
 }
 </script>
 

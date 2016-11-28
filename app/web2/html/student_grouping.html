@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
-<!--favicon-->
-<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/37adf3319cbf9f89d4f86d4e5a0745be?s=32" sizes="16x16">
-<title>FRA221_Grading - Home</title>
+<title>student_grouping</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
-{% if g.user.Profile['Role'] == 'student' %}
+<link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
-{% else %}
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
-{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css">
+<!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
 <style>
   html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   .w3-sidenav a,.w3-sidenav h4 {padding: 12px;}
@@ -22,30 +16,11 @@
     }
     body,td,th {
 	     font-family: Verdana, Geneva, sans-serif;
-	      font-size: 18px;
+	      font-size: 16px;
       }
-
-      .black-ribbon {
-  position: fixed;
-  z-index: 9999;
-  width: 120px;
-}
-@media only all and (min-wi;dth: 768px) {
-  .black-ribbon {
-    width: auto;
-  }
-}
-
-.stick-left { left: 0; }
-.stick-right { right: 0; }
-.stick-top { top: 0; }
-.stick-bottom { bottom: 0; }
-
 </style>
 <body>
 
-<!--black ribbon for HM King RAMA IX-->
-<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 <!--Navbar-->
 <div class="w3-top">
   <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
@@ -53,15 +28,20 @@
     <li class="w3-opennav w3-right w3-hide-large">
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
-    <li><a href="{{url_for('.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
-    {% if g.user.Profile['Role']== 'student' %}
-    <li class="w3-hide-small"><a href="{{url_for('.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
-    {% endif %}
-    <li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
+    <li><a href="#" class="w3-theme-l1">Home</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</a></li>
   </ul>
 </div>
+
+<!-- Sidenav -->
+<!--nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4><b>Menu</b></h4>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
+  <a href="#" class="w3-hover-black">Grouping</a>
+</nav-->
 
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -71,29 +51,30 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Center">My profile</h1>
+      <h1 class="w3-text-teal">Grouping</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-            {% for x in g.show_list %}
-              <h3 style="display: inline"><b>{{x}}</b></h3>
-              <span class="w3-text-cyan"> : {{g.user.Profile[x]}}</span><br><br>
-            {% endfor %}
-          </div>
-          <div class="w3-col l6 w3-center">
-            <img src = "{{g.user.Picture}}" style="width:50%; height:30%;"/>
+          <form method="#" action="#">
+            subject:
+            <select name="subject_code">
+              <option value="FRA221">FRA221</option>
+              <option value="FRA231">FRA231</option>
+              <option value="FRA241">FRA241</option>
+              <option value="FRA222">FRA222</option>
+            </select><br><br>
+            Group Name:
+            <input type="text" id="group_name" name="group_name">
+            Members:
+            <input type="text" id="members" name="members"><br>
+            <button type="button" onclick="#" id="#" value="grouping">plus</button><br><br>
+            <input type="submit" value="Grouping">
+          </form>
+          <!-- semester pull semester_data from db -->
           </div>
         </div>
     </div>
   </div>
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
 
-  <!-- Pagination -->
     <!--div class="w3-container w3-theme-l1">
       <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </div-->
@@ -124,6 +105,9 @@ function w3_open() {
 function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
+}
+function grouping(){
+
 }
 </script>
 
