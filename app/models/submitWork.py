@@ -2,7 +2,7 @@ import sqlite3
 import datetime
 from flask import url_for
 import urllib
-import requests
+from flask import request
 
 class submitWork:
     def __init__(self, Work_ID, Year, Subject_Id, ID):
@@ -129,7 +129,7 @@ class submitWork:
         urllib.urlretrive(url,"lesson2.pdf")
 
         print "Downloading worksheet"
-        r = requests.get(url)
+        r = request.get(url)
         with open("lesson2.pdf") as file:
             file.write(r.content)
 
