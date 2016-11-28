@@ -74,14 +74,14 @@ def CurrentWork(url_user_id):
 
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
-    g.subject = sorted(g.subject)
+    g.subject = sorted([x.Subject_Id for x in g.subject])
     # sent work data to html
     g.work = []
     g.address = []
     g.status = []
     for subject in g.subject:
-        data = []
-        for work in sorted(subject.get_work(), key=itemgetter(2)):
+        subject1 = Subject(subject,Year)
+        for work in sorted(subject1.get_work(), key=itemgetter(2)):
             # check work from submit work
             try:
                 # k = submitWork(work[2], year, work[0], g.user.id)
