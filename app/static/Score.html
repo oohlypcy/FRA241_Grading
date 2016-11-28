@@ -22,6 +22,22 @@
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 18px;
       }
+
+      .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
 </style>
 <body>
 
@@ -41,9 +57,7 @@
 </div>
 
 <!--black ribbon for HM King RAMA IX-->
-<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
-  <img src="http://image.coolz-server.com/s/v6pge483">
-</div>
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>

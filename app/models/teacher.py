@@ -20,13 +20,31 @@ class Subject:
         self.student_profile=self.View_student_profile()
 
     def Cal_mean(self):
+        if sort == "mean score":
+            print ("Accessing Database")
+            time.student(2)
+            print ("Accessing Database...")
+            time.student(2)
+            c = lite.connect('student.db')
+            with c:
+                cur. con.cursor()
+                table = cur.execute("slect firstname,mean score FROM FIBO By score ")
 
-        #connect = sqlite3.connect('Data.db')
+            select
+                student_ID, avg(score) as score
+            from
+                Subject
+            group by
+                Student_ID
+            order by
+                avg(score)
+            #connect = sqlite3.connect('Data.db')
         #c = connect.cursor()
-        #all_score =
-        #all_student =
+        #all_score = c.execute("Select student_ID =")
+        #all_student = Stusent_ID
         #mean = all_score/all_student
-        pass
+
+
     def Get_grade_mark_by_subject(self):
         connect = sqlite3.connect("Data.db")
         c = connect.cursor()

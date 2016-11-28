@@ -48,12 +48,28 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
+    .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
 </style>
 <body>
+
 <!--black ribbon for HM King RAMA IX-->
-<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
-    <img src="http://image.coolz-server.com/s/v6pge483">
-</div>
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
+
 <!--Navbar-->
 <div class="w3-top">
     <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
@@ -86,7 +102,11 @@ tr:nth-child(even) {
     <h4><b>Menu</b></h4>
     <a href="#" class="w3-hover-black">upload work</a>
     {% if g.work.lim_member > 1 %}
-    <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,work_id=g.work_id)}}" class="w3-hover-black">manage group</a>
+    {% if g.user.Profile['Role'] == 'teacher' %}
+        <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,workID=g.work_id,mode = 'random')}}" class="w3-hover-black">Grouping Random</a>
+
+    {% endif %}
+    <a href="{{url_for('Addpage.manage_group',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year,workID=g.work_id,mode = 'choose')}}" class="w3-hover-black">manage group</a>
     {% endif %}
     <!--a href="http://facebook.com/" class="w3-hover-black">facebook</a>
     <a href="http://www2.kmutt.ac.th/" class="w3-hover-black">kmutt</a>
@@ -133,10 +153,12 @@ tr:nth-child(even) {
                                 {% endif %}
                             </table>
 
+                         {% if g.user.Profile['Role'] == 'teacher' %}
                         <p>
-                            <button class="w3-btn w3-green" onclick="return Score_full()">submit</button>
-                            <input type="button" class="w3-btn w3-green" onclick="myFunction()" value="Clear">
+                            <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
+                            <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
                         </p>
+                         {% endif %}
                         {% endif %}
                     </form>
                     <form id="myForm2">
@@ -168,11 +190,12 @@ tr:nth-child(even) {
                                 </tr>
                                 {% endif %}
                             </table>
-
+                        {% if g.user.Profile['Role'] == 'teacher' %}
                         <p>
                             <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
                             <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
                         </p>
+                         {% endif %}
                         {% endif %}
                     </form>
                 </div>

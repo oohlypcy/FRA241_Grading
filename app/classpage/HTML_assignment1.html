@@ -25,12 +25,29 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 table, td {
     border: 1px solid black;
 }
+
+   .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
 </style>
 <body>
+
 <!--black ribbon for HM King RAMA IX-->
-<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
-  <img src="http://image.coolz-server.com/s/v6pge483">
-</div>
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
+
 <!--Navbar-->
 <div class="w3-top">
   <ul class="w3-navbar w3-theme w3-top w3-left-align w3-large">
@@ -48,16 +65,18 @@ table, td {
   </ul>
 </div>
 <!-- Overlay effect when opening sidenav on small screens -->
-{% if g.user.Profile['Role'] == 'teacher' %}
+
 <nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
+{% if g.user.Profile['Role'] == 'teacher' %}
   <a href="{{url_for('Addpage.add_assignment',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}" class="w3-hover-black">Add Assignment</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
-</nav>
 {% endif %}
+
+</nav>
+
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidenav is visible -->
@@ -76,7 +95,7 @@ table, td {
                     <td>FULLMARK  </td>
                     <td>LINK </td>
                 </tr>
-            {% for x in g.subject.get_work() %}
+            {% for x in g.subjectwork %}
                         <tr>
                             <!--pull subjectID, WorkID, type, duedate and status-->
                             <td> {{x[2]}} </td>
@@ -122,7 +141,18 @@ table, td {
       <!--<li><a class="w3-hover-black w3-hide-small" href="#">5</a></li>-->
       <!--<li><a class="w3-hover-black" href="#">»</a></li>-->
     <!--</ul>-->
-  <!--</div>-->
+
+
+
+  <!--<''' อันนี้ของHtml ไม่รู้เอาใส่ในบรรทัดไหน
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''>-->
 
   <footer id="myFooter" style="position:absolute;bottom:0;width:100%;">
     <div class="w3-container w3-theme-l2 w3-padding-32">

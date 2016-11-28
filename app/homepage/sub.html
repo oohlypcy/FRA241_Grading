@@ -26,6 +26,23 @@
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 18px;
       }
+
+      .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
 </style>
 <body>
 
@@ -46,16 +63,19 @@
   </ul>
 </div>
 <!--black ribbon for HM King RAMA IX-->
-<div class="w3-large w3-right-align w3-nevbar w3-display-topright w3-container">
-  <img src="http://image.coolz-server.com/s/v6pge483">
-</div>
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
+{% if g.user.Profile['Role'] != 'student' %}
 <nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
   <a href="{{url_for('Addpage.add_subject',url_user_id=g.id)}}" class="w3-hover-black">Add subject</a>
+    <a href="{{url_for('Addpage.add_works',url_user_id=g.id)}}" class="w3-hover-black">Add work</a>
+    <a href="{{url_for('Addpage.add_timetable2',url_user_id=g.id)}}" class="w3-hover-black">Add timetable</a>
+
 </nav>
+{% endif %}
 <!-- Overlay effect when opening sidenav on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
@@ -64,13 +84,13 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal" align="Center">Subject</h1>
+      <h1 class="w3-text-teal" align="Left">Subject</h1>
         <div class="w3-row w3-container">
 
           <div class="w3-col l6 w3-center">
               <ul class="w3-ul w3-hoverable w3-xxlarge">
                   {% for x in g.subject_list %}
-                  <li>
+                  <li style="width:150%;">
 
                     <div class="w3-card-4" style="width:100%;">
                       <header class="w3-container w3-blue">
@@ -80,8 +100,23 @@
                         </h1>
                       </header>
                       <div class="w3-container" align="Left">
-                        <p style="font-size:25px">Year : {{x.Year}}</p>
-                        <p style="font-size:20px">{{x.data['Description']}}</p>
+                          {% for y in g.title %}
+                            {% if y[1] == x.Subject_Id %}
+                                <p style="font-size:20px">Title : {{y[0]}} {{x.Year}}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p style="font-size:20px">Year : {{x.Year}}</p>
+                            {% for y in g.lecturer %}
+                                {% if y[1] == x.Subject_Id %}
+                                  <p style="font-size:20px">Lecturer : {{y[0]}}</p>
+                                {% endif %}
+                            {% endfor %}
+                            {% for y in g.data %}
+                                {% if y[1] == x.Subject_Id %}
+                                    <p style="font-size:20px">Assignment : {{y[0]}}</p>
+                                {% endif %}
+                            {% endfor %}
+
                       </div>
                         <footer class="w3-container w3-teal">
                         </footer>

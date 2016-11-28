@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <meta http-equiv="refresh" content="disabled" id="meta-refresh">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 var mr = document.getElementById("meta-refresh");
 mr.parentNode.removeChild(mr);
 </script>
-<title>teacher_add_ta</title>
+<title>teacher_add_timetable</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
@@ -31,7 +30,7 @@ mr.parentNode.removeChild(mr);
 	      font-size: 16px;
       }
 
-         .black-ribbon {
+          .black-ribbon {
   position: fixed;
   z-index: 9999;
   width: 120px;
@@ -76,7 +75,7 @@ mr.parentNode.removeChild(mr);
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_subject.html" class="w3-hover-black">Add subject</a>
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html" class="w3-hover-black">Add TA</a>
   <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping Random</a>
 </nav>
 
@@ -88,49 +87,46 @@ mr.parentNode.removeChild(mr);
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      {% if g.current == 'TA' %}
-      <h1 class="w3-text-teal">Add Teacher Assistance</h1>
-      {% else %}
-      <h1 class="w3-text-teal">Add Student</h1>
-      {% endif %}
+      <h1 class="w3-text-teal">Add Subject</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-          <form method="#" action="#">
-            Subject:
-              <select name="subject_code">
-                <option value="{{g.subject_id}}">{{g.subject_id}}</option>
-                <!--option value="FRA231">FRA231</option>
-                <option value="FRA241">FRA241</option>
-                <option value="FRA222">FRA222</option-->
-              </select><br><br>
-            {% if g.current == 'TA' %}
-            Add TA:
-      {% else %}
-            Add student:
-      {% endif %}
 
-              <input id="TA_id" type="text" ><button onclick="choose_TA_name()" value="choose" id="show_TA_name1">Add</button><br>
+          <form>
+            Subject ID:<br>
+                <!--<input type="text" id="id2" style="width:30%" name="id2" required><br><br>-->
+                  <select name="id">
+                  {% for x in g.subject %}
+                    <option value="{{x[0]}}">{{x[0]}}</option>
+                  {% endfor %}
+                   </select>
+
+
+
+            Choose students group:<br>
+              <input type="radio" name="group" value="All">All<br>
+              <input type="radio" name="group" value="A">SecA<br>
+              <input type="radio" name="group" value="B">SecB<br>
             Semester:
-              <select name="semester">
-                <option value="{{g.year}}">{{g.year}}</option>
-                <!--option value="2560">2560</option>
-                <option value="2561">2561</option-->
+                <select name="semester">
+                <option value="2559">2559</option>
+                <option value="2560">2560</option>
+                <option value="2561">2561</option>
               </select><br><br>
-              <div id="showta">
-                {% if g.current == 'TA' %}
-      <p>current TA</p>
-      {% else %}
-      <p >current student</p>
-      {% endif %}
-                {% for x in g.people %}
-                <p id="{{x}}"> {{x}}
-                  {% if g.user.Profile['Role'] != 'student' %}
-                  <button class="w3-btn w3-red" onclick="return putout({{x}})" >X</button>
-                  {% endif %}
-                </p>
-                {% endfor %}
-              </div>
-            <!--input type="submit" value="Add"-->
+            day:
+              <select name="day">
+                <option value="monday">monday</option>
+                <option value="tuesday">tuesday</option>
+                <option value="wenesday">wenesday</option>
+                <option value="thursday">thursday</option>
+                <option value="friday">friday</option>
+              </select>
+            room:
+              <input type="text" id="room" style="width:25%" name="room"  required><br>
+            Start time:
+              <input type="text" id="start" style="width:15%" name="start"  required>
+            Stop time:
+              <input type="text" id="stop" style="width:15%" name="stop" required><br><br>
+              <button class="w3-btn w3-red" onclick="return addtimetable()" >create</button>
           </form>
 
           <!-- semester pull semester_data from db -->
@@ -147,7 +143,7 @@ mr.parentNode.removeChild(mr);
 <!-- END MAIN -->
 </div>
 
-<script>
+<script type="text/javascript">
 // Get the Sidenav
 var mySidenav = document.getElementById("mySidenav");
 
@@ -170,52 +166,26 @@ function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
 }
-
-//function show_TA_name(){
-  //  var x = document.getElementById('TA_id').value;
-//  var y = "TA1";
-//  if (x==y){
-//    document.getElementById("show_TA_list").innerHTML = x;
-//  }
-//  return false;
-//}
-function putout(userid){
-var authentication;
-  $.ajax({ url : "{{url_for('Addpage.removeperson',url_user_id=g.id,url_Subject_id=g.subject_id,url_Year=g.year)}}",
+</script>
+<script type="text/javascript">
+function addtimetable(){
+  var authentication=false;
+  $.ajax({ url: "{{url_for('Addpage.add_timetable',url_user_id=g.id)}}",
+  method: "GET",
   async: false,
   data: {
-    id: userid,
-  },
-  dataType: 'json',
-  success: function(data){
-  authentication=data.authen;
-  if(authentication === true){
-  $("#a".replace('a',userid)).remove();
-  }
-  }
-  });
+  ID: $('select[name="id"]').val(),
+  section: $('input[name="group"]:checked').val(),
+  year: $('select[name="semester"]').val(),
+  day: $('select[name="day"]').val(),
+  room: $('input[id="room"]').val(),
+  start: $('input[id="start"]').val(),
+  stop: $('input[id="stop"]').val(),
 
-  return authentication;
-}
-function choose_TA_name(){
-var TA_id = document.getElementById("TA_id").value;
-var authentication;
-  $.ajax({ url : "{{url_for('Addpage.addperson',url_user_id=g.id,url_Subject_id=g.subject_id,url_Year=g.year)}}",
-  async: false,
-  data: {
-    id: $('input[id="TA_id"]').val(),
-    from: "{{g.current}}"
   },
-  dataType: 'json',
+  datatype: 'json',
   success: function(data){
-  authentication=data.authen;
-  if(authentication === true){
-  $( "#showta" ).append( "<p id=x> x </p>".replace('x',TA_id));
-  document.getElementById(TA_id).innerHTML = TA_id+" ";
-  {% if g.user.Profile['Role'] != 'student' %}
-     $( "#a".replace('a',TA_id) ).append( "<button class=\"w3-btn w3-red\" onclick=\"return putout(x)\">X</button>".replace('x',TA_id));
-   {% endif %}
- }
+  authentication = data.authen;
   }
   });
   return authentication;

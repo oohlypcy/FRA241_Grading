@@ -1,7 +1,8 @@
 import sqlite3
 import datetime
 from flask import url_for
-
+import urllib
+import requests
 
 class submitWork:
     def __init__(self, Work_ID, Year, Subject_Id, ID):
@@ -48,6 +49,8 @@ class submitWork:
         mark = c.execute("SELECT Mark from SubmitWork WHERE WorkID = ? AND ID = ? AND Year = ? AND Subject_ID = ?"
                          ,(str(self.WorkID),str(self.ID) ,str(self.Year),str(self.Subject_Id)))
         mark = mark.fetchone()
+        if mark == None:
+            return 0
         # close connection
         c.close()
         # return mark [list]
@@ -71,6 +74,8 @@ class submitWork:
             "SELECT status from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?",(str(self.WorkID),
                                                                             str(self.Year), str(self.Subject_Id)))
         status = status.fetchone()
+        if status == None:
+            return 'Not sent'
         # close connection
         c.close()
         # return status 'str'
@@ -84,13 +89,22 @@ class submitWork:
         work_address = c.execute("SELECT Address from SubmitWork WHERE WorkID = ? AND Year = ?  AND Subject_ID = ?"
                                  ,(str(self.WorkID),str(self.Year),str(self.Subject_Id)))
         work_address = work_address.fetchone()
+        if work_address == None:
+            return 'N'
         # close connection
         c.close()
         # return address 'str'
         # print self.workID,self.Year,self.Subject_Id,work_address
         return work_address[0]
 
-    def Upload(self, repository, name):  # address
+    def Upload(self, repository, name):
+
+
+
+
+
+
+        # address
         # connect = sqlite3.connect("Data.db")
         # c = connect.cursor()
         # # get address of work
@@ -110,5 +124,14 @@ class submitWork:
         pass
 
     def Download(self):
+        url = 'kmmc.in/wp-content/uploads/2014/01/lesson2.pdf'
+        print "Downloading wiht urllib"
+        urllib.urlretrive(url,"lesson2.pdf")
+
+        print "Downloading worksheet"
+        r = requests.get(url)
+        with open("lesson2.pdf") as file:
+            file.write(r.content)
+
         # self.address
         pass

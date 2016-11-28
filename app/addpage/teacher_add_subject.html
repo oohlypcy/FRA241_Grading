@@ -10,7 +10,11 @@ mr.parentNode.removeChild(mr);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
 <link rel="stylesheet" href="../css/w3.css">
+{% if g.user.Profile['Role'] == 'student' %}
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-orange.css">
+{% else %}
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
+{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- <link rel="stylesheet" href="file:///C|/Users/fibo/Desktop/w3.css"> -->
@@ -25,8 +29,28 @@ mr.parentNode.removeChild(mr);
 	     font-family: Verdana, Geneva, sans-serif;
 	      font-size: 16px;
       }
+
+          .black-ribbon {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+}
+@media only all and (min-wi;dth: 768px) {
+  .black-ribbon {
+    width: auto;
+  }
+}
+
+.stick-left { left: 0; }
+.stick-right { right: 0; }
+.stick-top { top: 0; }
+.stick-bottom { bottom: 0; }
+
 </style>
 <body>
+
+<!--black ribbon for HM King RAMA IX-->
+<img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 
 <!--Navbar-->
 <div class="w3-top">
@@ -37,11 +61,16 @@ mr.parentNode.removeChild(mr);
     </li>
     <li><a href="{{url_for('homepage.Home',url_user_id=g.id)}}"class="w3-theme-l1">Home</a></li>
     <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentSubject',url_user_id=g.id)}}" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentWork',url_user_id=g.id)}}" class="w3-hover-white">Assignment</a></li>
+       {% if g.user.Profile['Role']== 'student' %}
+    <li class="w3-hide-small"><a href="{{url_for('homepage.CurrentScore',url_user_id=g.id)}}" class="w3-hover-white">Score</a></li>
+    {% endif %}
+<li class="w3-hide-small"><a href="{{url_for('login.login')}}" class="w3-hover-white w3-right-align">Logout</a></li>
   </ul>
 </div>
 
 <!-- Sidenav -->
-<nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
+<!--nav class="w3-sidenav w3-collapse w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:51px;" id="mySidenav">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="close menu">
     <i class="fa fa-remove"></i>
   </a>
@@ -61,6 +90,7 @@ mr.parentNode.removeChild(mr);
       <h1 class="w3-text-teal">Add Subject</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
+
           <form>
             Subject name:
               <input type="text" id="subject_name" name="subject_name" required><br>
@@ -72,18 +102,22 @@ mr.parentNode.removeChild(mr);
             score reference:
               <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required>
               </textarea><br>
-            Choose students group:<br>
-              <input type="radio" name="group" value="All">All<br>
-              <input type="radio" name="group" value="SecA">SecA<br>
-              <input type="radio" name="group" value="SecB">SecB<br>
+            <!--Choose students group:<br>-->
+              <!--<input type="radio" name="group" value="All">All<br>-->
+              <!--<input type="radio" name="group" value="SecA">SecA<br>-->
+              <!--<input type="radio" name="group" value="SecB">SecB<br>-->
             Semester:
                 <select name="semester">
                 <option value="2559">2559</option>
                 <option value="2560">2560</option>
                 <option value="2561">2561</option>
               </select><br><br>
+            Syllabus:
+                <textarea rows="" cols="" wrap="soft" id="syllabus" name="syllabus" required>
+              </textarea><br>
               <button class="w3-btn w3-red" onclick="return addsubject()" >create</button>
           </form>
+
           <!-- semester pull semester_data from db -->
           </div>
         </div>
@@ -135,6 +169,7 @@ function addsubject(){
   subref: $('textarea[id="score_ref"]').val(),
   section: $('input[name="group"]:checked').val(),
   year: $('select[name="semester"]').val(),
+  syllabus : $('select[name="syllabus"]').val(),
   },
   datatype: 'json',
   success: function(data){

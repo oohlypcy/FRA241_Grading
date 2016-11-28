@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
-<title>teacher_add_subject</title>
+<meta http-equiv="refresh" content="disabled" id="meta-refresh">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var mr = document.getElementById("meta-refresh");
+mr.parentNode.removeChild(mr);
+</script>
+<title>teacher_add_work</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-pink.css">
@@ -29,7 +35,7 @@
       <a class="w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     </li>
     <li><a href="#" class="w3-theme-l1">Home</a></li>
-    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</a></li>
+    <li class="w3-hide-small"><a href="#" class="w3-hover-white">Subject</a></li> <!--index is testing file-->
   </ul>
 </div>
 
@@ -39,9 +45,9 @@
     <i class="fa fa-remove"></i>
   </a>
   <h4><b>Menu</b></h4>
-  <!-- <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_subject.html" class="w3-hover-black">Add subject</a> -->
+  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_subject.html" class="w3-hover-black">Add subject</a>
   <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_TA.html">Add TA</a>
-  <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_work.html">Add work</a>
+  <!-- <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/teacher_add_work.html">Add work</a> -->
   <a href="file:///C:/Users/fibo/Documents/GitHub/FRA241_Grading/app/web2/html/grouping.html" class="w3-hover-black">Grouping random</a>
 </nav>
 
@@ -53,32 +59,38 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Add Subject</h1>
+      <h1 class="w3-text-teal">Add Work</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
           <form method="#" action="#">
-            Subject name:
-              <input type="text" id="subject_name" name="subject_name" required=""><br>
-            Subject code:
-              <input type="text" id="subject_code" name="subject_code" required=""><br>
-            Subject details: <!--top goal of this subject (watt tu pra song)-->
-              <textarea rows="" cols="" wrap="soft" id="subject_details" name="subject_details">
-              </textarea><br>
-            score reference:
-              <textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
-              </textarea><br>
-            Choose students group:<br>
-              <input type="radio" name="group" value="All">All<br>
-              <input type="radio" name="group" value="SecA">SecA<br>
-              <input type="radio" name="group" value="SecB">SecB<br>
-            Semester:
-                <select name="semester">
-                <option value="2559">2559</option>
-                <option value="2560">2560</option>
-                <option value="2561">2561</option>
+            Subject:
+              <select name="subject_code">
+                <option value="FRA221">FRA221</option>
+                <option value="FRA231">FRA231</option>
+                <option value="FRA241">FRA241</option>
+                <option value="FRA222">FRA222</option>
               </select><br><br>
-              <input type="submit" value="create">
+            Type of work:
+              <select name="type">
+                <option value="homework">homework</option>
+                <option value="assignment">assignment</option>
+                <option value="work">work</option>
+                <option value="project">project</option>
+              </select><br><br>
+            <input type="radio"/>Group<input type="text" id="#">/Gr.<br>
+            <input type="radio"/>Individual<br><br>
+            <!-- Grouping by teacher<br> <!--confused about --> -->
+              <!-- <input type="checkbox" name="teacher_grouping" value="yes">Yes<input type="text" id="members" name="members"><br> -->
+              <!-- <input type="checkbox" name="teacher_grouping" value="no">No<br><br> -->
+            work detail:
+              <br><textarea rows="" cols="" wrap="soft" id="score_ref" name="score_ref" required="">
+              </textarea><br><br>
+            Deadline:<br>
+              <input type="date" name="date"><br>
+              <input type="time" name="time"><br><br>
+              <input type="submit" value="Add">
           </form>
+
           <!-- semester pull semester_data from db -->
           </div>
         </div>
