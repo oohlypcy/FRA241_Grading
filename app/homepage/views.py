@@ -71,29 +71,31 @@ def CurrentWork(url_user_id):
     else:
         Year = int(str(year.year + 543)[0:4])
     # year.time
-
     g.user = User(url_user_id)
     g.subject = g.user.Subject['current']
-    g.subject = sorted(g.subject)
+    g.subject = sorted([x.Subject_Id for x in g.subject])
     # sent work data to html
     g.work = []
     g.address = []
     g.status = []
     for subject in g.subject:
-        data = []
-        for work in sorted(subject.get_work(), key=itemgetter(2)):
-            # check work from submit work
-            try:
-                # k = submitWork(work[2], year, work[0], g.user.id)
-                g.address.append(str(
-                    url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
+        subject1 = Subject(subject,Year)
+        for work in sorted(subject1.get_work(), key=itemgetter(2)):
+            deadline = work[3].split('/')
+            deadline = datetime.date(int(deadline[2]),int(deadline[1]),int(deadline[0]))
+            if deadline <= year:
+                # check work from submit work
+                try:
+                    # k = submitWork(work[2], year, work[0], g.user.id)
+                    g.address.append(str(
+                        url_for('classpage.Subject_work_score', url_Subject_id=work[0], url_Year=Year, work_id=work[2],
                             url_user_id=g.user.id)))
-                g.status.append("send")
-            # work doesn't submit
-            except Exception:
-                g.address.append(None)
-                g.status.append("not send")
-            g.work.append(work)
+                    g.status.append("send")
+                # work doesn't submit
+                except Exception:
+                    g.address.append(None)
+                    g.status.append("not send")
+                g.work.append(work)
     g.lenght = range(len(g.work))
     return render_template("HTML_assignment.html")
 
