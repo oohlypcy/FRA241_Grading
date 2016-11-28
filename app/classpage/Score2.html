@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <title>Template</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{url_for('static',filename="w3.css")}}">
@@ -86,7 +87,7 @@ tr:nth-child(even) {
       <h1 class="w3-text-teal">Score : {{g.SubjectID}}</h1>
         <div class="w3-row w3-container">
           <div class="w3-col l6 w3-white w3-left">
-
+            <form>
             <table>
               {% if g.user.Profile['Role'] == 'student' %}
                 <tr>
@@ -116,15 +117,22 @@ tr:nth-child(even) {
                     <td>{{x}}</td>
                     {% for y in g.score %}
                       {% if y[0] == x %}
-                        <td>{{y[3][0]}}</td>
+                        <td><input id="{{y[0]}}{{y[2]}}" class="w3-input" type="text"
+                                               placeholder="{{y[3][0]}}" style="width:90%" required></td>
                       {% endif %}
                     {% endfor %}
                   </tr>
                 {% endfor %}
               {% endif %}
             </table>
+                                 {% if g.user.Profile['Role'] == 'teacher' %}
+                        <p>
+                            <button class="w3-btn w3-green" onclick="return Scorefull()">submit</button>
+                            <input type="button" class="w3-btn w3-green" onclick="myFunction2()" value="Clear">
+                        </p>
+                         {% endif %}
 
-
+            </form>
           <!--</div>-->
           <!--<div class="w3-col l6 w3-center">-->
             <!--<img src="http://ww4.sinaimg.cn/large/e646ea2djw1ezrx3b84xdj21401lmnao.jpg" style="width:50%; height:30%;"/>-->
@@ -172,6 +180,37 @@ function w3_close() {
     mySidenav.style.display = "none";
     overlayBg.style.display = "none";
 }
+function Scorefull(){
+console.log(".....")
+
+    var student_list ={{g.all_user_ID|tojson|safe}};
+    var workid_list = {{g.workID|tojson|safe}};
+    console.log(student_list);
+    var authentication;
+
+    for(var i=0;i<student_list.length;i++){
+          for(var k=0;k<workid_list.length;k++){
+
+    console.log(".....")
+    var j = student_list[i]+workid_list[k][0].toString();
+    console.log(j)
+        $.ajax({ url: "{{url_for('classpage.insert_mark',url_user_id=g.id,url_Subject_id=g.Subject_id,url_Year=g.Year)}}",
+            async: false,
+            data: {
+            id: student_list[i],
+            score: $('input[id="student_list"]'.replace("student_list",j)).val(),
+            work_id: workid_list[k][0],
+                },
+            dataType: 'json',
+            success: function(data){
+            authentication=data.authen;
+            }
+            });
+            }
+    }
+
+}
+
 </script>
 
 </body>

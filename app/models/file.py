@@ -1,43 +1,28 @@
-import sqlite3
-from flask import url_for
-from flask import request
+import urllib2
+
+url = "www2.kmutt.ac.th/thai/abt_history/info.../KMUTT-Prospectus.pdf"
+
+file_name = url.split('/')[-1]
+u = urllib2.urlopen(url)
+f = open(file_name, 'wb')
+meta = u.info()
+file_size = int(meta.getheaders("Content-Length")[0])
+print "Downloading: %s Bytes: %s" % (file_name, file_size)
+
+file_size_dl = 0
+block_sz = 8192
+while True:
+    buffer = u.read(block_sz)
+    if not buffer:
+        break
+
+    file_size_dl += len(buffer)
+    f.write(buffer)
+    status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+    status = status + chr(8)*(len(status)+1)
+    print status,
+
+f.close()
 
 
-# declare class
-class file:
-    # when create function
-    def __init__(self, id):
-        # declare attribute when create
-        self.id = id
-        # make a dictionary
-        self.Profile = self.Get_profile()
-        self.Subject = ""
-        self.Picture = ""  # url_for('static', filename='')
-
-    def Get_profile(self):
-        # connect with database
-        connect = sqlite3.connect('Data.db')
-        # create a being that process data (go get filter etc.)
-        c = connect.cursor()
-        # get table column
-        tableField = c.execute("PRAGMA table_info(User)")
-        tableField = tableField.fetchall()
-        column = []
-        for x in tableField:
-            column.append(str(x[1]))
-        # get profile data
-        mydata = c.execute("SELECT * from User WHERE ID =" + str(self.id))
-        k = mydata.fetchone()
-        # make it into dict
-        Profiledict = {}
-        for x, y in zip(k, column):
-            Profiledict[str(y)] = str(x)
-        # close connection
-        c.close()
-        # return the dict
-        return Profiledict
-
-    def upload_file(self):
-        if request.method == 'POST':
-            f = request.files['the_file']
-            f.save('/var/www/uploads/uploaded_file.pdf')
+''''อันนี้dowload file'''

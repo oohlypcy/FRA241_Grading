@@ -34,8 +34,8 @@ mr.parentNode.removeChild(mr);
 <img src="/static/black_ribbon_top_right.png" class="black-ribbon stick-top stick-right"/>
 <header class="w3-container w3-teal">
   <h1>Login</h1>
-</header>
 
+</header>
 <div class="w3-container w3-half w3-margin-top">
 
 <form class="w3-container w3-card-4" id="form_login" >
@@ -59,7 +59,9 @@ mr.parentNode.removeChild(mr);
 <p>
   <!--change # to input_your_email_page
   should insert input_your_email_page-->
+
 <span class="w3-right w3-padding w3-hide-small"><a href="http://hotmail.com/">Forgot a password?</a></span>
+<span class="w3-right w3-padding w3-hide-small"><a href="{{url_for('login.register')}}">Register</a></span>
 </p>
 
 </form>

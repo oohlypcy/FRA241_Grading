@@ -85,10 +85,52 @@
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
       <h1 class="w3-text-teal" align="Left">{{g.Subject_id}}</h1>
-        <div class="w3-row w3-container">
+        <div class="w3-row w3-container" >
 
-          <div class="w3-col l6 w3-center">
-              <ul class="w3-ul w3-hoverable w3-xxlarge">
+
+          <div class="w3-card-4" style="width:90%;height:40%">
+            <header class="w3-container w3-blue" align="middle">
+                <h1>{{g.data[0]}}</h1>
+            </header>
+
+          <div class="w3-container">
+
+                  <p style="font-size:25px">{{g.data[1]}}</p>
+                {% for x in g.lecturer %}
+                    <p style="font-size:20px">Lecturer : {{x}}</p>
+                {% endfor %}
+                    <table class ="w3-table-all w3-centered">
+                      <tr>
+                          <th>class is on</th>
+                          <th>room</th>
+                          <th>Time</th>
+                      </tr>
+                        {% for x in g.select %}
+                            {% for y in x %}
+                            <tr>
+                                <td>{{y[0]}}</td>
+                                <td>{{y[1]}}</td>
+                                <td>{{y[2]}}</td>
+
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+
+            </div>
+
+          <footer class="w3-container w3-blue">
+                  <p style="font-size:25px" >Course Syllabus</p>
+                  <p style="font-size:20px" class="w3-panel w3-white">this course is about {{g.data[2]}}</p>
+
+
+          </footer>
+          </div>
+
+
+
+          <div class="w3-col l6 w3-center " style="width:90%;height:40%">
+              <ul class="w3-ul w3-hoverable w3-xxlarge w3-panel w3-light-blue">
                   <li><a href="{{url_for('classpage.Subject_work', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Assignment</a></li>
                   <li><a href="{{url_for('classpage.Subject_Score', url_Subject_id = g.Subject_id , url_Year = g.Year , url_user_id = g.id)}}">Score</a></li>
 
