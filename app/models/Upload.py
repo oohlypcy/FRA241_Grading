@@ -22,7 +22,7 @@ def upload_file():
                                     filename=filename))
     return
 
-    ''' อันนี้ของHtml ไม่รู้เอาใส่ในบรรทัดไหน
+    ''' อันนี้ของHtml ไม่รู้เอาใส่ในบรรทัดไหน  รบกวนเช็คให้หน่อยครับ
     <!doctype html>
     <title>Upload new File</title>
     <h1>Upload new File</h1>
